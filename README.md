@@ -1,1 +1,1 @@
-# my-fit-tracker
+# MyFitTracker

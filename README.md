@@ -1,5 +1,4 @@
-# Capstone Project
-## Project Title: MyFitTracker
+# Capstone Project: MyFitTracker
 
 ## About MyFitTracker
 MyFitTracker is a web-based application that allows users to track their fitness activities, monitor progress, and set fitness goals.
@@ -57,11 +56,11 @@ There are many wearable devices and fitness applications available today. Howeve
 - Track Progress: On the dashboard, users view their progress toward fitness goals through weekly summaries and graphs.
 - Set a Goal: Users set a goal (e.g., run 20 km per month) and track progress through visual indicators
 - Community Engagement: Users join fitness groups to share progress and participate in challenges
-Optional
-- Add Payment Method: Users log into their dashboard, click "Add Payment Method," enter data, and click "Save."
-- Take lessons: Paid users navigate to Lessons page and select lessons (e.g., exercise lesson, nutrition lecture)
-(For Instructor)
-- Register Lessons: Instructors log into their dashboard, click "Add Lesson", select the lesson type (e.g., workout, nutrition) and sett the price, upload the lesson, and click "Save."
-- Add Payment Method: Instructors log into their dashboard, click "Add Payment Method" to receive money they earn, enter necessary details, and click "Save."
+- Optional
+    - Add Payment Method: Users log into their dashboard, click "Add Payment Method," enter data, and click "Save."
+    - Take lessons: Paid users navigate to Lessons page and select lessons (e.g., exercise lesson, nutrition lecture)
+    - For Instructors
+        - Register Lessons: Instructors log into their dashboard, click "Add Lesson", select the lesson type (e.g., workout, nutrition) and sett the price, upload the lesson, and click "Save."
+        - Add Payment Method: Instructors log into their dashboard, click "Add Payment Method" to receive money they earn, enter necessary details, and click "Save."
 
 ## References:

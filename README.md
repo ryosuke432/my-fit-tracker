@@ -30,7 +30,7 @@ There are many wearable devices and fitness applications available today. Howeve
     - Optional guest mode for quick tracking
 - Activity Logging
     - Log workout activities (e.g., running, cycling, weightlifting) with duration, distance, calories burned.
-    - (Optional) Integrate with third-party APIs (e.g., Fitbit, Strava, Mapbox)
+    - (Optional) Integrate with third-party APIs (e.g., Fitbit, Strava)
 - Goal Setting
     - Set fitness goals (e.g., run 20 km in a month)
     - Track goal progress over time.
@@ -46,7 +46,7 @@ There are many wearable devices and fitness applications available today. Howeve
 - Dark Mode
     - Switch between light and dark modes for accessibility
 - (Optional) Advanced Features:
-    - Create Custom Routes: Allow users to create their own walking or running routes (paid plan)
+    - Create Custom Routes: Allow paid users to create their own walking or running routes with Mapbox API (paid plan)
     - Notifications & Alerts: Allow users to set daily targets, receive reminders via alerts, and get notified of messages from friends and instructors
     - Multiple User Roles: In addition to regular users, introduce an instructor role that can give lessons, receive reviews from users, and earn money through paid classes
 

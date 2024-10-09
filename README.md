@@ -9,7 +9,6 @@ There are many wearable devices and fitness applications available today. Howeve
 - Frontend: 
     - React.js for interactive user interface
     - Tailwind CSS for responsive design
-    - (Optional) Mapbox API for paid users creating own routes
     - Axios for making requests to the backend 
 - Backend:
     - Node.js with Express.js for handling API requests
@@ -31,7 +30,7 @@ There are many wearable devices and fitness applications available today. Howeve
     - Optional guest mode for quick tracking
 - Activity Logging
     - Log workout activities (e.g., running, cycling, weightlifting) with duration, distance, calories burned.
-    - (Optional) Integrate with third-party APIs (e.g., Fitbit, Strava)
+    - (Optional) Integrate with third-party APIs (e.g., Fitbit, Strava, Mapbox)
 - Goal Setting
     - Set fitness goals (e.g., run 20 km in a month)
     - Track goal progress over time.

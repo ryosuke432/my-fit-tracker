@@ -28,6 +28,7 @@ There are many wearable devices and fitness applications available today. Howeve
 - User Authentication
     - Register/login to save fitness data
     - Optional guest mode for quick tracking
+    - (For instructors) Register/login to upload lessons
 - Activity Logging
     - Log workout activities (e.g., running, cycling, weightlifting) with duration, distance, calories burned.
     - (Optional) Integrate with third-party APIs (e.g., Fitbit, Strava)
@@ -57,10 +58,16 @@ There are many wearable devices and fitness applications available today. Howeve
 - Community Engagement: Users join fitness groups to share progress and participate in challenges
 - (Optional)
     - Add Payment Method: Users log into their dashboard, click "Add Payment Method," enter data, and click "Save."
-    - Customize Own Routes: Paid users navigate to "My Route" and customize their own routes, and click "Save."
+    - Customize Own Routes: Paid users navigate to "My Routes" and customize their own routes, and click "Save."
     - Take Lessons: Paid users navigate to "Lessons" page and select lessons (e.g., exercise lesson, nutrition lecture)
     - For Instructors
-        - Register Lessons: Instructors log into their dashboard, click "Add Lesson", select the lesson type (e.g., workout, nutrition) and sett the price, upload the lesson, and click "Save."
+        - Register Lessons: Instructors log into their dashboard, click "Add Lesson", select the lesson type (e.g., workout, nutrition) and set the price, upload the lesson, and click "Save."
         - Add Payment Method: Instructors log into their dashboard, click "Add Payment Method" to receive money they earn, enter necessary details, and click "Save."
+
+## Use Case Diagram
+![Use Case Diagram](./diagram/UseCaseDiagram.svg)
+
+## Entity Relationship Diagram
+![ER Diagram](./diagram/ERDDiagram.svg)
 
 ## References:

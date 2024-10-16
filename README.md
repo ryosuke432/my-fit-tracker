@@ -14,7 +14,7 @@ There are many wearable devices and fitness applications available today. Howeve
     - Node.js with Express.js for handling API requests
     - RESTful APIs
 - Database:
-    - MongoDB (for unstructured data) or PostgreSQL/MySQL (for structured data)
+    - PostgreSQL
 - Authentication & Security:
     - JWT (JSON Web Tokens) for user authentication
 - Deployment:

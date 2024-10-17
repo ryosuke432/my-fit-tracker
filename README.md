@@ -66,12 +66,12 @@ There are many wearable devices and fitness applications available today. Howeve
         - Add Payment Method: Instructors log into their dashboard, click "Add Payment Method" to receive money they earn, enter necessary details, and click "Save."
 
 ## Use Case Diagram
-![Use Case Diagram](./diagram/UseCaseDiagram.svg)
+![Use Case Diagram](./images/UseCaseDiagram.svg)
 
 ## Entity Relationship Diagram
-![ER Diagram](./diagram/ERDDiagram.svg)
+![ER Diagram](./images/ERDDiagram.svg)
 
 ## UI Wireframe
-[UI Wireframe](https://excalidraw.com/#json=9P6mbCCIe1NkD3YynpgC0,1AZc4bOMwnmF6FGJ5ebzTA)
+![UI Wireframe](./images/UI_wireframe.svg)
 
 ## References:

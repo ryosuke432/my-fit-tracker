@@ -17,6 +17,7 @@ There are many wearable devices and fitness applications available today. Howeve
     - PostgreSQL
 - Authentication & Security:
     - JWT (JSON Web Tokens) for user authentication
+    - bcrypt
 - Deployment:
     - AWS (or Render? or Vercel?) for deployment
     - Cloudinary or Amazon S3 for hosting images of property listings
@@ -69,5 +70,8 @@ There are many wearable devices and fitness applications available today. Howeve
 
 ## Entity Relationship Diagram
 ![ER Diagram](./diagram/ERDDiagram.svg)
+
+## UI Wireframe
+[UI Wireframe](https://excalidraw.com/#json=9P6mbCCIe1NkD3YynpgC0,1AZc4bOMwnmF6FGJ5ebzTA)
 
 ## References:

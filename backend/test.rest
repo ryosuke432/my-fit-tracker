@@ -1,0 +1,29 @@
+### add a new member
+POST http://localhost:5000/api/v1/auth/signup
+content-type: application/json
+
+{
+    "f_name": "John",
+    "l_name": "Smith",
+    "email": "john.smith@gmail.com",
+    "mobile": "9999999999",
+    "password": "password999"
+}
+
+### retrieve all members 
+GET http://localhost:5000/api/v1/member
+
+### retrieve a specific member by ID
+GET http://localhost:5000/api/v1/member/1
+
+### update an existing member 
+PUT http://localhost:5000/api/v1/member/3
+content-type: application/json
+
+{
+    "f_name": "Ben",
+    "email": "ben.smith@gmail.com"
+}
+
+### delete a specific member by ID
+DELETE http://localhost:5000/api/v1/member/1

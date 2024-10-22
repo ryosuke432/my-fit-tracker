@@ -75,3 +75,6 @@ There are many wearable devices and fitness applications available today. Howeve
 ![UI Wireframe](./images/UI_wireframe.svg)
 
 ## References:
+### Backend:
+    - [How to hash password](https://stackoverflow.com/questions/34120548/using-bcrypt-with-sequelize-model)
+    

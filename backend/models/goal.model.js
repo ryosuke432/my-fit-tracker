@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import sequelize from '../../db.js';
+import sequelize from '../db.js';
 import Member from './member.model.js';
 
 const Goal = sequelize.define('Goal', {
@@ -22,9 +22,9 @@ const Goal = sequelize.define('Goal', {
   },
 });
 
-Member.hasMany(Goal, {
-  foreignKey: 'id',
-});
+Member.hasMany(Goal);
 Goal.belongsTo(Member);
+
+await Goal.sync({ alter: true });
 
 export default Goal;

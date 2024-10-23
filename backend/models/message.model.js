@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import sequelize from '../../db.js';
+import sequelize from '../db.js';
 import Member from './member.model.js';
 import Channel from './channel.model.js';
 
@@ -12,5 +12,7 @@ const Message = sequelize.define('Message', {
 
 Member.belongsToMany(Channel, { through: Message });
 Channel.belongsToMany(Member, { through: Message });
+
+await Message.sync({ alter: true });
 
 export default Message;

@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import sequelize from '../../db.js';
+import sequelize from '../db.js';
 import Member from './member.model.js';
 
 const Nutrition = sequelize.define('Nutrition', {
@@ -21,9 +21,9 @@ const Nutrition = sequelize.define('Nutrition', {
   },
 });
 
-Member.hasMany(Nutrition, {
-  foreignKey: 'id',
-});
+Member.hasMany(Nutrition);
 Nutrition.belongsTo(Member);
+
+await Nutrition.sync({ alter: true });
 
 export default Nutrition;

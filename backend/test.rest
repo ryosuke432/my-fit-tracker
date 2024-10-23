@@ -15,8 +15,8 @@ POST http://localhost:5000/api/v1/auth/login
 content-type: application/json
 
 {
-    "email": "john.smith@gmail.com",
-    "password": "password999"
+    "email": "adam.smith@gmail.com",
+    "password": "password123"
 }
 
 ### retrieve all members 
@@ -28,19 +28,81 @@ GET http://localhost:5000/api/v1/member/1
 
 ### enter profile page
 GET http://localhost:5000/api/v1/member/profile
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY0NDgwNSwiZXhwIjoxNzI5NjQ2NjA1fQ.LnHmIp0euaon5jbqOtZwrWszMpM_UiW3CAbG6FcoWyo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1ODYxOSwiZXhwIjoxNzI5NjYwNDE5fQ.zXz8CMGbxwnc62hO4qmcBZW6Mc7TJun0vuOIcN7l3g4
 
 ### edit profile info
 PUT http://localhost:5000/api/v1/member/profile
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY0NDgwNSwiZXhwIjoxNzI5NjQ2NjA1fQ.LnHmIp0euaon5jbqOtZwrWszMpM_UiW3CAbG6FcoWyo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1ODYxOSwiZXhwIjoxNzI5NjYwNDE5fQ.zXz8CMGbxwnc62hO4qmcBZW6Mc7TJun0vuOIcN7l3g4
 
 {
-    "f_name": "Jane"
+    "l_name": "Smith"
 }
 
 ### delete member
 DELETE http://localhost:5000/api/v1/member/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1ODYxOSwiZXhwIjoxNzI5NjYwNDE5fQ.zXz8CMGbxwnc62hO4qmcBZW6Mc7TJun0vuOIcN7l3g4
+
+### add workout
+POST http://localhost:5000/api/v1/member/workout
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY0NDgwNSwiZXhwIjoxNzI5NjQ2NjA1fQ.LnHmIp0euaon5jbqOtZwrWszMpM_UiW3CAbG6FcoWyo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1ODYxOSwiZXhwIjoxNzI5NjYwNDE5fQ.zXz8CMGbxwnc62hO4qmcBZW6Mc7TJun0vuOIcN7l3g4
+
+{
+    "name": "Running",
+    "duration_min": 60,
+    "distance_km": 10
+}
+
+### view workouts
+GET http://localhost:5000/api/v1/member/workout
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1ODYxOSwiZXhwIjoxNzI5NjYwNDE5fQ.zXz8CMGbxwnc62hO4qmcBZW6Mc7TJun0vuOIcN7l3g4
+
+### view specific workout
+GET http://localhost:5000/api/v1/member/workout/6
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1ODYxOSwiZXhwIjoxNzI5NjYwNDE5fQ.zXz8CMGbxwnc62hO4qmcBZW6Mc7TJun0vuOIcN7l3g4
+
+### edit workout info
+PUT http://localhost:5000/api/v1/member/workout/6
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1ODYxOSwiZXhwIjoxNzI5NjYwNDE5fQ.zXz8CMGbxwnc62hO4qmcBZW6Mc7TJun0vuOIcN7l3g4
+
+{
+    "name": "Walking"
+}
+
+### delete specific workout
+DELETE http://localhost:5000/api/v1/member/workout/6
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1ODYxOSwiZXhwIjoxNzI5NjYwNDE5fQ.zXz8CMGbxwnc62hO4qmcBZW6Mc7TJun0vuOIcN7l3g4
+
+
+### add nutrition of a specific member
+POST http://localhost:5000/api/v1/member/nutrition
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1ODYxOSwiZXhwIjoxNzI5NjYwNDE5fQ.zXz8CMGbxwnc62hO4qmcBZW6Mc7TJun0vuOIcN7l3g4
+
+{
+    "name": "Turkey Sandwich",
+    "calories": 850
+}
+
+### retrieve all nutrition data of a specific member
+GET http://localhost:5000/api/v1/member/nutrition
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1ODYxOSwiZXhwIjoxNzI5NjYwNDE5fQ.zXz8CMGbxwnc62hO4qmcBZW6Mc7TJun0vuOIcN7l3g4
+
+### retrieve speciifc nutrition data of a specific member
+GET http://localhost:5000/api/v1/member/nutrition/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1ODYxOSwiZXhwIjoxNzI5NjYwNDE5fQ.zXz8CMGbxwnc62hO4qmcBZW6Mc7TJun0vuOIcN7l3g4
+
+### edit specific nutrition data of a specific member
+PUT http://localhost:5000/api/v1/member/nutrition/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1ODYxOSwiZXhwIjoxNzI5NjYwNDE5fQ.zXz8CMGbxwnc62hO4qmcBZW6Mc7TJun0vuOIcN7l3g4
+
+{
+    "fat": 5.6
+}
+
+### delete specific nutrition data of a specific member
+DELETE http://localhost:5000/api/v1/member/nutrition/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1ODYxOSwiZXhwIjoxNzI5NjYwNDE5fQ.zXz8CMGbxwnc62hO4qmcBZW6Mc7TJun0vuOIcN7l3g4

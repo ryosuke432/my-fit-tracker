@@ -1,13 +1,7 @@
-import { Sequelize, DataTypes } from 'sequelize';
-import Member from './member.model';
-import Channel from './channel.model';
-
-const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  { host: process.env.DB_HOST, dialect: 'postgres' }
-);
+import { DataTypes } from 'sequelize';
+import sequelize from '../../db.js';
+import Member from './member.model.js';
+import Channel from './channel.model.js';
 
 const Message = sequelize.define('Message', {
   content: {

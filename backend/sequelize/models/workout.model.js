@@ -1,21 +1,26 @@
-import { Sequelize, DataTypes } from 'sequelize';
-import Member from './member.model';
-
-const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  { host: process.env.DB_HOST, dialect: 'postgres' }
-);
+import { DataTypes } from 'sequelize';
+import sequelize from '../../db.js';
+import Member from './member.model.js';
 
 const Workout = sequelize.define('Workout', {
   name: {
-    type: DataTypes.STRING(100),
+    type: DataTypes.ENUM(
+      'Walking',
+      'Running',
+      'Cycling',
+      'Swimming',
+      'Other'
+    ),
     allowNull: false,
+  },
+  duration_min: {
+    type: DataTypes.INTEGER
+  },
+  distance_km: {
+    type: DataTypes.INTEGER
   },
   detail: {
     type: DataTypes.TEXT,
-    allowNull: false,
   },
 });
 

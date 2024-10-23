@@ -10,20 +10,37 @@ content-type: application/json
     "password": "password999"
 }
 
+### login
+POST http://localhost:5000/api/v1/auth/login
+content-type: application/json
+
+{
+    "email": "john.smith@gmail.com",
+    "password": "password999"
+}
+
 ### retrieve all members 
 GET http://localhost:5000/api/v1/member
 
 ### retrieve a specific member by ID
 GET http://localhost:5000/api/v1/member/1
 
-### update an existing member 
-PUT http://localhost:5000/api/v1/member/3
-content-type: application/json
+
+### enter profile page
+GET http://localhost:5000/api/v1/member/profile
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY0NDgwNSwiZXhwIjoxNzI5NjQ2NjA1fQ.LnHmIp0euaon5jbqOtZwrWszMpM_UiW3CAbG6FcoWyo
+
+### edit profile info
+PUT http://localhost:5000/api/v1/member/profile
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY0NDgwNSwiZXhwIjoxNzI5NjQ2NjA1fQ.LnHmIp0euaon5jbqOtZwrWszMpM_UiW3CAbG6FcoWyo
 
 {
-    "f_name": "Ben",
-    "email": "ben.smith@gmail.com"
+    "f_name": "Jane"
 }
 
-### delete a specific member by ID
-DELETE http://localhost:5000/api/v1/member/1
+### delete member
+DELETE http://localhost:5000/api/v1/member/profile
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY0NDgwNSwiZXhwIjoxNzI5NjQ2NjA1fQ.LnHmIp0euaon5jbqOtZwrWszMpM_UiW3CAbG6FcoWyo

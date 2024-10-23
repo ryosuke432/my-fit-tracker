@@ -1,16 +1,15 @@
-import { Sequelize, DataTypes } from 'sequelize';
-import Member from './member.model';
-
-const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  { host: process.env.DB_HOST, dialect: 'postgres' }
-);
+import { DataTypes } from 'sequelize';
+import sequelize from '../../db.js';
+import Member from './member.model.js';
 
 const Goal = sequelize.define('Goal', {
-  type: {
-    type: DataTypes.ENUM('Number of workout days', 'Calories Burned', 'Workout duration', 'Workout distance'),
+  goal_type: {
+    type: DataTypes.ENUM(
+      'Number of workout days',
+      'Calories Burned',
+      'Workout duration',
+      'Workout distance'
+    ),
     allowNull: false,
   },
   weekly_goal: {

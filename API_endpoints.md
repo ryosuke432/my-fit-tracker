@@ -9,9 +9,9 @@ Sole Entity Endpoints:
 -	DELETE /member/{id}
     Description: Deletes a member by ID.
 2.	Authentication Endpoints:
--	POST /signup
+-	POST auth/signup
     Description: Register a new member/instructor.
--	POST /login
+-	POST auth/login
     Description: Verify login information and authenticate it.
 3.	Instructor Endpoints (Optional):
 -	GET /instructor

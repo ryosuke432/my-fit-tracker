@@ -77,4 +77,5 @@ There are many wearable devices and fitness applications available today. Howeve
 ## References:
 ### Backend:
     - [How to hash password](https://stackoverflow.com/questions/34120548/using-bcrypt-with-sequelize-model)
+    - [How to implement JWT](https://blog.logrocket.com/how-to-implement-jwt-authentication-vue-nodejs/)
     

@@ -1,10 +1,11 @@
 import express from 'express';
-import { Op } from 'sequelize';
+import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
 import Member from '../sequelize/models/member.model.js';
 
+dotenv.config();
 const authRouter = express.Router();
 
-// TODO: implement jwt auth
 // register a new member
 authRouter.post('/signup', async (req, res) => {
   try {
@@ -28,22 +29,41 @@ authRouter.post('/signup', async (req, res) => {
 });
 
 // login verification
-// app.get('/login', (req, res) => {
-//   const tokenHeaderKey = process.env.TOKEN_HEADER_KEY;
-//   const jwtSecretKey = process.env.JWT_SECRET_KEY;
+authRouter.post('/login', async (req, res) => {
+  const { email, password } = req.body;
 
-//   try {
-//     const token = req.header(tokenHeaderKey);
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Enter all the required fields' });
+  }
 
-//     const verified = jwt.verify(token, jwtSecretKey);
-//     if (verified) {
-//       return res.send('Successfully Verified!');
-//     } else {
-//       return res.status(401).send(error);
-//     }
-//   } catch (err) {
-//     return res.status(401).send(err);
-//   }
-// });
+  try {
+    const member = await Member.findOne({ where: { email } });
+
+    if (!member) {
+      res.status(400).json({ message: 'Please enter a valid email' });
+    }
+
+    const isValid = await member.comparePassword(password);
+
+    if (!isValid) {
+      res.status(400).json({ message: 'Please enter a valid password' });
+    }
+
+    const payload = {
+      id: member.id,
+      is_premium: member.is_premium,
+    };
+    const jwtSecretKey = process.env.JWT_SECRET_KEY;
+
+    const accessToken = jwt.sign(payload, jwtSecretKey, {
+      expiresIn: '30m',
+    });
+
+    res.status(200).json({ message: "Successfully logged in", accessToken });
+  } catch (err) {
+    console.error(err);
+    return res.status(401).send(err);
+  }
+});
 
 export default authRouter;

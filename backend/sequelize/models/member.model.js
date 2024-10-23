@@ -35,7 +35,7 @@ const Member = sequelize.define(
       validate: {
         len: {
           args: [10, 10],
-          msg: 'Mobile number should be 10 digits',
+          msg: 'Mobile number must be 10 digits',
         },
         is: {
           args: '^[0-9]{10}$',
@@ -79,14 +79,13 @@ const Member = sequelize.define(
         }
       },
     },
-    instanceMethods: {
-      comparePassword: async (plainPwd) => {
-        return await bcrypt.compare(plainPwd, this.password);
-      },
-    },
   }
 );
 
-await Member.sync({ alter: true });
+Member.prototype.comparePassword = async function (plainPwd) {
+  return await bcrypt.compare(plainPwd, this.password);
+};
+
+// await Member.sync({ alter: true });
 
 export default Member;

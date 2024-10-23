@@ -13,6 +13,9 @@ const Workout = sequelize.define('Workout', {
   distance_km: {
     type: DataTypes.FLOAT,
   },
+  calories: {
+    type: DataTypes.FLOAT,
+  }
 });
 
 Member.hasMany(Workout);

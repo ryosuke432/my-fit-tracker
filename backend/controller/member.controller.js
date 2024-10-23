@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
+import sequelize from '../db.js';
 import Member from '../models/member.model.js';
 import Workout from '../models/workout.model.js';
 import Nutrition from '../models/nutrition.model.js';
@@ -105,10 +106,47 @@ export const addWorkout = async (req, res) => {
   try {
     const mid = req.payload.id;
     const { name, duration_min, distance_km } = req.body;
+    const member = await Member.findByPk(mid);
+    let calories;
+
+    if (member.dataValues.body_weight) {
+      let met;
+      const speed_kmh = distance_km / (duration_min / 60);
+      switch (name) {
+        case 'Walking':
+          met = speed_kmh < 3.22 ? 2 : 4.5;
+          break;
+        case 'Running':
+          if (speed_kmh <= 8.05) {
+            met = 8;
+          } else if (speed_kmh <= 11.27) {
+            met = 11.5;
+          } else {
+            met = 16;
+          }
+          break;
+        case 'Cycling':
+          if (speed_kmh <= 16.09) {
+            met = 4;
+          } else if (speed_kmh < 19.31) {
+            met = 8;
+          } else if (speed_kmh < 22.53) {
+            met = 10;
+          } else {
+            met = 12;
+          }
+          break;
+        case 'Swimming':
+          met = 7;
+          break;
+      }
+      calories = (duration_min * met * member.dataValues.body_weight) / 200;
+    }
     const workout = await Workout.create({
       name,
       duration_min,
       distance_km,
+      calories,
       MemberId: mid,
     });
     res.status(201).json({ message: 'Successfully registerd', workout });
@@ -121,7 +159,37 @@ export const addWorkout = async (req, res) => {
 export const viewAllWorkout = async (req, res) => {
   try {
     const mid = req.payload.id;
-    const workouts = await Workout.findAll({ where: { MemberId: mid } });
+    const { date, week } = req.query;
+    const attributes = [];
+    const group = [];
+    if (date) {
+      attributes.push([
+        sequelize.fn('date', sequelize.col('createdAt')),
+        'date',
+      ]);
+      group.push([sequelize.fn('date', sequelize.col('createdAt'))]);
+    }
+    if (week) {
+      attributes.push([
+        sequelize.fn('date_part', 'week', sequelize.col('createdAt')),
+        'week',
+      ]);
+      group.push([
+        sequelize.fn('date_part', 'week', sequelize.col('createdAt')),
+      ]);
+    }
+
+    attributes.push(
+      [sequelize.fn('SUM', sequelize.col('duration_min')), 'total_duration'],
+      [sequelize.fn('SUM', sequelize.col('distance_km')), 'total_distance'],
+      [sequelize.fn('SUM', sequelize.col('calories')), 'total_calories']
+    );
+    const workouts = await Workout.findAll({
+      where: { MemberId: mid },
+      attributes,
+      group,
+    });
+
     if (!workouts) {
       return res.status(404).json({ message: 'Workout Not Found' });
     }
@@ -223,7 +291,42 @@ export const addNutrition = async (req, res) => {
 export const viewAllNutrition = async (req, res) => {
   try {
     const mid = req.payload.id;
-    const nutrition = await Nutrition.findAll({ where: { MemberId: mid } });
+    const { date, week } = req.query;
+
+    const attributes = [];
+    const group = [];
+    if (date) {
+      attributes.push([
+        sequelize.fn('date', sequelize.col('createdAt')),
+        'date',
+      ]);
+      group.push([sequelize.fn('date', sequelize.col('createdAt'))]);
+    }
+    if (week) {
+      attributes.push([
+        sequelize.fn('date_part', 'week', sequelize.col('createdAt')),
+        'week',
+      ]);
+      group.push([
+        sequelize.fn('date_part', 'week', sequelize.col('createdAt')),
+      ]);
+    }
+
+    attributes.push(
+      [sequelize.fn('SUM', sequelize.col('calories')), 'total_calories'],
+      [sequelize.fn('SUM', sequelize.col('protein')), 'total_protein'],
+      [sequelize.fn('SUM', sequelize.col('fat')), 'total_fat'],
+      [
+        sequelize.fn('SUM', sequelize.col('carbohydrates')),
+        'total_carbohydrates',
+      ]
+    );
+    const nutrition = await Nutrition.findAll({
+      where: { MemberId: mid },
+      attributes,
+      group,
+    });
+
     if (!nutrition) {
       return res.status(404).json({ message: 'Nutrition Not Found' });
     }

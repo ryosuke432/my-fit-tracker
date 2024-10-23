@@ -8,4 +8,6 @@ const Channel = sequelize.define('Channel', {
   },
 });
 
+Channel.sync({ alter: true });
+
 export default Channel;

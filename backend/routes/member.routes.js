@@ -2,20 +2,21 @@ import express from 'express';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import Member from '../sequelize/models/member.model.js';
+import Workout from '../sequelize/models/workout.model.js';
 
 dotenv.config();
 const memberRouter = express.Router();
 
 // retrieve all members
-memberRouter.get('/', async (req, res) => {
-  try {
-    const members = await Member.findAll();
-    res.status(200).json(members);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: err });
-  }
-});
+// memberRouter.get('/', async (req, res) => {
+//   try {
+//     const members = await Member.findAll();
+//     res.status(200).json(members);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ error: err });
+//   }
+// });
 
 // retrieve a specific member by id
 // memberRouter.get('/:id', async (req, res) => {
@@ -53,7 +54,8 @@ const verifyToken = (req, res, next) => {
 // enter profile page
 memberRouter.get('/profile', verifyToken, async (req, res) => {
   try {
-    const member = await Member.findByPk(req.payload.id);
+    const id = req.payload.id;
+    const member = await Member.findByPk(id);
     res.status(200).json({ message: 'Profile Page', member });
   } catch (err) {
     console.error(err);
@@ -63,8 +65,8 @@ memberRouter.get('/profile', verifyToken, async (req, res) => {
 
 // update a specific member
 memberRouter.put('/profile', verifyToken, async (req, res) => {
-  const id = req.payload.id;
   try {
+    const id = req.payload.id;
     const member = await Member.findByPk(id);
 
     if (!member) {
@@ -106,8 +108,8 @@ memberRouter.put('/profile', verifyToken, async (req, res) => {
 
 // delete a member by id
 memberRouter.delete('/profile', verifyToken, async (req, res) => {
-  const id = req.payload.id;
   try {
+    const id = req.payload.id;
     const member = await Member.findByPk(id);
 
     if (!member) {
@@ -115,6 +117,90 @@ memberRouter.delete('/profile', verifyToken, async (req, res) => {
     }
 
     await Member.destroy({ where: { id } });
+    res.status(200).json({ message: 'Successfully deleted' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err });
+  }
+});
+
+// Workout Interaction
+// add workout of a specific member
+memberRouter.post('/workout', verifyToken, async (req, res) => {
+  try {
+    const fk = req.payload.id;
+    const { name, duration_min, distance_km } = req.body;
+    const workout = await Workout.create({
+      name,
+      duration_min,
+      distance_km,
+      MemberId: fk,
+    });
+    res.status(201).json({ message: 'Successfully registerd', workout });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err });
+  }
+});
+
+// retrieve all workouts of a specific member
+memberRouter.get('/workout', verifyToken, async (req, res) => {
+  try {
+    const mid = req.payload.id;
+    const workouts = await Workout.findAll({ where: { MemberId: mid } });
+    res.status(200).json(workouts);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err });
+  }
+});
+
+// edit specific workout of a specific member
+memberRouter.put('/workout/:id', verifyToken, async (req, res) => {
+  try {
+    const mid = req.payload.id;
+    const wid = req.params.id;
+    const workout = await Workout.findOne({
+      where: { id: wid, MemberId: mid },
+    });
+    if (!workout) {
+      return res.status(400).json({ error: 'Workout Not Found' });
+    }
+
+    const { name, duration_min, distance_km } = req.body;
+    let updatedInfo = {};
+    if (name) {
+      updatedInfo.name = name;
+    }
+    if (duration_min) {
+      updatedInfo.duration_min = duration_min;
+    }
+    if (distance_km) {
+      updatedInfo.distance_km = distance_km;
+    }
+
+    await Workout.update(updatedInfo, { where: { id: wid, MemberId: mid } });
+    res.status(200).json({ message: 'Successfully updated' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err });
+  }
+});
+
+// delete a specific workout of a specific member
+memberRouter.delete('/workout/:id', verifyToken, async (req, res) => {
+  try {
+    const mid = req.payload.id;
+    const wid = req.params.id;
+    const workout = await Workout.findOne({
+      where: { id: wid, MemberId: mid },
+    });
+
+    if (!workout) {
+      return res.status(400).json({ error: 'Workout Not Found' });
+    }
+
+    await Workout.destroy({ where: { id: wid, MemberId: mid } });
     res.status(200).json({ message: 'Successfully deleted' });
   } catch (err) {
     console.error(err);

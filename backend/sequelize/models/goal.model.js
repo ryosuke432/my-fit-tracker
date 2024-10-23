@@ -22,9 +22,9 @@ const Goal = sequelize.define('Goal', {
   },
 });
 
-Member.hasMany(Goal, {
-  foreignKey: 'id',
-});
+Member.hasMany(Goal);
 Goal.belongsTo(Member);
+
+Goal.sync({ alter: true });
 
 export default Goal;

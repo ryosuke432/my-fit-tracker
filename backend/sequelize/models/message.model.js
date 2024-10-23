@@ -13,4 +13,6 @@ const Message = sequelize.define('Message', {
 Member.belongsToMany(Channel, { through: Message });
 Channel.belongsToMany(Member, { through: Message });
 
+Message.sync({ alter: true });
+
 export default Message;

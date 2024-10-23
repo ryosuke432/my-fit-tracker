@@ -15,8 +15,8 @@ POST http://localhost:5000/api/v1/auth/login
 content-type: application/json
 
 {
-    "email": "john.smith@gmail.com",
-    "password": "password999"
+    "email": "adam.smith@gmail.com",
+    "password": "password123"
 }
 
 ### retrieve all members 
@@ -29,7 +29,7 @@ GET http://localhost:5000/api/v1/member/1
 ### enter profile page
 GET http://localhost:5000/api/v1/member/profile
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY0NDgwNSwiZXhwIjoxNzI5NjQ2NjA1fQ.LnHmIp0euaon5jbqOtZwrWszMpM_UiW3CAbG6FcoWyo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1MzI1NiwiZXhwIjoxNzI5NjUzMjg2fQ.2Y5SMaz2NnQUO5IPrqxGKMPPwlg871gpJisLz71GYS4
 
 ### edit profile info
 PUT http://localhost:5000/api/v1/member/profile
@@ -44,3 +44,33 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaXNfcHJlb
 DELETE http://localhost:5000/api/v1/member/profile
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY0NDgwNSwiZXhwIjoxNzI5NjQ2NjA1fQ.LnHmIp0euaon5jbqOtZwrWszMpM_UiW3CAbG6FcoWyo
+
+### add workout
+POST http://localhost:5000/api/v1/member/workout
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1MjEyMSwiZXhwIjoxNzI5NjUzOTIxfQ.RDaHnLZyit-RFPjHhwitUjN4VIIJPI6z4kd6QcqhTdE
+
+{
+    "name": "Swimming",
+    "duration_min": 60,
+    "distance_km": 1.5
+}
+
+### view workouts
+GET http://localhost:5000/api/v1/member/workout
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1MjEyMSwiZXhwIjoxNzI5NjUzOTIxfQ.RDaHnLZyit-RFPjHhwitUjN4VIIJPI6z4kd6QcqhTdE
+
+### edit workout info
+PUT http://localhost:5000/api/v1/member/workout/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1MjEyMSwiZXhwIjoxNzI5NjUzOTIxfQ.RDaHnLZyit-RFPjHhwitUjN4VIIJPI6z4kd6QcqhTdE
+
+{
+    "name": "Walking"
+}
+
+### delete specific workout
+DELETE http://localhost:5000/api/v1/member/workout/4
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1MjEyMSwiZXhwIjoxNzI5NjUzOTIxfQ.RDaHnLZyit-RFPjHhwitUjN4VIIJPI6z4kd6QcqhTdE

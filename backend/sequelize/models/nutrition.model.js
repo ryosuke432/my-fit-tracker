@@ -21,9 +21,9 @@ const Nutrition = sequelize.define('Nutrition', {
   },
 });
 
-Member.hasMany(Nutrition, {
-  foreignKey: 'id',
-});
+Member.hasMany(Nutrition);
 Nutrition.belongsTo(Member);
+
+Nutrition.sync({ alter: true });
 
 export default Nutrition;

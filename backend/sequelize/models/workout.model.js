@@ -4,29 +4,20 @@ import Member from './member.model.js';
 
 const Workout = sequelize.define('Workout', {
   name: {
-    type: DataTypes.ENUM(
-      'Walking',
-      'Running',
-      'Cycling',
-      'Swimming',
-      'Other'
-    ),
+    type: DataTypes.ENUM('Walking', 'Running', 'Cycling', 'Swimming'),
     allowNull: false,
   },
   duration_min: {
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
   },
   distance_km: {
-    type: DataTypes.INTEGER
-  },
-  detail: {
-    type: DataTypes.TEXT,
+    type: DataTypes.FLOAT,
   },
 });
 
-Member.hasMany(Workout, {
-  foreignKey: 'id',
-});
+Member.hasMany(Workout);
 Workout.belongsTo(Member);
+
+Workout.sync({ alter: true });
 
 export default Workout;

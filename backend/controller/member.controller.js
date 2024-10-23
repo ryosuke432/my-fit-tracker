@@ -160,35 +160,37 @@ export const viewAllWorkout = async (req, res) => {
   try {
     const mid = req.payload.id;
     const { date, week } = req.query;
-    const attributes = [];
-    const group = [];
-    if (date) {
-      attributes.push([
-        sequelize.fn('date', sequelize.col('createdAt')),
-        'date',
-      ]);
-      group.push([sequelize.fn('date', sequelize.col('createdAt'))]);
-    }
-    if (week) {
-      attributes.push([
-        sequelize.fn('date_part', 'week', sequelize.col('createdAt')),
-        'week',
-      ]);
-      group.push([
-        sequelize.fn('date_part', 'week', sequelize.col('createdAt')),
-      ]);
-    }
+    let filter = { where: { MemberId: mid } };
+    if (date || week) {
+      const attributes = [];
+      const group = [];
+      if (date) {
+        attributes.push([
+          sequelize.fn('date', sequelize.col('createdAt')),
+          'date',
+        ]);
+        group.push([sequelize.fn('date', sequelize.col('createdAt'))]);
+      }
+      if (week) {
+        attributes.push([
+          sequelize.fn('date_part', 'week', sequelize.col('createdAt')),
+          'week',
+        ]);
+        group.push([
+          sequelize.fn('date_part', 'week', sequelize.col('createdAt')),
+        ]);
+      }
 
-    attributes.push(
-      [sequelize.fn('SUM', sequelize.col('duration_min')), 'total_duration'],
-      [sequelize.fn('SUM', sequelize.col('distance_km')), 'total_distance'],
-      [sequelize.fn('SUM', sequelize.col('calories')), 'total_calories']
-    );
-    const workouts = await Workout.findAll({
-      where: { MemberId: mid },
-      attributes,
-      group,
-    });
+      attributes.push(
+        [sequelize.fn('SUM', sequelize.col('duration_min')), 'total_duration'],
+        [sequelize.fn('SUM', sequelize.col('distance_km')), 'total_distance'],
+        [sequelize.fn('SUM', sequelize.col('calories')), 'total_calories']
+      );
+
+      filter.attributes = attributes;
+      filter.group = group;
+    }
+    const workouts = await Workout.findAll(filter);
 
     if (!workouts) {
       return res.status(404).json({ message: 'Workout Not Found' });
@@ -292,40 +294,42 @@ export const viewAllNutrition = async (req, res) => {
   try {
     const mid = req.payload.id;
     const { date, week } = req.query;
+    let filter = { where: { MemberId: mid } };
 
-    const attributes = [];
-    const group = [];
-    if (date) {
-      attributes.push([
-        sequelize.fn('date', sequelize.col('createdAt')),
-        'date',
-      ]);
-      group.push([sequelize.fn('date', sequelize.col('createdAt'))]);
-    }
-    if (week) {
-      attributes.push([
-        sequelize.fn('date_part', 'week', sequelize.col('createdAt')),
-        'week',
-      ]);
-      group.push([
-        sequelize.fn('date_part', 'week', sequelize.col('createdAt')),
-      ]);
-    }
+    if (date || week) {
+      const attributes = [];
+      const group = [];
+      if (date) {
+        attributes.push([
+          sequelize.fn('date', sequelize.col('createdAt')),
+          'date',
+        ]);
+        group.push([sequelize.fn('date', sequelize.col('createdAt'))]);
+      }
+      if (week) {
+        attributes.push([
+          sequelize.fn('date_part', 'week', sequelize.col('createdAt')),
+          'week',
+        ]);
+        group.push([
+          sequelize.fn('date_part', 'week', sequelize.col('createdAt')),
+        ]);
+      }
 
-    attributes.push(
-      [sequelize.fn('SUM', sequelize.col('calories')), 'total_calories'],
-      [sequelize.fn('SUM', sequelize.col('protein')), 'total_protein'],
-      [sequelize.fn('SUM', sequelize.col('fat')), 'total_fat'],
-      [
-        sequelize.fn('SUM', sequelize.col('carbohydrates')),
-        'total_carbohydrates',
-      ]
-    );
-    const nutrition = await Nutrition.findAll({
-      where: { MemberId: mid },
-      attributes,
-      group,
-    });
+      attributes.push(
+        [sequelize.fn('SUM', sequelize.col('calories')), 'total_calories'],
+        [sequelize.fn('SUM', sequelize.col('protein')), 'total_protein'],
+        [sequelize.fn('SUM', sequelize.col('fat')), 'total_fat'],
+        [
+          sequelize.fn('SUM', sequelize.col('carbohydrates')),
+          'total_carbohydrates',
+        ]
+      );
+
+      filter.attributes = attributes;
+      filter.group = group;
+    }
+    const nutrition = await Nutrition.findAll(filter);
 
     if (!nutrition) {
       return res.status(404).json({ message: 'Nutrition Not Found' });

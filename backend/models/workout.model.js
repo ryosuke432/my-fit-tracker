@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import sequelize from '../../db.js';
+import sequelize from '../db.js';
 import Member from './member.model.js';
 
 const Workout = sequelize.define('Workout', {
@@ -18,6 +18,6 @@ const Workout = sequelize.define('Workout', {
 Member.hasMany(Workout);
 Workout.belongsTo(Member);
 
-Workout.sync({ alter: true });
+await Workout.sync({ alter: true });
 
 export default Workout;

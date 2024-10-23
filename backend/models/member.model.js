@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import sequelize from '../../db.js';
+import sequelize from '../db.js';
 import bcrypt from 'bcrypt';
 
 const Member = sequelize.define(
@@ -86,6 +86,6 @@ Member.prototype.comparePassword = async function (plainPwd) {
   return await bcrypt.compare(plainPwd, this.password);
 };
 
-// await Member.sync({ alter: true });
+await Member.sync({ alter: true });
 
 export default Member;

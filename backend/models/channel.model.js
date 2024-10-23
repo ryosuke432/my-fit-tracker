@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import sequelize from '../../db.js';
+import sequelize from '../db.js';
 
 const Channel = sequelize.define('Channel', {
   name: {
@@ -8,6 +8,6 @@ const Channel = sequelize.define('Channel', {
   },
 });
 
-Channel.sync({ alter: true });
+await Channel.sync({ alter: true });
 
 export default Channel;

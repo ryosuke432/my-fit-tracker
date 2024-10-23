@@ -1,8 +1,9 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
-import Member from '../sequelize/models/member.model.js';
-import Workout from '../sequelize/models/workout.model.js';
+import Member from '../models/member.model.js';
+import Workout from '../models/workout.model.js';
+import Nutrition from '../models/nutrition.model.js';
 
 dotenv.config();
 const memberRouter = express.Router();
@@ -51,11 +52,16 @@ const verifyToken = (req, res, next) => {
   });
 };
 
+// Sole entity
 // enter profile page
 memberRouter.get('/profile', verifyToken, async (req, res) => {
   try {
     const id = req.payload.id;
     const member = await Member.findByPk(id);
+
+    if (!member) {
+      return res.status(400).json({ message: 'Member Not Found' });
+    }
     res.status(200).json({ message: 'Profile Page', member });
   } catch (err) {
     console.error(err);
@@ -70,7 +76,7 @@ memberRouter.put('/profile', verifyToken, async (req, res) => {
     const member = await Member.findByPk(id);
 
     if (!member) {
-      return res.status(400).json({ error: 'Member Not Found' });
+      return res.status(400).json({ message: 'Member Not Found' });
     }
 
     const { f_name, l_name, email, mobile, password, body_weight, is_premium } =
@@ -113,7 +119,7 @@ memberRouter.delete('/profile', verifyToken, async (req, res) => {
     const member = await Member.findByPk(id);
 
     if (!member) {
-      return res.status(400).json({ error: 'Member Not Found' });
+      return res.status(400).json({ message: 'Member Not Found' });
     }
 
     await Member.destroy({ where: { id } });
@@ -124,7 +130,9 @@ memberRouter.delete('/profile', verifyToken, async (req, res) => {
   }
 });
 
-// Workout Interaction
+// Entities Interaction
+
+// Workout interaction
 // add workout of a specific member
 memberRouter.post('/workout', verifyToken, async (req, res) => {
   try {
@@ -148,7 +156,28 @@ memberRouter.get('/workout', verifyToken, async (req, res) => {
   try {
     const mid = req.payload.id;
     const workouts = await Workout.findAll({ where: { MemberId: mid } });
+    if (!workouts) {
+      return res.status(400).json({ message: 'Workout Not Found' });
+    }
     res.status(200).json(workouts);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err });
+  }
+});
+
+// retrieve specific workout of a specific member
+memberRouter.get('/workout/:id', verifyToken, async (req, res) => {
+  try {
+    const mid = req.payload.id;
+    const wid = req.params.id;
+    const workout = await Workout.findOne({
+      where: { id: wid, MemberId: mid },
+    });
+    if (!workout) {
+      return res.status(400).json({ message: 'Workout Not Found' });
+    }
+    res.status(200).json(workout);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err });
@@ -164,7 +193,7 @@ memberRouter.put('/workout/:id', verifyToken, async (req, res) => {
       where: { id: wid, MemberId: mid },
     });
     if (!workout) {
-      return res.status(400).json({ error: 'Workout Not Found' });
+      return res.status(400).json({ message: 'Workout Not Found' });
     }
 
     const { name, duration_min, distance_km } = req.body;
@@ -197,7 +226,7 @@ memberRouter.delete('/workout/:id', verifyToken, async (req, res) => {
     });
 
     if (!workout) {
-      return res.status(400).json({ error: 'Workout Not Found' });
+      return res.status(400).json({ message: 'Workout Not Found' });
     }
 
     await Workout.destroy({ where: { id: wid, MemberId: mid } });
@@ -207,5 +236,120 @@ memberRouter.delete('/workout/:id', verifyToken, async (req, res) => {
     res.status(500).json({ error: err });
   }
 });
+
+// Nutrition interaction
+// add nutrition of a specific member
+memberRouter.post('/nutrition', verifyToken, async (req, res) => {
+  try {
+    const fk = req.payload.id;
+    const { name, calories, protein, fat, carbohydrates } = req.body;
+    const nutrition = await Nutrition.create({
+      name,
+      calories,
+      protein,
+      fat,
+      carbohydrates,
+      MemberId: fk,
+    });
+    res.status(201).json({ message: 'Successfully registerd', nutrition });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err });
+  }
+});
+
+// retrieve all nutrition of a specific member
+memberRouter.get('/nutrition', verifyToken, async (req, res) => {
+  try {
+    const mid = req.payload.id;
+    const nutrition = await Nutrition.findAll({ where: { MemberId: mid } });
+    if (!nutrition) {
+      return res.status(400).json({ message: 'Nutrition Not Found' });
+    }
+    res.status(200).json(nutrition);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err });
+  }
+});
+
+// retrieve specific nutrition of a specific member
+memberRouter.get('/nutrition/:id', verifyToken, async (req, res) => {
+  try {
+    const mid = req.payload.id;
+    const nid = req.params.id;
+    const nutrition = await Nutrition.findOne({
+      where: { id: nid, MemberId: mid },
+    });
+    if (!nutrition) {
+      return res.status(400).json({ message: 'Nutrition Not Found' });
+    }
+    res.status(200).json(nutrition);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err });
+  }
+});
+
+// edit specific nutrition of a specific member
+memberRouter.put('/nutrition/:id', verifyToken, async (req, res) => {
+  try {
+    const mid = req.payload.id;
+    const nid = req.params.id;
+    const nutrition = await Nutrition.findOne({
+      where: { id: nid, MemberId: mid },
+    });
+    if (!nutrition) {
+      return res.status(400).json({ message: 'Nutrition Not Found' });
+    }
+
+    const { name, calories, protein, fat, carbohydrates } = req.body;
+    let updatedInfo = {};
+    if (name) {
+      updatedInfo.name = name;
+    }
+    if (calories) {
+      updatedInfo.calories = calories;
+    }
+    if (protein) {
+      updatedInfo.protein = protein;
+    }
+    if (fat) {
+      updatedInfo.fat = fat;
+    }
+    if (carbohydrates) {
+      updatedInfo.carbohydrates = carbohydrates;
+    }
+
+    await Nutrition.update(updatedInfo, { where: { id: nid, MemberId: mid } });
+    res.status(200).json({ message: 'Successfully updated' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err });
+  }
+});
+
+// delete specific nutrition of a specific member
+memberRouter.delete('/nutrition/:id', verifyToken, async (req, res) => {
+  try {
+    const mid = req.payload.id;
+    const nid = req.params.id;
+    const nutrition = await Nutrition.findOne({
+      where: { id: nid, MemberId: mid },
+    });
+
+    if (!nutrition) {
+      return res.status(400).json({ message: 'Nutrition Not Found' });
+    }
+
+    await Nutrition.destroy({ where: { id: nid, MemberId: mid } });
+    res.status(200).json({ message: 'Successfully deleted' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err });
+  }
+});
+
+
 
 export default memberRouter;

@@ -28,7 +28,6 @@ GET http://localhost:5000/api/v1/member/1
 
 ### enter profile page
 GET http://localhost:5000/api/v1/member/profile
-Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1MzI1NiwiZXhwIjoxNzI5NjUzMjg2fQ.2Y5SMaz2NnQUO5IPrqxGKMPPwlg871gpJisLz71GYS4
 
 ### edit profile info
@@ -42,13 +41,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaXNfcHJlb
 
 ### delete member
 DELETE http://localhost:5000/api/v1/member/profile
-Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY0NDgwNSwiZXhwIjoxNzI5NjQ2NjA1fQ.LnHmIp0euaon5jbqOtZwrWszMpM_UiW3CAbG6FcoWyo
 
 ### add workout
 POST http://localhost:5000/api/v1/member/workout
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1MjEyMSwiZXhwIjoxNzI5NjUzOTIxfQ.RDaHnLZyit-RFPjHhwitUjN4VIIJPI6z4kd6QcqhTdE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1NTI5NCwiZXhwIjoxNzI5NjU3MDk0fQ.e14Hf3vltwRvTgaVjD8Y2chhXHW8ryQlHYDDUMY9of4
 
 {
     "name": "Swimming",
@@ -58,8 +56,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaXNfcHJlb
 
 ### view workouts
 GET http://localhost:5000/api/v1/member/workout
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1MjEyMSwiZXhwIjoxNzI5NjUzOTIxfQ.RDaHnLZyit-RFPjHhwitUjN4VIIJPI6z4kd6QcqhTdE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1NTI5NCwiZXhwIjoxNzI5NjU3MDk0fQ.e14Hf3vltwRvTgaVjD8Y2chhXHW8ryQlHYDDUMY9of4
+
+### view specific workout
+GET http://localhost:5000/api/v1/member/workout/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1NTI5NCwiZXhwIjoxNzI5NjU3MDk0fQ.e14Hf3vltwRvTgaVjD8Y2chhXHW8ryQlHYDDUMY9of4
 
 ### edit workout info
 PUT http://localhost:5000/api/v1/member/workout/1
@@ -72,5 +73,36 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaXNfcHJlb
 
 ### delete specific workout
 DELETE http://localhost:5000/api/v1/member/workout/4
-Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1MjEyMSwiZXhwIjoxNzI5NjUzOTIxfQ.RDaHnLZyit-RFPjHhwitUjN4VIIJPI6z4kd6QcqhTdE
+
+
+### add nutrition of a specific member
+POST http://localhost:5000/api/v1/member/nutrition
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1NTI5NCwiZXhwIjoxNzI5NjU3MDk0fQ.e14Hf3vltwRvTgaVjD8Y2chhXHW8ryQlHYDDUMY9of4
+
+{
+    "name": "Turkey Sandwich",
+    "calories": 850
+}
+
+### retrieve all nutrition data of a specific member
+GET http://localhost:5000/api/v1/member/nutrition
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1NzM0MCwiZXhwIjoxNzI5NjU5MTQwfQ.6OO2Pbt-xQ0iRXsEU-KWyDxGflZiXnYpE2jkvLsFrkA
+
+### retrieve speciifc nutrition data of a specific member
+GET http://localhost:5000/api/v1/member/nutrition/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1NzM0MCwiZXhwIjoxNzI5NjU5MTQwfQ.6OO2Pbt-xQ0iRXsEU-KWyDxGflZiXnYpE2jkvLsFrkA
+
+### edit specific nutrition data of a specific member
+PUT http://localhost:5000/api/v1/member/nutrition/2
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1NzM0MCwiZXhwIjoxNzI5NjU5MTQwfQ.6OO2Pbt-xQ0iRXsEU-KWyDxGflZiXnYpE2jkvLsFrkA
+
+{
+    "fat": 5.6
+}
+
+### delete specific nutrition data of a specific member
+DELETE http://localhost:5000/api/v1/member/nutrition/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNfcHJlbWl1bSI6ZmFsc2UsImlhdCI6MTcyOTY1NzM0MCwiZXhwIjoxNzI5NjU5MTQwfQ.6OO2Pbt-xQ0iRXsEU-KWyDxGflZiXnYpE2jkvLsFrkA

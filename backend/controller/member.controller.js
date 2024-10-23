@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import Member from '../models/member.model.js';
 import Workout from '../models/workout.model.js';
 import Nutrition from '../models/nutrition.model.js';
+import Goal from '../models/goal.model.js';
 
 dotenv.config();
 
@@ -102,13 +103,13 @@ export const deleteProfile = async (req, res) => {
 // member-workout controller
 export const addWorkout = async (req, res) => {
   try {
-    const fk = req.payload.id;
+    const mid = req.payload.id;
     const { name, duration_min, distance_km } = req.body;
     const workout = await Workout.create({
       name,
       duration_min,
       distance_km,
-      MemberId: fk,
+      MemberId: mid,
     });
     res.status(201).json({ message: 'Successfully registerd', workout });
   } catch (err) {
@@ -202,7 +203,7 @@ export const deleteWorkout = async (req, res) => {
 // member-nutrition controller
 export const addNutrition = async (req, res) => {
   try {
-    const fk = req.payload.id;
+    const mid = req.payload.id;
     const { name, calories, protein, fat, carbohydrates } = req.body;
     const nutrition = await Nutrition.create({
       name,
@@ -210,7 +211,7 @@ export const addNutrition = async (req, res) => {
       protein,
       fat,
       carbohydrates,
-      MemberId: fk,
+      MemberId: mid,
     });
     res.status(201).json({ message: 'Successfully registerd', nutrition });
   } catch (err) {
@@ -300,6 +301,106 @@ export const deleteNutrition = async (req, res) => {
     }
 
     await Nutrition.destroy({ where: { id: nid, MemberId: mid } });
+    res.status(200).json({ message: 'Successfully deleted' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err });
+  }
+};
+
+export const addGoal = async (req, res) => {
+  try {
+    const mid = req.payload.id;
+    const { goal_type, weekly_goal, total_duration } = req.body;
+    const goal = await Goal.create({
+      goal_type,
+      weekly_goal,
+      total_duration,
+      MemberId: mid,
+    });
+    res.status(201).json({ message: 'Successfully registerd', goal });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err });
+  }
+};
+
+export const viewAllGoals = async (req, res) => {
+  try {
+    const mid = req.payload.id;
+    const goals = await Goal.findAll({ where: { MemberId: mid } });
+    if (!goals) {
+      return res.status(404).json({ message: 'Goal Not Found' });
+    }
+    res.status(200).json(goals);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err });
+  }
+};
+
+export const viewGoal = async (req, res) => {
+  try {
+    const mid = req.payload.id;
+    const gid = req.params.id;
+    const goal = await Goal.findOne({
+      where: { id: gid, MemberId: mid },
+    });
+    if (!goal) {
+      return res.status(404).json({ message: 'Goal Not Found' });
+    }
+    res.status(200).json(goal);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err });
+  }
+};
+
+export const updateGoal = async (req, res) => {
+  try {
+    const mid = req.payload.id;
+    const gid = req.params.id;
+
+    const goal = await Goal.findOne({
+      where: { id: gid, MemberId: mid },
+    });
+    if (!goal) {
+      return res.status(404).json({ message: 'Goal Not Found' });
+    }
+
+    const { goal_type, weekly_goal, total_duration } = req.body;
+    let updatedInfo = {};
+    if (goal_type) {
+      updatedInfo.goal_type = goal_type;
+    }
+    if (weekly_goal) {
+      updatedInfo.weekly_goal = weekly_goal;
+    }
+    if (total_duration) {
+      updatedInfo.total_duration = total_duration;
+    }
+
+    await Goal.update(updatedInfo, { where: { id: gid, MemberId: mid } });
+    res.status(200).json({ message: 'Successfully updated' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err });
+  }
+};
+
+export const deleteGoal = async (req, res) => {
+  try {
+    const mid = req.payload.id;
+    const gid = req.params.id;
+
+    const goal = await Goal.findOne({
+      where: { id: gid, MemberId: mid },
+    });
+    if (!goal) {
+      return res.status(404).json({ message: 'Goal Not Found' });
+    }
+
+    await Goal.destroy({ where: { id: gid, MemberId: mid } });
     res.status(200).json({ message: 'Successfully deleted' });
   } catch (err) {
     console.error(err);

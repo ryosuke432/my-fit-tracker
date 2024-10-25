@@ -40,18 +40,18 @@ authRouter.post('/login', async (req, res) => {
     const member = await Member.findOne({ where: { email } });
 
     if (!member) {
-      res.status(400).json({ message: 'Please enter a valid email' });
+      return res.status(400).json({ message: 'Please enter a valid email' });
     }
 
     const isValid = await member.comparePassword(password);
 
     if (!isValid) {
-      res.status(400).json({ message: 'Please enter a valid password' });
+      return res.status(400).json({ message: 'Please enter a valid password' });
     }
 
     const payload = {
       id: member.id,
-      is_premium: member.is_premium,
+      email: member.email,
     };
     const jwtSecretKey = process.env.JWT_SECRET_KEY;
 
@@ -59,10 +59,10 @@ authRouter.post('/login', async (req, res) => {
       expiresIn: '1h',
     });
 
-    res.status(200).json({ message: "Successfully logged in", accessToken });
+    res.status(200).json({ message: 'Successfully logged in', accessToken });
   } catch (err) {
     console.error(err);
-    return res.status(401).send(err);
+    res.status(401).json({ error: err });
   }
 });
 

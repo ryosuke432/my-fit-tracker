@@ -12,7 +12,7 @@ const Login = () => {
     password: '',
   });
 
-  const handleInput = async (e: any) => {
+  const handleInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setInput((prev) => ({
       ...prev,
@@ -21,21 +21,23 @@ const Login = () => {
   };
 
   const handleSubmit = async () => {
-    if (input.email !== '' && input.password !== '') {
-      try {
-        const { data } = await axiosInstance.post('/v1/auth/login', {
-          email: input.email,
-          password: input.password,
-        });
-        console.log(data.message);
+    const { email, password } = input;
+    if (!email || !password) return;
 
-        if (data.accessToken) {
-          auth?.setToken(data.accessToken);
-          navigate('/mypage', { replace: true });
-        }
-      } catch (err: any) {
-        console.error(err.response.data.message);
+    try {
+      const { data } = await axiosInstance.post('/v1/auth/login', {
+        email,
+        password,
+      });
+
+      console.log(data.message)
+
+      if (data.accessToken) {
+        auth?.setToken(data.accessToken);
+        navigate('/mypage', { replace: true });
       }
+    } catch (err: any) {
+      console.error(err.response?.data?.message);
     }
   };
 
@@ -47,19 +49,19 @@ const Login = () => {
         <input
           type='email'
           name='email'
-          placeholder='email'
+          placeholder='Email'
           autoComplete='off'
-          autoFocus={true}
+          autoFocus
           onChange={handleInput}
-          required={true}
+          required
         />
         <input
           id='password'
           type='password'
           name='password'
-          placeholder='password'
+          placeholder='Password'
           onChange={handleInput}
-          required={true}
+          required
         />
 
         <Button label='Log in' action={handleSubmit} />

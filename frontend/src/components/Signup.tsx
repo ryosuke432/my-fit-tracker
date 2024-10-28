@@ -1,43 +1,55 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from './ui/Button';
+import axiosInstance from '../api/axiosInstance';
 
 const Signup = () => {
-  const [fname, setFname] = useState('' as string);
-  const [lname, setLname] = useState('' as string);
-  const [email, setEmail] = useState('' as string);
-  const [mobile, setMobile] = useState('' as string);
-  const [password, setPassword] = useState('' as string);
-  const [bodyWeight, setBodyWeight] = useState('' as string);
+  const navigate = useNavigate();
+  const [input, setInput] = useState({
+    f_name: '',
+    l_name: '',
+    email: '',
+    mobile: '',
+    password: '',
+    body_weight: '',
+  });
+
+  const handleInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setInput((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleSignup = async () => {
-    const { data } = await axios({
-      method: 'post',
-      url: 'http://localhost:5000/api/v1/auth/signup',
-      data: {
-        f_name: fname,
-        l_name: lname,
+    const { f_name, l_name, email, mobile, password, body_weight } = input;
+    if (!f_name || !l_name || !email || !mobile || !password) return;
+    try {
+      const { data } = await axiosInstance.post('/v1/auth/signup', {
+        f_name,
+        l_name,
         email,
         mobile,
         password,
-        body_weight: bodyWeight,
-      },
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+        body_weight,
+      });
 
-    console.log(data)
+      console.log(data.message);
 
-    setFname('');
-    setLname('');
-    setEmail('');
-    setMobile('');
-    setPassword('');
-    setBodyWeight('');
+      navigate('/login');
 
-    
+      setInput({
+        f_name: '',
+        l_name: '',
+        email: '',
+        mobile: '',
+        password: '',
+        body_weight: '',
+      });
+    } catch (err: any) {
+      console.error(err.response?.data?.message);
+    }
   };
 
   return (
@@ -47,56 +59,51 @@ const Signup = () => {
       <form className='flex flex-col gap-y-3 w-full'>
         <input
           type='text'
-          name='fname'
+          name='f_name'
           placeholder='First Name'
-          value={fname}
           autoComplete='off'
-          onChange={(e) => setFname(e.target.value)}
-          required={true}
+          autoFocus
+          onChange={handleInput}
+          required
         />
         <input
           type='text'
-          name='lname'
+          name='l_name'
           placeholder='Last Name'
-          value={lname}
           autoComplete='off'
-          onChange={(e) => setLname(e.target.value)}
-          required={true}
+          onChange={handleInput}
+          required
         />
         <input
           type='email'
           name='email'
           placeholder='Email address'
-          value={email}
           autoComplete='off'
-          onChange={(e) => setEmail(e.target.value)}
-          required={true}
+          onChange={handleInput}
+          required
         />
         <input
           type='tel'
           name='mobile'
           placeholder='Mobile number'
-          value={mobile}
           autoComplete='off'
-          onChange={(e) => setMobile(e.target.value)}
-          required={true}
+          onChange={handleInput}
+          required
         />
         <input
           id='password'
           type='password'
           name='password'
           placeholder='Password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required={true}
+          onChange={handleInput}
+          required
         />
         <input
           id='bodyWeight'
           type='number'
-          name='bodyWeight'
-          placeholder='(Optional) Body Weight (kg)'
-          value={bodyWeight}
-          onChange={(e) => setBodyWeight(e.target.value)}
+          name='body_weight'
+          placeholder='(Optional) Body weight (kg)'
+          onChange={handleInput}
         />
 
         <Button label='Sign up' action={handleSignup} />

@@ -41,3 +41,14 @@ interface SelectProps {
   onChangeFunc: handleInputChangeProp;
   selectedOption?: string;
 }
+
+type LoginType = {
+  email: string;
+  password: string;
+};
+
+interface ProviderProps {
+  token: string;
+  login(data: LoginType): void;
+  logout(): void;
+}

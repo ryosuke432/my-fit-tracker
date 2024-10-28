@@ -1,9 +1,17 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-const Metrics = () => {
+const Metrics = ({ data }: { data: any }) => {
   return (
-    <div>Metrics</div>
-  )
-}
+    <>
+      <div>Metrics</div>
 
-export default Metrics
+      <>
+        <div>Workout</div>
+        <div>Nutrition</div>
+      </>
+    </>
+  );
+};
+
+export default Metrics;

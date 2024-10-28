@@ -1,36 +1,41 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import Button from './ui/Button';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthProvider';
+import axiosInstance from '../api/axiosInstance';
 
 const Login = () => {
+  const auth = useAuth();
   const navigate = useNavigate();
-  const [email, setEmail] = useState('' as string);
-  const [password, setPassword] = useState('' as string);
-  const [accessToken, setAccessToken] = useState('' as string);
+  const [input, setInput] = useState({
+    email: '',
+    password: '',
+  });
 
+  const handleInput = async (e: any) => {
+    const { name, value } = e.target;
+    setInput((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
-  const handleLogin = async () => {
-    const { data } = await axios({
-      method: 'post',
-      url: 'http://localhost:5000/api/v1/auth/login',
-      data: {
-        email,
-        password,
-      },
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+  const handleSubmit = async () => {
+    if (input.email !== '' && input.password !== '') {
+      try {
+        const { data } = await axiosInstance.post('/v1/auth/login', {
+          email: input.email,
+          password: input.password,
+        });
+        console.log(data.message);
 
-    setEmail('');
-    setPassword('');
-
-    if (data?.accessToken) {
-      setAccessToken(data.accessToken);
-      navigate('/');
-    } else {
-      navigate('/login');
+        if (data.accessToken) {
+          auth?.setToken(data.accessToken);
+          navigate('/mypage', { replace: true });
+        }
+      } catch (err: any) {
+        console.error(err.response.data.message);
+      }
     }
   };
 
@@ -43,10 +48,9 @@ const Login = () => {
           type='email'
           name='email'
           placeholder='email'
-          value={email}
           autoComplete='off'
           autoFocus={true}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={handleInput}
           required={true}
         />
         <input
@@ -54,12 +58,11 @@ const Login = () => {
           type='password'
           name='password'
           placeholder='password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={handleInput}
           required={true}
         />
 
-        <Button label='Log in' action={handleLogin} />
+        <Button label='Log in' action={handleSubmit} />
       </form>
 
       <p>

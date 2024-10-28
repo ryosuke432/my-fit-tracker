@@ -84,3 +84,5 @@ There are many wearable devices and fitness applications available today. Howeve
 - Cals calculation
     - https://www.calculator.net/calories-burned-calculator.html
     - https://blog.nasm.org/metabolic-equivalents-for-weight-loss#:~:text=So%20now%20that%20we%20understand,%2F%20200%20%3D%20KCAL%2FMIN.&text=So%20in%2045%20minutes%2C%20this,700%20calories%20running%20at%207mph.
+- JWT Authentication in React with react-router
+    - https://dev.to/sanjayttg/jwt-authentication-in-react-with-react-router-1d03

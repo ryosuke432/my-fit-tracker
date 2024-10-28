@@ -3,11 +3,11 @@ POST http://localhost:5000/api/v1/auth/signup
 content-type: application/json
 
 {
-    "f_name": "Ryo",
+    "f_name": "Adam",
     "l_name": "Smith",
-    "email": "ryo.smith@gmail.com",
-    "mobile": "1234567899",
-    "password": "password111"
+    "email": "adam.smith@gmail.com",
+    "mobile": "1112223333",
+    "password": "password123"
 }
 
 ### login
@@ -15,8 +15,8 @@ POST http://localhost:5000/api/v1/auth/login
 content-type: application/json
 
 {
-    "email": "ryo.smith@gmail.com",
-    "password": "password111"
+    "email": "adam.smith@gmail.com",
+    "password": "password123"
 }
 
 ### enter profile page
@@ -48,8 +48,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsI
 }
 
 ### view workouts
-GET http://localhost:5000/api/v1/member/workout?week=true
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoicnlvLnNtaXRoQGdtYWlsLmNvbSIsImlhdCI6MTcyOTgxODIyMCwiZXhwIjoxNzI5ODIxODIwfQ.TT9zUtS1Fs-fASsGReN4inywTWpAbFJ-vkznbW-gN5A
+GET http://localhost:5000/api/v1/member/workout?date=true
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJhZGFtLnNtaXRoQGdtYWlsLmNvbSIsImlhdCI6MTcyOTg4MTI5MCwiZXhwIjoxNzI5ODg0ODkwfQ.-6-zr-aKS6Ln4T84Sw0_3PjlbOzzPx0iWKyaSUzMfrg
 
 ### view specific workout
 GET http://localhost:5000/api/v1/member/workout/7

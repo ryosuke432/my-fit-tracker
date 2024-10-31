@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import Button from './ui/Button';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from './AuthProvider';
+import { useAuth } from './auth/AuthProvider';
 import axiosInstance from '../api/axiosInstance';
+import HomeLayout from './HomeLayout';
+import Form from './ui/Form';
 
 const Login = () => {
   const auth = useAuth();
@@ -12,7 +14,7 @@ const Login = () => {
     password: '',
   });
 
-  const handleInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInput: handleChangeProp = async (e) => {
     const { name, value } = e.target;
     setInput((prev) => ({
       ...prev,
@@ -20,7 +22,7 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = async () => {
+  const handleLogin: handleBtnActionProp = async () => {
     const { email, password } = input;
     if (!email || !password) return;
 
@@ -30,7 +32,7 @@ const Login = () => {
         password,
       });
 
-      console.log(data.message)
+      console.log(data.message);
 
       if (data.accessToken) {
         auth?.setToken(data.accessToken);
@@ -41,39 +43,48 @@ const Login = () => {
     }
   };
 
+  const inputDataset = [
+    {
+      type: 'email',
+      name: 'email',
+      placeholder: 'Email',
+      autoComplete: 'off',
+      autoFocus: true,
+      required: true,
+    },
+    {
+      type: 'password',
+      name: 'password',
+      placeholder: 'Password',
+      autoComplete: 'off',
+      required: true,
+    },
+  ];
+
+  const buttonDataset = {
+    label: 'Log in',
+    action: handleLogin,
+  };
+
   return (
-    <div className='container min-w-72 w-96 mx-auto px-4 py-2 flex flex-col justify-evenly items-center gap-y-5 text-center border-2 border-solid border-slate-900 rounded'>
-      <h2 className='text-xl'>Log in</h2>
+    <HomeLayout>
+      <div className='container min-w-72 w-96 mx-auto px-4 py-2 flex flex-col justify-evenly items-center gap-y-5 text-center border-2 border-solid border-slate-900 rounded'>
+        <h2 className='text-xl'>Log in</h2>
 
-      <form className='flex flex-col gap-y-3 w-full'>
-        <input
-          type='email'
-          name='email'
-          placeholder='Email'
-          autoComplete='off'
-          autoFocus
-          onChange={handleInput}
-          required
-        />
-        <input
-          id='password'
-          type='password'
-          name='password'
-          placeholder='Password'
-          onChange={handleInput}
-          required
+        <Form
+          inputDataset={inputDataset}
+          handleChange={handleInput}
+          buttonDataset={buttonDataset}
         />
 
-        <Button label='Log in' action={handleSubmit} />
-      </form>
-
-      <p>
-        Don't have an account?{' '}
-        <span className='text-blue-500'>
-          <Link to='/signup'>Sign up</Link>
-        </span>
-      </p>
-    </div>
+        <p>
+          Don't have an account?{' '}
+          <span className='text-blue-500'>
+            <Link to='/signup'>Sign up</Link>
+          </span>
+        </p>
+      </div>
+    </HomeLayout>
   );
 };
 

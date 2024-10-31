@@ -1,31 +1,41 @@
 import React from 'react';
-import { Routes, Route, NavLink } from 'react-router-dom';
+import {
+  Routes,
+  Route,
+  // useRouteError,
+} from 'react-router-dom';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Mypage from './components/Mypage';
-import AuthProvider from './components/AuthProvider';
-import PrivateRoute from './components/PrivateRoute';
+import AuthProvider from './components/auth/AuthProvider';
+import PrivateRoute from './components/auth/PrivateRoute';
+import Metrics from './components/Metrics';
+import Home from './components/Home';
+import Profile from './components/Profile';
 
 function App() {
   return (
-    <>
-      <nav>
-        <NavLink to='/'>Home</NavLink>
-        <NavLink to='/login'>Log in</NavLink>
-        <NavLink to='/signup'>Sign up</NavLink>
-      </nav>
-      <AuthProvider>
-        <Routes>
-          <Route index element={<div>Home</div>} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/' element={<PrivateRoute />}>
-            <Route path='/mypage' element={<Mypage />} />
+    <AuthProvider>
+      <Routes>
+        <Route index element={<Home />} />
+        <Route path='login' element={<Login />} />
+        <Route path='signup' element={<Signup />} />
+        <Route path='/' element={<PrivateRoute />}>
+          <Route path='mypage' element={<Mypage />}>
+            <Route path='profile' element={<Profile />} />
+            <Route path='metrics' element={<Metrics />} />
           </Route>
-          <Route path='/signup' element={<Signup />} />
-        </Routes>
-      </AuthProvider>
-    </>
+        </Route>
+      </Routes>
+    </AuthProvider>
   );
 }
+
+// const ErrorBoundary = () => {
+//   let error = useRouteError();
+//   console.error(error);
+// Uncaught ReferenceError: path is not defined
+//   return <div>Dang!</div>;
+// }
 
 export default App;

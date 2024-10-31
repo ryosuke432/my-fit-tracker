@@ -1,14 +1,11 @@
 import React from 'react';
-import { NavLink, Route, Routes } from 'react-router-dom';
-import Login from './Login';
-import Mypage from './Mypage';
-import Signup from './Signup';
+import HomeLayout from './HomeLayout';
 
 const Home = () => {
   return (
-    <>
-      <div>Home</div>
-    </>
+    <HomeLayout>
+      <h1 className='text-center'>MyFitTracker</h1>
+    </HomeLayout>
   );
 };
 

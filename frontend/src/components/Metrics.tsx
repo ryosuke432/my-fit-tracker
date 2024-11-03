@@ -142,7 +142,8 @@ const Metrics = () => {
   const fetchWorkout = useCallback(async () => {
     try {
       const { data, status } = await axiosInstance.get<WorkoutInterface[]>(
-        '/v1/member/workout'
+        '/v1/member/workout',
+        { params: { date: dateDisplay } }
       );
       if (status !== 200) return;
       setWorkout(data);

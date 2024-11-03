@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
+import { Op } from 'sequelize'
 import sequelize from '../db.js';
 import Member from '../models/member.model.js';
 import Workout from '../models/workout.model.js';
@@ -189,6 +190,9 @@ export const viewAllWorkout = async (req, res) => {
 
       filter.attributes = attributes;
       filter.group = group;
+
+      if (date) filter.having = { date: { [Op.eq]: date } };
+      if (week) filter.having = { date_part: { [Op.eq]: week } };
     }
     const workouts = await Workout.findAll(filter);
 

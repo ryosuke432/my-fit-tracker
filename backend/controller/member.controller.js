@@ -190,9 +190,6 @@ export const viewAllWorkout = async (req, res) => {
 
       filter.attributes = attributes;
       filter.group = group;
-
-      if (date) filter.having = { date: { [Op.eq]: date } };
-      if (week) filter.having = { date_part: { [Op.eq]: week } };
     }
     const workouts = await Workout.findAll(filter);
 

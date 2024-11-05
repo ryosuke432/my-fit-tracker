@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Button from './ui/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './auth/AuthProvider';
 import axiosInstance from '../api/axiosInstance';
@@ -36,7 +35,7 @@ const Login = () => {
 
       if (data.accessToken) {
         auth?.setToken(data.accessToken);
-        navigate('/mypage', { replace: true });
+        navigate('/mypage/metrics', { replace: true });
       }
     } catch (err: any) {
       console.error(err.response?.data?.message);

@@ -14,7 +14,7 @@ const Header = () => {
   return (
     <div className='flex flex-row justify-between items-center w-screen p-3'>
       <div className='hidden md:block h-full ml-12'>
-        <Link to={'/mypage'}>
+        <Link to={'/mypage/metrics'}>
           <img
             alt='logo'
             src={logo}

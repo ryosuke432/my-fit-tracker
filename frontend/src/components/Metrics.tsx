@@ -48,13 +48,11 @@ const Metrics = () => {
   const handleAddWorkout: handleBtnActionProp = async () => {
     const { name, duration_min, distance_km } = workoutInput;
     try {
-      const { data } = await axiosInstance.post('/v1/member/workout', {
+      await axiosInstance.post('/v1/member/workout', {
         name,
         duration_min,
         distance_km,
       });
-
-      console.log(data.message);
 
       setWorkoutInput({
         name: '',
@@ -100,15 +98,13 @@ const Metrics = () => {
   const handleAddNutrition: handleBtnActionProp = async () => {
     const { name, calories, protein, fat, carbohydrates } = nutritionInput;
     try {
-      const { data } = await axiosInstance.post('/v1/member/nutrition', {
+      await axiosInstance.post('/v1/member/nutrition', {
         name,
         calories,
         protein,
         fat,
         carbohydrates,
       });
-
-      console.log(data.message);
 
       setNutritionInput({
         name: '',

@@ -12,6 +12,7 @@ import PrivateRoute from './components/auth/PrivateRoute';
 import Metrics from './components/Metrics';
 import Home from './components/Home';
 import Profile from './components/Profile';
+import WorkoutDetail from './components/WorkoutDetail';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path='mypage' element={<Mypage />}>
             <Route path='profile' element={<Profile />} />
             <Route path='metrics' element={<Metrics />} />
+            <Route path='metrics-detail' element={<WorkoutDetail />} />
           </Route>
         </Route>
       </Routes>

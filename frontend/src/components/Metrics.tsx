@@ -2,10 +2,26 @@ import React, { useCallback, useEffect, useState } from 'react';
 import axiosInstance from '../api/axiosInstance';
 import Button from './ui/Button';
 import Form from './ui/Form';
+import { Link } from 'react-router-dom';
 
 const Metrics = () => {
-  const [workout, setWorkout] = useState<WorkoutInterface[]>();
-  const [nutrition, setNutrition] = useState<NutritionInterface[]>();
+  const [workout, setWorkout] = useState<AggregatedWorkoutInterface[]>([
+    {
+      date: '',
+      total_calories: 0,
+      total_distance: 0,
+      total_duration: 0,
+    },
+  ]);
+  const [nutrition, setNutrition] = useState<AggregatedNutritionInterface[]>([
+    {
+      date: '',
+      total_calories: 0,
+      total_protein: 0,
+      total_fat: 0,
+      total_carbohydrates: 0,
+    },
+  ]);
   const [splashWorkout, setSplashWorkout] = useState<boolean>(false);
   const [splashNutrition, setSplashNutrition] = useState<boolean>(false);
   const [workoutInput, setWorkoutInput] = useState<WorkoutInterface>({
@@ -141,9 +157,9 @@ const Metrics = () => {
 
   const fetchWorkout = useCallback(async () => {
     try {
-      const { data, status } = await axiosInstance.get<WorkoutInterface[]>(
-        '/v1/member/workout'
-      );
+      const { data, status } = await axiosInstance.get<
+        AggregatedWorkoutInterface[]
+      >('/v1/member/workout?date=true');
       if (status !== 200) return;
       setWorkout(data);
     } catch (err) {
@@ -153,9 +169,9 @@ const Metrics = () => {
 
   const fetchNutrition = useCallback(async () => {
     try {
-      const { data, status } = await axiosInstance.get<NutritionInterface[]>(
-        '/v1/member/nutrition'
-      );
+      const { data, status } = await axiosInstance.get<
+        AggregatedNutritionInterface[]
+      >('/v1/member/nutrition?date=true');
       if (status !== 200) return;
       setNutrition(data);
     } catch (err) {
@@ -189,9 +205,7 @@ const Metrics = () => {
           }}
         />
         <h3>
-          {dateDisplay.toLocaleDateString('en-US', {
-            timeZone: 'America/Vancouver',
-          })}
+          {dateDisplay.toISOString().split('T')[0]}
         </h3>
         <Button label='>' action={() => changeDate(1)} />
       </div>
@@ -222,35 +236,52 @@ const Metrics = () => {
               </div>
             </div>
           )}
-          <div className='text-lg'>Workout</div>
+          <Link to={'/mypage/metrics-detail'}>
+            <div className='text-lg'>Workout</div>
+          </Link>
           {workout ? (
-            workout.map((data: WorkoutInterface) => {
-              return (
-                <div
-                  key={data.id}
-                  className='grow flex flex-col justify-evenly items-center w-5/6'
-                >
-                  <div className='border-2 border-slate-900 rounded-full w-24 h-24 m-auto'>
-                    <div className='relative top-1/4'>
-                      <p className='text-xl'>
-                        {data.calories ? data.calories : 'No data'}
-                      </p>
-                      <small>Cals</small>
+            workout
+              .filter(
+                (data: AggregatedWorkoutInterface) =>
+                  data.date === dateDisplay.toISOString().split('T')[0]
+              )
+              .map((data: AggregatedWorkoutInterface) => {
+                return (
+                  <div
+                    key={data.date}
+                    className='grow flex flex-col justify-evenly items-center w-5/6'
+                  >
+                    <div className='border-2 border-slate-900 rounded-full w-24 h-24 m-auto'>
+                      <div className='relative top-1/4'>
+                        <p className='text-xl'>
+                          {data.total_calories
+                            ? data.total_calories
+                            : 'No data'}
+                        </p>
+                        <small>Cals</small>
+                      </div>
+                    </div>
+                    <div className='flex flex-row justify-evenly items-center gap-x-3 w-full'>
+                      <div>
+                        <p>
+                          {data.total_distance
+                            ? data.total_distance
+                            : 'No data'}
+                        </p>
+                        <small>Distance</small>
+                      </div>
+                      <div>
+                        <p>
+                          {data.total_duration
+                            ? data.total_duration
+                            : 'No data'}
+                        </p>
+                        <small>Duration</small>
+                      </div>
                     </div>
                   </div>
-                  <div className='flex flex-row justify-evenly items-center gap-x-3 w-full'>
-                    <div>
-                      <p>{data.distance_km ? data.distance_km : 'No data'}</p>
-                      <small>Distance</small>
-                    </div>
-                    <div>
-                      <p>{data.duration_min ? data.duration_min : 'No data'}</p>
-                      <small>Duration</small>
-                    </div>
-                  </div>
-                </div>
-              );
-            })
+                );
+              })
           ) : (
             <div>No workout data</div>
           )}
@@ -258,39 +289,50 @@ const Metrics = () => {
         <div className='flex flex-col justify-between items-center py-3 w-full md:w-1/2 h-full shadow-lg rounded text-center'>
           <div className='text-lg'>Nutrition</div>
           {nutrition ? (
-            nutrition.map((data: NutritionInterface) => {
-              return (
-                <div
-                  key={data.id}
-                  className='grow flex flex-col justify-evenly items-center w-5/6'
-                >
-                  <div className='border-2 border-slate-900 rounded-full w-24 h-24 m-auto'>
-                    <div className='relative top-1/4'>
-                      <p className='text-xl'>
-                        {data.calories ? data.calories : 'No data'}
-                      </p>
-                      <small>Cals</small>
+            nutrition
+              .filter(
+                (data: AggregatedNutritionInterface) =>
+                  data.date === dateDisplay.toISOString().split('T')[0]
+              )
+              .map((data: AggregatedNutritionInterface) => {
+                return (
+                  <div
+                    key={data.date}
+                    className='grow flex flex-col justify-evenly items-center w-5/6'
+                  >
+                    <div className='border-2 border-slate-900 rounded-full w-24 h-24 m-auto'>
+                      <div className='relative top-1/4'>
+                        <p className='text-xl'>
+                          {data.total_calories
+                            ? data.total_calories
+                            : 'No data'}
+                        </p>
+                        <small>Cals</small>
+                      </div>
+                    </div>
+                    <div className='flex flex-row justify-evenly items-center gap-x-3 w-full'>
+                      <div>
+                        <p>
+                          {data.total_protein ? data.total_protein : 'No data'}
+                        </p>
+                        <small>Protein</small>
+                      </div>
+                      <div>
+                        <p>{data.total_fat ? data.total_fat : 'No data'}</p>
+                        <small>Fat</small>
+                      </div>
+                      <div>
+                        <p>
+                          {data.total_carbohydrates
+                            ? data.total_carbohydrates
+                            : 'No data'}
+                        </p>
+                        <small>Carbs</small>
+                      </div>
                     </div>
                   </div>
-                  <div className='flex flex-row justify-evenly items-center gap-x-3 w-full'>
-                    <div>
-                      <p>{data.protein ? data.protein : 'No data'}</p>
-                      <small>Protein</small>
-                    </div>
-                    <div>
-                      <p>{data.fat ? data.fat : 'No data'}</p>
-                      <small>Fat</small>
-                    </div>
-                    <div>
-                      <p>
-                        {data.carbohydrates ? data.carbohydrates : 'No data'}
-                      </p>
-                      <small>Carbs</small>
-                    </div>
-                  </div>
-                </div>
-              );
-            })
+                );
+              })
           ) : (
             <div>No nutrition data</div>
           )}

@@ -1,13 +1,87 @@
+### Memo
+[
+    {
+        "f_name": "Adam",
+        "l_name": "Smith",
+        "email": "adam.smith@gmail.com",
+        "mobile": "1111111111",
+        "password": "adam1111"
+    },
+    {
+        "f_name": "Ben",
+        "l_name": "Smith",
+        "email": "ben.smith@gmail.com",
+        "mobile": "2222222222",
+        "password": "ben22222"
+    },
+    {
+        "f_name": "Emma",
+        "l_name": "Johnson",
+        "email": "emma.johnson@gmail.com",
+        "mobile": "3333333333",
+        "password": "emmaj333"
+    },
+    {
+        "f_name": "Liam",
+        "l_name": "Brown",
+        "email": "liam.brown@gmail.com",
+        "mobile": "4444444444",
+        "password": "liam4444"
+    },
+    {
+        "f_name": "Olivia",
+        "l_name": "Jones",
+        "email": "olivia.jones@gmail.com",
+        "mobile": "5555555555",
+        "password": "olivia555"
+    },
+    {
+        "f_name": "Noah",
+        "l_name": "Garcia",
+        "email": "noah.garcia@gmail.com",
+        "mobile": "6666666666",
+        "password": "noah6666"
+    },
+    {
+        "f_name": "Ava",
+        "l_name": "Martinez",
+        "email": "ava.martinez@gmail.com",
+        "mobile": "7777777777",
+        "password": "avam7777"
+    },
+    {
+        "f_name": "James",
+        "l_name": "Rodriguez",
+        "email": "james.rodriguez@gmail.com",
+        "mobile": "8888888888",
+        "password": "james888"
+    },
+    {
+        "f_name": "Sophia",
+        "l_name": "Hernandez",
+        "email": "sophia.hernandez@gmail.com",
+        "mobile": "9999999999",
+        "password": "sophia999"
+    },
+    {
+        "f_name": "Lucas",
+        "l_name": "Wilson",
+        "email": "lucas.wilson@gmail.com",
+        "mobile": "1010101010",
+        "password": "lucas1010"
+    },
+]
+
 ### add a new member
 POST http://localhost:5000/api/v1/auth/signup
 content-type: application/json
 
 {
-    "f_name": "Ben",
-    "l_name": "Smith",
-    "email": "ben.smith2@gmail.com",
-    "mobile": "2222222222",
-    "password": "password222"
+    "f_name": "Lucas",
+    "l_name": "Wilson",
+    "email": "lucas.wilson@gmail.com",
+    "mobile": "1010101010",
+    "password": "lucas1010"
 }
 
 ### login
@@ -21,12 +95,16 @@ content-type: application/json
 
 ### enter profile page
 GET http://localhost:5000/api/v1/member/profile
+
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZGFtLnNtaXRoQGdtYWlsLmNvbSIsImlhdCI6MTczMDY4MDY4NSwiZXhwIjoxNzMwNjg0Mjg1fQ.ennY4uodoJh9sGSyUrIrceXfg6SiswWxM5e3a3rVC2s
+
 
 ### edit profile info
 PUT http://localhost:5000/api/v1/member/profile
 Content-Type: application/json
+
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZGFtLnNtaXRoQGdtYWlsLmNvbSIsImlhdCI6MTczMDY4MDY4NSwiZXhwIjoxNzMwNjg0Mjg1fQ.ennY4uodoJh9sGSyUrIrceXfg6SiswWxM5e3a3rVC2s
+
 
 {
     "body_weight": 70.5
@@ -36,10 +114,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiO
 DELETE http://localhost:5000/api/v1/member/profile
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZGFtLnNtaXRoQGdtYWlsLmNvbSIsImlhdCI6MTczMDY4MDY4NSwiZXhwIjoxNzMwNjg0Mjg1fQ.ennY4uodoJh9sGSyUrIrceXfg6SiswWxM5e3a3rVC2s
 
+
+
 ### add workout
 POST http://localhost:5000/api/v1/member/workout
 Content-Type: application/json
+
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZGFtLnNtaXRoQGdtYWlsLmNvbSIsImlhdCI6MTczMDY4MDY4NSwiZXhwIjoxNzMwNjg0Mjg1fQ.ennY4uodoJh9sGSyUrIrceXfg6SiswWxM5e3a3rVC2s
+
 
 {
     "name": "Running",
@@ -55,10 +137,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiO
 GET http://localhost:5000/api/v1/member/workout/7
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZGFtLnNtaXRoQGdtYWlsLmNvbSIsImlhdCI6MTczMDY4MDY4NSwiZXhwIjoxNzMwNjg0Mjg1fQ.ennY4uodoJh9sGSyUrIrceXfg6SiswWxM5e3a3rVC2s
 
+
 ### edit workout info
 PUT http://localhost:5000/api/v1/member/workout/20
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZGFtLnNtaXRoQGdtYWlsLmNvbSIsImlhdCI6MTczMDY4MDY4NSwiZXhwIjoxNzMwNjg0Mjg1fQ.ennY4uodoJh9sGSyUrIrceXfg6SiswWxM5e3a3rVC2s
+
 
 {
     "duration_min": 100
@@ -67,6 +151,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiO
 ### delete specific workout
 DELETE http://localhost:5000/api/v1/member/workout/6
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZGFtLnNtaXRoQGdtYWlsLmNvbSIsImlhdCI6MTczMDY4MDY4NSwiZXhwIjoxNzMwNjg0Mjg1fQ.ennY4uodoJh9sGSyUrIrceXfg6SiswWxM5e3a3rVC2s
+
 
 
 ### add nutrition of a specific member
@@ -131,3 +216,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiO
 ### delete a specific goal of a specific member
 DELETE http://localhost:5000/api/v1/member/goal/4
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZGFtLnNtaXRoQGdtYWlsLmNvbSIsImlhdCI6MTczMDY4MDY4NSwiZXhwIjoxNzMwNjg0Mjg1fQ.ennY4uodoJh9sGSyUrIrceXfg6SiswWxM5e3a3rVC2s
+

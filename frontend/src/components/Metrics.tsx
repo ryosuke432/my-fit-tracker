@@ -160,6 +160,7 @@ const Metrics = () => {
       const { data, status } = await axiosInstance.get<
         AggregatedWorkoutInterface[]
       >('/v1/member/workout?date=true');
+
       if (status !== 200) return;
       setWorkout(data);
     } catch (err) {

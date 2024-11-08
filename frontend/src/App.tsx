@@ -13,6 +13,7 @@ import Metrics from './components/Metrics';
 import Home from './components/Home';
 import Profile from './components/Profile';
 import WorkoutDetail from './components/WorkoutDetail';
+import Goal from './components/Goal';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path='/' element={<PrivateRoute />}>
           <Route path='mypage' element={<Mypage />}>
             <Route path='profile' element={<Profile />} />
+            <Route path='goal' element={<Goal />} />
             <Route path='metrics' element={<Metrics />} />
             <Route path='metrics-detail' element={<WorkoutDetail />} />
           </Route>

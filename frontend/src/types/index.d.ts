@@ -71,7 +71,7 @@ interface handleBtnActionProp {
 }
 
 interface handleChangeProp {
-  (e: React.ChangeEvent<HTMLInputElement>): void;
+  (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>): void;
 }
 
 // UI components

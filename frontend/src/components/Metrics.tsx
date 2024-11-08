@@ -201,18 +201,24 @@ const Metrics = () => {
             changeDate(-1);
           }}
         />
-        <h3>
-          {dateDisplay.toISOString().split('T')[0]}
-        </h3>
+        <h3>{dateDisplay.toISOString().split('T')[0]}</h3>
         <Button label='>' action={() => changeDate(1)} />
       </div>
 
       <div className='flex flex-col md:flex-row justify-evenly items-center h-5/6 my-3 mx-2 px-5 gap-x-5'>
-        <div className='flex flex-col justify-between items-center py-3 w-full md:w-1/2 h-full shadow-lg rounded text-center'>
+        <div className='flex flex-col justify-between items-center py-3 w-full md:w-1/2 h-full shadow-lg rounded-2xl text-center'>
           {splashWorkout && (
             <div className='absolute bg-slate-200 w-3/5 h-1/2 z-10'>
               <div className='px-10 py-3'>
-                <p>Add New Workout</p>
+                <p>
+                  Add New Workout
+                  <span
+                    className='px-3 py-1 text-sm float-right hover:text-white hover:bg-slate-700 border rounded-2xl hover:cursor-pointer'
+                    onClick={() => setSplashWorkout(false)}
+                  >
+                    close
+                  </span>
+                </p>
                 <Form
                   inputDataset={workoutInputDataset}
                   handleChange={handleWorkoutChange}
@@ -224,7 +230,15 @@ const Metrics = () => {
           {splashNutrition && (
             <div className='absolute bg-slate-200 w-3/5 h-1/2 z-10'>
               <div className='px-10 py-3'>
-                <p>Add New Nutrition</p>
+                <p>
+                  Add New Nutrition
+                  <span
+                    className='px-3 py-1 text-sm float-right hover:text-white hover:bg-slate-700 border rounded-2xl hover:cursor-pointer'
+                    onClick={() => setSplashNutrition(false)}
+                  >
+                    close
+                  </span>
+                </p>
                 <Form
                   inputDataset={nutritionInputDataset}
                   handleChange={handleNutritionChange}
@@ -283,7 +297,7 @@ const Metrics = () => {
             <div>No workout data</div>
           )}
         </div>
-        <div className='flex flex-col justify-between items-center py-3 w-full md:w-1/2 h-full shadow-lg rounded text-center'>
+        <div className='flex flex-col justify-between items-center py-3 w-full md:w-1/2 h-full shadow-lg rounded-2xl text-center'>
           <div className='text-lg'>Nutrition</div>
           {nutrition ? (
             nutrition

@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useProfile } from './Mypage';
 import axiosInstance from '../api/axiosInstance';
 import Button from './ui/Button';
 import Form from './ui/Form';
-import { fetchProfile } from './Mypage';
 
 const Profile = () => {
-  const [profile, setProfile] = useState<MemberInterface>();
+  const [profile, setProfile] = useProfile();
   const [splash, setSplash] = useState<boolean>(false);
 
   const fetchProfile = useCallback(async () => {
@@ -16,7 +16,7 @@ const Profile = () => {
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  }, [setProfile]);
 
   useEffect(() => {
     fetchProfile();

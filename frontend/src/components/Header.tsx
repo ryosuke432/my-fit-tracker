@@ -3,7 +3,7 @@ import { useAuth } from './auth/AuthProvider';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../logo.jpg';
 
-const Header = () => {
+const Header = ({ profile }: { profile: MemberInterface }) => {
   const auth = useAuth();
   const navigate = useNavigate();
 
@@ -14,7 +14,7 @@ const Header = () => {
   return (
     <div className='flex flex-row justify-between items-center w-screen p-3'>
       <div className='hidden md:block h-full ml-12'>
-        <Link to={'/mypage/metrics'}>
+        <Link to={'/mypage/goal'}>
           <img
             alt='logo'
             src={logo}
@@ -27,14 +27,14 @@ const Header = () => {
         <div>dark</div>
         <div className='hidden md:block'>
           <Link to={'/mypage/profile'}>
-            <div className='w-36 h-8 border rounded'>
-              <div>(Member Name)</div>
+            <div className='w-36 h-8 border-2 border-blue-700 rounded text-center'>
+              {profile.full_name}
             </div>
           </Link>
         </div>
         <button
           type='button'
-          className='w-8 h-8 border rounded'
+          className='w-8 h-8 border-2 border-blue-700 rounded'
           onClick={handleLogout}
         >
           <span>

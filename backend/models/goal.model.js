@@ -5,8 +5,8 @@ import Member from './member.model.js';
 const Goal = sequelize.define('Goal', {
   goal_type: {
     type: DataTypes.ENUM(
-      'Number of workout days',
-      'Calories Burned',
+      'Workout days',
+      'Calories burned',
       'Workout duration',
       'Workout distance'
     ),

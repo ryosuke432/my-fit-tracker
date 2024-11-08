@@ -52,6 +52,7 @@ authRouter.post('/login', async (req, res) => {
     const payload = {
       id: member.id,
       email: member.email,
+      is_premium: member.is_premium,
     };
     const jwtSecretKey = process.env.JWT_SECRET_KEY;
 

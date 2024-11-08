@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
-import { Op } from 'sequelize'
+import { Op } from 'sequelize';
 import sequelize from '../db.js';
 import Member from '../models/member.model.js';
 import Workout from '../models/workout.model.js';
@@ -420,13 +420,17 @@ export const addGoal = async (req, res) => {
   try {
     const mid = req.payload.id;
     const { goal_type, weekly_goal, total_duration } = req.body;
-    const goal = await Goal.create({
-      goal_type,
-      weekly_goal,
-      total_duration,
-      MemberId: mid,
+    const [goal, created] = await Goal.findOrCreate({
+      where: {
+        goal_type,
+        MemberId: mid,
+      },
+      defaults: {
+        weekly_goal,
+        total_duration,
+      },
     });
-    res.status(201).json({ message: 'Successfully registerd', goal });
+    res.status(201).json({ message: 'Successfully registerd', goal, created });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err });

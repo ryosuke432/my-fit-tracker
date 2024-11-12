@@ -56,8 +56,9 @@ authRouter.post('/login', async (req, res) => {
     };
     const jwtSecretKey = process.env.JWT_SECRET_KEY;
 
+    // TODO: add expiration later
     const accessToken = jwt.sign(payload, jwtSecretKey, {
-      expiresIn: '1h',
+      // expiresIn: '1h',
     });
 
     res.status(200).json({ message: 'Successfully logged in', accessToken });

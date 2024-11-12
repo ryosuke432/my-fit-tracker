@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import axiosInstance from '../api/axiosInstance';
 import Button from './ui/Button';
+import { CirclePlus, Pencil, Trash2, X } from 'lucide-react';
 
 const Goal = () => {
   const initialVal: GoalInterface = {
@@ -11,14 +12,13 @@ const Goal = () => {
 
   //   for display data
   const [goalOutput, setGoalOutput] = useState<GoalInterface[]>([]);
-  const fetchGoal = useCallback(async () => {
+  const fetchGoal: () => Promise<void> = useCallback(async () => {
     try {
       const { data, status } = await axiosInstance.get<GoalInterface[]>(
         '/v1/member/goal'
       );
 
-      if (status !== 200) return;
-      setGoalOutput(data);
+      if (status === 200) setGoalOutput(data);
     } catch (err: any) {
       console.error(err);
     }
@@ -61,19 +61,19 @@ const Goal = () => {
 
   return (
     <>
-      <div className='hidden md:flex flex-row justify-start items-center m-2 px-5 gap-x-3'>
+      {/* <div className='hidden md:flex flex-row justify-start items-center m-2 px-5 gap-x-3'>
         <Button label='Set Goal' action={() => setSplash(true)} />
-      </div>
+      </div> */}
 
       <div className='flex flex-col md:flex-row justify-evenly items-center h-5/6 my-2 mx-2 px-5'>
-        <div className='flex flex-col justify-start items-center gap-y-5 py-3 w-full md:w-5/6 h-full bg-slate-200 shadow-lg rounded-2xl text-center'>
-          {splash && (
-            <div className='absolute bg-slate-200 w-3/5 h-1/2 z-10'>
+        <div className='flex flex-col justify-start items-center gap-y-5 py-3 w-full md:w-5/6 h-full rounded-2xl text-center'>
+          {/*   {splash && (
+            <div className='absolute bg-slate-100 w-3/5 h-1/2 z-10'>
               <div className='px-10 py-3'>
                 <p className='text-lg text-center'>
                   Set a Goal
                   <span
-                    className='px-3 py-1 text-sm float-right hover:text-white hover:bg-slate-700 border rounded-2xl hover:cursor-pointer'
+                    className='px-3 py-1 text-sm float-right hover:text-white hover:bg-slate-700 rounded-2xl hover:cursor-pointer'
                     onClick={() => setSplash(false)}
                   >
                     close
@@ -147,10 +147,10 @@ const Goal = () => {
                 </form>
               </div>
             </div>
-          )}
+          )} */}
 
           <div className='text-lg'>Goals</div>
-          <div className='flex flex-col justify-evenly items-center gap-y-2 py-2 w-2/3 h-full'>
+          <div className='flex flex-col md:flex-row md:flex-wrap justify-evenly items-center gap-2 p-2 w-full md:w-5/6 h-full'>
             {goalOutput
               ?.filter(
                 (data: GoalInterface) => data.goal_type === 'Workout days'
@@ -159,7 +159,7 @@ const Goal = () => {
                 return (
                   <div
                     key={data.id}
-                    className='grow flex flex-col justify-evenly items-center w-3/4 bg-white rounded-2xl'
+                    className='flex flex-col justify-evenly items-center w-full md:w-5/12 h-1/3 bg-emerald-100 rounded-2xl'
                   >
                     <p className='text-lg'>Workout Days</p>
                     <div className='flex flex-row justify-center items-center '>
@@ -168,64 +168,21 @@ const Goal = () => {
                         {data.weekly_goal > 1 ? 'days' : 'day'}
                         /week{' '}
                       </span>
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        width='20'
-                        height='20'
-                        viewBox='0 0 24 24'
-                        fill='none'
-                        stroke='currentColor'
-                        stroke-width='2'
-                        stroke-linecap='round'
-                        stroke-linejoin='round'
-                        className='lucide lucide-x'
-                      >
-                        <path d='M18 6 6 18' />
-                        <path d='m6 6 12 12' />
-                      </svg>
+                      <X size={16} />
                       <span>
                         {data.total_duration}{' '}
                         {data.total_duration > 1 ? 'weeks' : 'week'}
                       </span>
                     </div>
                     <div className='flex flex-row justify-evenly items-center gap-x-3 m-1 p-1'>
-                      <div className='rounded-full hover:cursor-pointer'>
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          width='16'
-                          height='16'
-                          viewBox='0 0 24 24'
-                          fill='none'
-                          stroke='currentColor'
-                          stroke-width='2'
-                          stroke-linecap='round'
-                          stroke-linejoin='round'
-                          className='lucide lucide-pencil'
-                        >
-                          <path d='M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z' />
-                          <path d='m15 5 4 4' />
-                        </svg>
-                      </div>
-                      <div className='rounded-full hover:cursor-pointer'>
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          width='16'
-                          height='16'
-                          viewBox='0 0 24 24'
-                          fill='none'
-                          stroke='#b40000'
-                          stroke-width='2'
-                          stroke-linecap='round'
-                          stroke-linejoin='round'
-                          className='lucide lucide-trash-2 rounded-full hover:shadow-md hover:cursor-pointer'
-                        >
-                          <path d='M3 6h18' />
-                          <path d='M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6' />
-                          <path d='M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2' />
-                          <line x1='10' x2='10' y1='11' y2='17' />
-                          <line x1='14' x2='14' y1='11' y2='17' />
-                        </svg>
-                      </div>
+                      <CirclePlus size={16} className='hover:cursor-pointer' />
+                      <Pencil size={16} className='hover:cursor-pointer' />
+                      <Trash2
+                        size={16}
+                        color='red'
+                        className='hover:cursor-pointer'
+                        onClick={() => console.log('delete')}
+                      />
                     </div>
                   </div>
                 );
@@ -239,69 +196,24 @@ const Goal = () => {
                 return (
                   <div
                     key={data.id}
-                    className='grow flex flex-col justify-evenly items-center w-3/4 bg-white rounded-2xl'
+                    className='flex flex-col justify-evenly items-center w-full md:w-5/12 h-1/3 bg-emerald-100 rounded-2xl'
                   >
                     <p className='text-lg'>Calories Burned</p>
                     <div className='flex flex-row justify-center items-center '>
                       <span>{data.weekly_goal} cals/week </span>
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        width='20'
-                        height='20'
-                        viewBox='0 0 24 24'
-                        fill='none'
-                        stroke='currentColor'
-                        stroke-width='2'
-                        stroke-linecap='round'
-                        stroke-linejoin='round'
-                        className='lucide lucide-x'
-                      >
-                        <path d='M18 6 6 18' />
-                        <path d='m6 6 12 12' />
-                      </svg>
+                      <X size={16} />
                       <span>
                         {data.total_duration}{' '}
                         {data.total_duration > 1 ? 'weeks' : 'week'}
                       </span>
                     </div>
                     <div className='flex flex-row justify-evenly items-center gap-x-3 m-1 p-1'>
-                      <div className='rounded-full hover:cursor-pointer'>
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          width='16'
-                          height='16'
-                          viewBox='0 0 24 24'
-                          fill='none'
-                          stroke='currentColor'
-                          stroke-width='2'
-                          stroke-linecap='round'
-                          stroke-linejoin='round'
-                          className='lucide lucide-pencil'
-                        >
-                          <path d='M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z' />
-                          <path d='m15 5 4 4' />
-                        </svg>
-                      </div>
-                      <div className='rounded-full hover:cursor-pointer'>
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          width='16'
-                          height='16'
-                          viewBox='0 0 24 24'
-                          fill='none'
-                          stroke='#b40000'
-                          stroke-width='2'
-                          stroke-linecap='round'
-                          stroke-linejoin='round'
-                          className='lucide lucide-trash-2 rounded-full hover:shadow-md hover:cursor-pointer'
-                        >
-                          <path d='M3 6h18' />
-                          <path d='M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6' />
-                          <path d='M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2' />
-                          <line x1='10' x2='10' y1='11' y2='17' />
-                          <line x1='14' x2='14' y1='11' y2='17' />
-                        </svg>
-                      </div>
+                      <Pencil size={16} className='hover:cursor-pointer' />
+                      <Trash2
+                        size={16}
+                        color='red'
+                        className='hover:cursor-pointer'
+                      />
                     </div>
                   </div>
                 );
@@ -315,69 +227,24 @@ const Goal = () => {
                 return (
                   <div
                     key={data.id}
-                    className='grow flex flex-col justify-evenly items-center w-3/4 bg-white rounded-2xl'
+                    className='flex flex-col justify-evenly items-center w-full md:w-5/12 h-1/3 bg-emerald-100 rounded-2xl'
                   >
                     <p className='text-lg'>Workout Duration</p>
                     <div className='flex flex-row justify-center items-center '>
                       <span>{data.weekly_goal} min/week </span>
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        width='20'
-                        height='20'
-                        viewBox='0 0 24 24'
-                        fill='none'
-                        stroke='currentColor'
-                        stroke-width='2'
-                        stroke-linecap='round'
-                        stroke-linejoin='round'
-                        className='lucide lucide-x'
-                      >
-                        <path d='M18 6 6 18' />
-                        <path d='m6 6 12 12' />
-                      </svg>
+                      <X size={16} />
                       <span>
                         {data.total_duration}{' '}
                         {data.total_duration > 1 ? 'weeks' : 'week'}
                       </span>
                     </div>
                     <div className='flex flex-row justify-evenly items-center gap-x-3 m-1 p-1'>
-                      <div className='rounded-full hover:cursor-pointer'>
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          width='16'
-                          height='16'
-                          viewBox='0 0 24 24'
-                          fill='none'
-                          stroke='currentColor'
-                          stroke-width='2'
-                          stroke-linecap='round'
-                          stroke-linejoin='round'
-                          className='lucide lucide-pencil'
-                        >
-                          <path d='M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z' />
-                          <path d='m15 5 4 4' />
-                        </svg>
-                      </div>
-                      <div className='rounded-full hover:cursor-pointer'>
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          width='16'
-                          height='16'
-                          viewBox='0 0 24 24'
-                          fill='none'
-                          stroke='#b40000'
-                          stroke-width='2'
-                          stroke-linecap='round'
-                          stroke-linejoin='round'
-                          className='lucide lucide-trash-2 rounded-full hover:shadow-md hover:cursor-pointer'
-                        >
-                          <path d='M3 6h18' />
-                          <path d='M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6' />
-                          <path d='M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2' />
-                          <line x1='10' x2='10' y1='11' y2='17' />
-                          <line x1='14' x2='14' y1='11' y2='17' />
-                        </svg>
-                      </div>
+                      <Pencil size={16} className='hover:cursor-pointer' />
+                      <Trash2
+                        size={16}
+                        color='red'
+                        className='hover:cursor-pointer'
+                      />
                     </div>
                   </div>
                 );
@@ -391,69 +258,24 @@ const Goal = () => {
                 return (
                   <div
                     key={data.id}
-                    className='grow flex flex-col justify-evenly items-center w-3/4 bg-white rounded-2xl'
+                    className='flex flex-col justify-evenly items-center w-full md:w-5/12 h-1/3 bg-emerald-100 rounded-2xl'
                   >
                     <p className='text-lg'>Workout Distance</p>
                     <div className='flex flex-row justify-center items-center '>
                       <span>{data.weekly_goal} km/week </span>
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        width='20'
-                        height='20'
-                        viewBox='0 0 24 24'
-                        fill='none'
-                        stroke='currentColor'
-                        stroke-width='2'
-                        stroke-linecap='round'
-                        stroke-linejoin='round'
-                        className='lucide lucide-x'
-                      >
-                        <path d='M18 6 6 18' />
-                        <path d='m6 6 12 12' />
-                      </svg>
+                      <X size={16} />
                       <span>
                         {data.total_duration}{' '}
                         {data.total_duration > 1 ? 'weeks' : 'week'}
                       </span>
                     </div>
                     <div className='flex flex-row justify-evenly items-center gap-x-3 m-1 p-1'>
-                      <div className='rounded-full hover:cursor-pointer'>
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          width='16'
-                          height='16'
-                          viewBox='0 0 24 24'
-                          fill='none'
-                          stroke='currentColor'
-                          stroke-width='2'
-                          stroke-linecap='round'
-                          stroke-linejoin='round'
-                          className='lucide lucide-pencil'
-                        >
-                          <path d='M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z' />
-                          <path d='m15 5 4 4' />
-                        </svg>
-                      </div>
-                      <div className='rounded-full hover:cursor-pointer'>
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          width='16'
-                          height='16'
-                          viewBox='0 0 24 24'
-                          fill='none'
-                          stroke='#b40000'
-                          stroke-width='2'
-                          stroke-linecap='round'
-                          stroke-linejoin='round'
-                          className='lucide lucide-trash-2 rounded-full hover:shadow-md hover:cursor-pointer'
-                        >
-                          <path d='M3 6h18' />
-                          <path d='M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6' />
-                          <path d='M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2' />
-                          <line x1='10' x2='10' y1='11' y2='17' />
-                          <line x1='14' x2='14' y1='11' y2='17' />
-                        </svg>
-                      </div>
+                      <Pencil size={16} className='hover:cursor-pointer' />
+                      <Trash2
+                        size={16}
+                        color='red'
+                        className='hover:cursor-pointer'
+                      />
                     </div>
                   </div>
                 );

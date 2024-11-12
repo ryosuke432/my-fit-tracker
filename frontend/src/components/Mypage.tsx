@@ -4,6 +4,7 @@ import { Outlet, useOutletContext } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 import Sidebar from './Sidebar';
+import MobileBottomNav from './MobileBottomNav';
 
 const Mypage = () => {
   const [profile, setProfile] = useState<MemberInterface>({
@@ -31,15 +32,16 @@ const Mypage = () => {
   }, [fetchProfile]);
 
   return (
-    <div className='flex flex-col justify-between items-center gap-y-2 w-screen h-screen'>
+    <div className='flex flex-col justify-between items-center w-screen md:h-screen'>
       <Header profile={profile} />
-      <div className='grow flex flex-row justify-between items-center m-2 p-3 gap-x-5 w-full'>
+      <div className='flex flex-row justify-between items-center p-3 gap-x-5 w-11/12 h-3/4'>
         <Sidebar />
-        <main className='grow h-full border-2 border-blue-700 rounded'>
+        <main className='grow h-full rounded'>
           <Outlet context={[profile, setProfile]} />
         </main>
       </div>
       <Footer />
+      <MobileBottomNav />
     </div>
   );
 };
@@ -47,5 +49,7 @@ const Mypage = () => {
 export default Mypage;
 
 export const useProfile = () => {
-  return useOutletContext<[MemberInterface, React.Dispatch<React.SetStateAction<MemberInterface>>]>();
+  return useOutletContext<
+    [MemberInterface, React.Dispatch<React.SetStateAction<MemberInterface>>]
+  >();
 };

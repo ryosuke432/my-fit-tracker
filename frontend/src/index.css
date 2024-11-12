@@ -4,5 +4,5 @@
 
 .active {
   font-weight: bold;
-  text-decoration: underline;
+  background-color: rgb(209 250 229);
 }

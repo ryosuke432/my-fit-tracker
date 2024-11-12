@@ -11,8 +11,7 @@ const Profile = () => {
   const fetchProfile = useCallback(async () => {
     try {
       const { data, status } = await axiosInstance.get('/v1/member/profile');
-      if (status !== 200) return;
-      setProfile(data.member);
+      if (status === 200) setProfile(data.member);
     } catch (err) {
       console.error(err);
     }

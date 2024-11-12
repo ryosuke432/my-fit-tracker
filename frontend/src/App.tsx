@@ -12,26 +12,32 @@ import PrivateRoute from './components/auth/PrivateRoute';
 import Metrics from './components/Metrics';
 import Home from './components/Home';
 import Profile from './components/Profile';
-import WorkoutDetail from './components/WorkoutDetail';
 import Goal from './components/Goal';
+import Lessons from './components/Lessons';
+import PremiumRoute from './components/auth/PremiumRoute';
 
 function App() {
   return (
-    <AuthProvider>
-      <Routes>
-        <Route index element={<Home />} />
-        <Route path='login' element={<Login />} />
-        <Route path='signup' element={<Signup />} />
-        <Route path='/' element={<PrivateRoute />}>
-          <Route path='mypage' element={<Mypage />}>
-            <Route path='profile' element={<Profile />} />
-            <Route path='goal' element={<Goal />} />
-            <Route path='metrics' element={<Metrics />} />
-            <Route path='metrics-detail' element={<WorkoutDetail />} />
+    <div className='text-black dark:text-white bg-white dark:bg-slate-800 text-center'>
+      <AuthProvider>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path='login' element={<Login />} />
+          <Route path='signup' element={<Signup />} />
+          <Route path='/' element={<PrivateRoute />}>
+            <Route element={<Mypage />}>
+              <Route path='profile' element={<Profile />} />
+              <Route path='goal' element={<Goal />} />
+              <Route path='metrics' element={<Metrics />} />
+
+              <Route path='premium' element={<PremiumRoute />}>
+                <Route path='lessons' element={<Lessons />} />
+              </Route>
+            </Route>
           </Route>
-        </Route>
-      </Routes>
-    </AuthProvider>
+        </Routes>
+      </AuthProvider>
+    </div>
   );
 }
 

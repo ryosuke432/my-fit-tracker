@@ -1,6 +1,5 @@
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
-import { Op } from 'sequelize';
 import sequelize from '../db.js';
 import Member from '../models/member.model.js';
 import Workout from '../models/workout.model.js';

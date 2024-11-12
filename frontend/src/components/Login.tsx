@@ -35,7 +35,7 @@ const Login = () => {
 
       if (data.accessToken) {
         auth?.setToken(data.accessToken);
-        navigate('/mypage/goal', { replace: true });
+        navigate('/goal', { replace: true });
       }
     } catch (err: any) {
       console.error(err.response?.data?.message);

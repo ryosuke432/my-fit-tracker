@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import Button from './ui/Button';
 import Workout from './Workout';
 import Nutrition from './Nutrition';
 

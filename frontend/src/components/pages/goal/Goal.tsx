@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import axiosInstance from '../api/axiosInstance';
-import Button from './ui/Button';
+import axiosInstance from '../../../api/axiosInstance';
 import { CirclePlus, Pencil, Trash2, X } from 'lucide-react';
 import GoalForm from './GoalForm';
 

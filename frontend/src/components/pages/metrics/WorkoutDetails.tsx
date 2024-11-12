@@ -1,6 +1,6 @@
 import React, { SetStateAction } from 'react';
 import { Pencil, Trash2, X } from 'lucide-react';
-import axiosInstance from '../api/axiosInstance';
+import axiosInstance from '../../../api/axiosInstance';
 
 const WorkoutDetails = ({
   workout,

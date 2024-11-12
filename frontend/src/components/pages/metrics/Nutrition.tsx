@@ -1,5 +1,5 @@
 import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
-import axiosInstance from '../api/axiosInstance';
+import axiosInstance from '../../../api/axiosInstance';
 import NutritionSummary from './NutritionSummary';
 import NutritionDetails from './NutritionDetails';
 import NutritionForm from './NutritionForm';

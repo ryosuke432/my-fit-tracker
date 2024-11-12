@@ -4,15 +4,15 @@ import {
   Route,
   // useRouteError,
 } from 'react-router-dom';
-import Login from './components/Login';
-import Signup from './components/Signup';
+import Login from './components/pages/home/Login';
+import Signup from './components/pages/home/Signup';
 import Mypage from './components/Mypage';
 import AuthProvider from './components/auth/AuthProvider';
 import PrivateRoute from './components/auth/PrivateRoute';
-import Metrics from './components/Metrics';
-import Home from './components/Home';
+import Metrics from './components/pages/metrics/Metrics';
+import Home from './components/pages/home/Home';
 import Profile from './components/Profile';
-import Goal from './components/Goal';
+import Goal from './components/pages/goal/Goal';
 import Lessons from './components/Lessons';
 import PremiumRoute from './components/auth/PremiumRoute';
 

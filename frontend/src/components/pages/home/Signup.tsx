@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Button from './ui/Button';
-import axiosInstance from '../api/axiosInstance';
+import axiosInstance from '../../../api/axiosInstance';
 import HomeLayout from './HomeLayout';
-import Form from './ui/Form';
+import Form from '../../ui/Form';
 
 const Signup = () => {
   const navigate = useNavigate();

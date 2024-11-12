@@ -1,5 +1,5 @@
 import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
-import axiosInstance from '../api/axiosInstance';
+import axiosInstance from '../../../api/axiosInstance';
 import WorkoutSummary from './WorkoutSummary';
 import WorkoutDetails from './WorkoutDetails';
 import WorkoutForm from './WorkoutForm';

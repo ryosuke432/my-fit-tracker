@@ -1,6 +1,6 @@
 import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
-import axiosInstance from '../api/axiosInstance';
-import Button from './ui/Button';
+import axiosInstance from '../../../api/axiosInstance';
+import Button from '../../ui/Button';
 import { X } from 'lucide-react';
 
 const GoalForm = ({

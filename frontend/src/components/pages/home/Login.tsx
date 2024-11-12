@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from './auth/AuthProvider';
-import axiosInstance from '../api/axiosInstance';
+import { useAuth } from '../../auth/AuthProvider';
+import axiosInstance from '../../../api/axiosInstance';
 import HomeLayout from './HomeLayout';
-import Form from './ui/Form';
+import Form from '../../ui/Form';
 
 const Login = () => {
   const auth = useAuth();

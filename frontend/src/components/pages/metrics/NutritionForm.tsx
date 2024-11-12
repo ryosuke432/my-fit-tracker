@@ -1,7 +1,7 @@
 import React, { SetStateAction, useState } from 'react';
 import { X } from 'lucide-react';
-import axiosInstance from '../api/axiosInstance';
-import Button from './ui/Button';
+import axiosInstance from '../../../api/axiosInstance';
+import Button from '../../ui/Button';
 
 const NutritionForm = ({
   fetchNutrition,

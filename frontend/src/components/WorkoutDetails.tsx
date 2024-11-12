@@ -1,13 +1,32 @@
 import React, { SetStateAction } from 'react';
 import { Pencil, Trash2, X } from 'lucide-react';
+import axiosInstance from '../api/axiosInstance';
 
 const WorkoutDetails = ({
   workout,
+  fetchWorkout,
+  fetchDailyWorkout,
+  fetchWeeklyWorkout,
   setFlipWorkout,
 }: {
   workout: WorkoutInterface[];
+  fetchWorkout: () => Promise<void>;
+  fetchDailyWorkout: () => Promise<void>;
+  fetchWeeklyWorkout: () => Promise<void>;
   setFlipWorkout: React.Dispatch<SetStateAction<number>>;
 }) => {
+  const handleDelete = async (id: string) => {
+    try {
+      const { status } = await axiosInstance.delete(`v1/member/workout/${id}`);
+      if (status === 200) console.log('Successfully deleted!');
+    } catch (err) {
+      console.error(err);
+    } finally {
+      fetchWorkout();
+      fetchDailyWorkout();
+      fetchWeeklyWorkout();
+    }
+  };
   return (
     <>
       <div className='flex flex-row justify-around items-center gap-x-3'>
@@ -36,7 +55,10 @@ const WorkoutDetails = ({
                     </button>
                   </td>
                   <td>
-                    <button type='button' onClick={() => console.log('delete')}>
+                    <button
+                      type='button'
+                      onClick={() => handleDelete(data.id?.toString() ?? '')}
+                    >
                       <Trash2
                         size={16}
                         color='red'

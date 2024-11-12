@@ -28,7 +28,7 @@ const Header = ({ profile }: { profile: MemberInterface }) => {
           className='w-8 h-8 p-2 rounded-full fill-white hover:cursor-pointer hover:shadow-md dark:hover:shadow-slate-100 dark:fill-yellow-100 dark:bg-slate-400 '
         />
         <Link
-          to={'/mypage/profile'}
+          to={'/profile'}
           className='w-8 h-8 bg-slate-100 rounded-full hover:shadow-md'
         >
           {profile.f_name[0]}

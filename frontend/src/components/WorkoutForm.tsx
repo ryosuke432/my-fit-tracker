@@ -64,7 +64,7 @@ const WorkoutForm = ({
 
       <form className='grow flex flex-col gap-y-3 w-full'>
         <input
-          type='name'
+          type='string'
           name='name'
           placeholder='Name'
           onChange={handleChange}

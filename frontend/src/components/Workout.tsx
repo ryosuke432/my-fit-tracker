@@ -92,7 +92,13 @@ const Workout = ({
             setFlipWorkout={setFlipWorkout}
           />
         ) : flipWorkout === 1 ? (
-          <WorkoutDetails workout={workout} setFlipWorkout={setFlipWorkout} />
+          <WorkoutDetails
+            workout={workout}
+            fetchWorkout={fetchWorkout}
+            fetchDailyWorkout={fetchDailyWorkout}
+            fetchWeeklyWorkout={fetchWeeklyWorkout}
+            setFlipWorkout={setFlipWorkout}
+          />
         ) : (
           <WorkoutForm
             fetchWorkout={fetchWorkout}

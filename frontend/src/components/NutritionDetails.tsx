@@ -1,24 +1,32 @@
-import React, { SetStateAction } from 'react';
+import React, { SetStateAction, useEffect } from 'react';
 import { Pencil, Trash2, X } from 'lucide-react';
 import axiosInstance from '../api/axiosInstance';
 
 const NutritionDetails = ({
   nutrition,
+  fetchNutrition,
+  fetchDailyNutrition,
+  fetchWeeklyNutrition,
   setFlipNutrition,
 }: {
   nutrition: NutritionInterface[];
+  fetchNutrition: () => Promise<void>;
+  fetchDailyNutrition: () => Promise<void>;
+  fetchWeeklyNutrition: () => Promise<void>;
   setFlipNutrition: React.Dispatch<SetStateAction<number>>;
 }) => {
-  const handleDelete = async (e: React.HTMLAttributes<HTMLButtonElement>) => {
-    // const { id } = e.id;
-
+  const handleDelete = async (id: string) => {
     try {
-      const { data, status } = await axiosInstance.delete(
-        `/v1/member/nutrition/`
+      const { status } = await axiosInstance.delete(
+        `/v1/member/nutrition/${id}`
       );
       if (status === 200) console.log('Successfully deleted!');
     } catch (err) {
       console.error(err);
+    } finally {
+      fetchNutrition();
+      fetchDailyNutrition();
+      fetchWeeklyNutrition();
     }
   };
 
@@ -44,7 +52,7 @@ const NutritionDetails = ({
           <tbody>
             {nutrition?.map((data: NutritionInterface) => {
               return (
-                <tr key={data.id} id={`${data.id}`}>
+                <tr key={data.id}>
                   <th>
                     {data.createdAt?.toString().slice(5, 10).replace('-', '/')}
                   </th>
@@ -54,7 +62,7 @@ const NutritionDetails = ({
                   <td>{data.fat} g</td>
                   <td>{data.carbohydrates} g</td>
                   <td>
-                    <button type='button' onClick={() => console.log('update')}>
+                    <button type='button' onClick={() => console.log('edit')}>
                       <Pencil size={16} className='hover:cursor-pointer' />
                     </button>
                   </td>
@@ -62,7 +70,7 @@ const NutritionDetails = ({
                     <button
                       id='test'
                       type='button'
-                      onClick={(e) => console.log(e)}
+                      onClick={() => handleDelete(data.id?.toString() ?? '')}
                     >
                       <Trash2
                         size={16}

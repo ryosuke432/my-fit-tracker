@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const MobileBottomNav = () => {
   return (
-    <div className='md:hidden fixed bottom-0 z-10 w-11/12 border-t border-slate-200 bg-white flex flex-row justify-evenly items-center gap-x-2 pt-2'>
+    <div className='md:hidden fixed bottom-0 z-10 w-full h-12 border-t border-slate-200 bg-white flex flex-row justify-evenly items-center gap-x-2 pt-2'>
       <Link
         to={'/metrics'}
         className='flex flex-col justify-center items-center'

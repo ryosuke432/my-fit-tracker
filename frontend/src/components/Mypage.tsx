@@ -34,7 +34,7 @@ const Mypage = () => {
   return (
     <div className='flex flex-col justify-between items-center w-screen md:h-screen'>
       <Header profile={profile} />
-      <div className='flex flex-row justify-between items-center p-3 gap-x-5 w-11/12 h-3/4'>
+      <div className='flex flex-row justify-between items-center p-3 gap-x-5 w-11/12 h-full'>
         <Sidebar />
         <main className='grow h-full rounded'>
           <Outlet context={[profile, setProfile]} />

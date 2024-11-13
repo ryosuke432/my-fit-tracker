@@ -4,5 +4,8 @@
 
 .active {
   font-weight: bold;
-  background-color: rgb(209 250 229);
+}
+
+.active > svg {
+  stroke-width: 3px;
 }

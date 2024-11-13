@@ -15,6 +15,8 @@ import Profile from './components/Profile';
 import Goal from './components/pages/goal/Goal';
 import Lessons from './components/Lessons';
 import PremiumRoute from './components/auth/PremiumRoute';
+import Community from './components/Community';
+import MyRoutes from './components/MyRoutes';
 
 function App() {
   return (
@@ -29,9 +31,11 @@ function App() {
               <Route path='profile' element={<Profile />} />
               <Route path='goal' element={<Goal />} />
               <Route path='metrics' element={<Metrics />} />
+              <Route path='community' element={<Community />} />
 
               <Route path='premium' element={<PremiumRoute />}>
                 <Route path='lessons' element={<Lessons />} />
+                <Route path='my-routes' element={<MyRoutes />} />
               </Route>
             </Route>
           </Route>

@@ -4,7 +4,6 @@ import Workout from './Workout';
 import Nutrition from './Nutrition';
 
 const Metrics = () => {
-  // TODO: useMemo
   const [flipWorkout, setFlipWorkout] = useState<number>(0);
   const [flipNutrition, setFlipNutrition] = useState<number>(0);
 
@@ -19,7 +18,7 @@ const Metrics = () => {
 
   return (
     <>
-      <div className='hidden md:flex flex-row justify-start items-center m-2 md:px-5 gap-x-5'>
+      <div className='hidden md:flex md:flex-row md:justify-start md:items-center md:m-2 md:px-5 md:gap-x-5'>
         <button
           type='button'
           onClick={() => setFlipWorkout(2)}
@@ -53,7 +52,7 @@ const Metrics = () => {
         </button>
       </div>
 
-      <div className='flex flex-col md:flex-row justify-evenly items-center h-11/12 md:h-5/6 my-3 mx-2 md:px-5 gap-x-5'>
+      <div className='flex flex-col md:flex-row justify-evenly items-center h-11/12 md:h-5/6 my-3 mx-2 md:px-5 gap-y-3 gap-x-5'>
         <Workout
           date={dateDisplay}
           flipWorkout={flipWorkout}

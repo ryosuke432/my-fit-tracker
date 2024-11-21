@@ -4,7 +4,7 @@ import { BookOpen, Flag, Gauge, MapPinned, Users } from 'lucide-react';
 
 const Sidebar = () => {
   return (
-    <div className='hidden md:flex flex-col justify-between items-center p-2 gap-y-5 w-36 lg:w-48 h-full overflow-auto scroll-smooth rounded'>
+    <div className='hidden md:flex md:flex-col md:justify-between md:items-center md:p-2 md:gap-y-5 md:w-48 md:h-full md:overflow-auto md:scroll-smooth md:rounded'>
       <div className='grow flex flex-col justify-start items-center w-5/6 gap-y-3'>
         <NavLink
           to={'/goal'}

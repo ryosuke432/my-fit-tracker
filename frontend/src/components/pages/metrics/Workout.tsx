@@ -53,6 +53,7 @@ const Workout = ({
       console.error(err);
     }
   }, []);
+
   const fetchDailyWorkout: () => Promise<void> = useCallback(async () => {
     try {
       const { data, status } = await axiosInstance.get<
@@ -64,6 +65,7 @@ const Workout = ({
       console.error(err);
     }
   }, []);
+  
   const fetchWeeklyWorkout: () => Promise<void> = useCallback(async () => {
     try {
       const { data, status } = await axiosInstance.get<

@@ -13,7 +13,7 @@ const Header = ({ profile }: { profile: MemberInterface }) => {
     navigate('/', { replace: true });
   };
   return (
-    <div className='flex flex-row justify-between items-center w-full md:w-11/12 p-3'>
+    <div className='flex flex-row justify-between items-center w-full p-3'>
       <Link to={'/goal'} className='flex flex-row justify-start items-center gap-x-2'>
         <img
           alt='logo'
@@ -25,18 +25,18 @@ const Header = ({ profile }: { profile: MemberInterface }) => {
       <div className='grow flex flex-row justify-end items-center gap-x-1 md:gap-x-5'>
         <Moon
           size={24}
-          className='w-8 h-8 p-2 rounded-full fill-white hover:cursor-pointer hover:shadow-md dark:hover:shadow-slate-100 dark:fill-yellow-100 dark:bg-slate-400 '
+          className='w-8 h-8 p-2 rounded-full fill-white hover:cursor-pointer hover:ring hover:ring-slate-200 dark:hover:shadow-slate-100 dark:fill-yellow-100 dark:bg-slate-400 '
         />
         <Link
           to={'/profile'}
-          className='w-8 h-8 bg-slate-100 rounded-full hover:shadow-md'
+          className='w-8 h-8 bg-slate-100 rounded-full hover:ring hover:ring-emerald-200'
         >
           {profile.f_name[0]}
           {profile.l_name[0]}
         </Link>
         <button
           type='button'
-          className='w-8 md:w-24 h-8 rounded-full hover:shadow-md hover:bg-emerald-200'
+          className='w-8 md:w-24 h-8 rounded-full hover:border hover:shadow'
           onClick={handleLogout}
         >
           <div className='flex flex-row justify-center items-center gap-x-1'>

@@ -4,7 +4,7 @@ import { BookOpen, Flag, Gauge, MapPinned, Users } from 'lucide-react';
 
 const MobileBottomNav = () => {
   return (
-    <div className='md:hidden fixed bottom-0 z-10 w-full h-12 border-t border-slate-200 bg-white flex flex-row justify-evenly items-center gap-x-2 py-1'>
+    <div className='lg:hidden fixed bottom-0 z-10 w-full h-12 border-t border-slate-200 bg-white flex flex-row justify-evenly items-center gap-x-2 py-1'>
       <NavLink to={'/goal'} className='flex flex-col justify-center items-center'>
         <Flag size={20} />
       </NavLink>

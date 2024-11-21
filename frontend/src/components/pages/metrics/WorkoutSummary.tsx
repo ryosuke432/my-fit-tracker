@@ -10,6 +10,29 @@ const WorkoutSummary = ({
   dailyWorkout: AggregatedWorkoutInterface[];
   setFlipWorkout: React.Dispatch<SetStateAction<number>>;
 }) => {
+  const Skeleton = () => {
+    return (
+      <div className='grow flex flex-col justify-evenly items-center w-5/6'>
+        <div className='border-2 border-emerald-900 rounded-full w-24 h-24 m-auto'>
+          <div className='relative top-1/4'>
+            <p className='text-xl'>No data</p>
+            <small>Cal</small>
+          </div>
+        </div>
+        <div className='flex flex-row justify-evenly items-center gap-x-3 w-full'>
+          <div>
+            <p>No data</p>
+            <small>Distance</small>
+          </div>
+          <div>
+            <p>No data</p>
+            <small>Duration</small>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
       <div className='flex flex-row justify-around items-center gap-x-3'>
@@ -23,38 +46,43 @@ const WorkoutSummary = ({
         </button>
       </div>
 
-      {dailyWorkout
-        ?.filter(
-          (data: AggregatedWorkoutInterface) =>
-            data.date === date.toISOString().split('T')[0]
-        )
-        .map((data: AggregatedWorkoutInterface) => {
-          return (
-            <div
-              key={data.date}
-              className='grow flex flex-col justify-evenly items-center w-5/6'
-            >
-              <div className='border-2 border-emerald-900 rounded-full w-24 h-24 m-auto'>
-                <div className='relative top-1/4'>
-                  <p className='text-xl'>
-                    {data.total_calories ? data.total_calories : 'No data'}
-                  </p>
-                  <small>Cal</small>
+      {!dailyWorkout.some(
+        (data: AggregatedWorkoutInterface) =>
+          data.date === date.toISOString().split('T')[0]
+      ) ? (
+        <Skeleton />
+      ) : (
+        dailyWorkout
+          .filter(
+            (data: AggregatedWorkoutInterface) =>
+              data.date === date.toISOString().split('T')[0]
+          )
+          .map((data: AggregatedWorkoutInterface) => {
+            return (
+              <div
+                key={data.date}
+                className='grow flex flex-col justify-evenly items-center w-5/6'
+              >
+                <div className='border-2 border-emerald-900 rounded-full w-24 h-24 m-auto'>
+                  <div className='relative top-1/4'>
+                    <p className='text-xl'>{data.total_calories}</p>
+                    <small>Cal</small>
+                  </div>
+                </div>
+                <div className='flex flex-row justify-evenly items-center gap-x-3 w-full'>
+                  <div>
+                    <p>{data.total_distance}</p>
+                    <small>Distance</small>
+                  </div>
+                  <div>
+                    <p>{data.total_duration}</p>
+                    <small>Duration</small>
+                  </div>
                 </div>
               </div>
-              <div className='flex flex-row justify-evenly items-center gap-x-3 w-full'>
-                <div>
-                  <p>{data.total_distance ? data.total_distance : 'No data'}</p>
-                  <small>Distance</small>
-                </div>
-                <div>
-                  <p>{data.total_duration ? data.total_duration : 'No data'}</p>
-                  <small>Duration</small>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+            );
+          })
+      )}
     </>
   );
 };

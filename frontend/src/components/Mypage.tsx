@@ -32,11 +32,11 @@ const Mypage = () => {
   }, [fetchProfile]);
 
   return (
-    <div className='flex flex-col justify-between items-center w-screen md:h-screen'>
+    <div className='flex flex-col justify-between items-center w-full md:h-screen overflow-hidden'>
       <Header profile={profile} />
-      <div className='flex flex-row justify-between items-center p-3 gap-x-5 w-11/12 h-full'>
+      <div className='flex flex-row justify-between items-center p-3 md:gap-x-5 w-full h-[calc(100vh-32px-80px)]'>
         <Sidebar />
-        <main className='grow h-full rounded'>
+        <main className='w-full h-full'>
           <Outlet context={[profile, setProfile]} />
         </main>
       </div>

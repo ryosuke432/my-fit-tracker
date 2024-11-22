@@ -96,6 +96,8 @@ const Workout = ({
         ) : flipWorkout === 1 ? (
           <WorkoutDetails
             workout={workout}
+            dailyWorkout={dailyWorkout}
+            weeklyWorkout={weeklyWorkout}
             fetchWorkout={fetchWorkout}
             fetchDailyWorkout={fetchDailyWorkout}
             fetchWeeklyWorkout={fetchWeeklyWorkout}

@@ -52,6 +52,26 @@ const Metrics = () => {
         </button>
       </div>
 
+      <div className='md:hidden flex fex-row justify-around items-center'>
+        <button type='button' onClick={() => changeDate(-1)}>
+          <ChevronLeft
+            size={24}
+            strokeWidth={2.5}
+            color='white'
+            className='p-1 bg-emerald-500 rounded-full hover:bg-emerald-700'
+          />
+        </button>
+        <h3 className='shrink-0'>{dateDisplay.toISOString().split('T')[0]}</h3>
+        <button type='button' onClick={() => changeDate(1)}>
+          <ChevronRight
+            size={24}
+            strokeWidth={2.5}
+            color='white'
+            className='p-1 bg-emerald-500 rounded-full hover:bg-emerald-700'
+          />
+        </button>
+      </div>
+
       <div className='flex flex-col md:flex-row justify-evenly items-center h-11/12 md:h-5/6 my-3 mx-2 md:px-5 gap-y-3 gap-x-5'>
         <Workout
           date={dateDisplay}

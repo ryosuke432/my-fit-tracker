@@ -42,8 +42,8 @@ const Goal = () => {
 
   const GoalCard = ({ index }: { index: number }) => {
     return (
-      <div className='flex flex-col justify-evenly items-center w-full h-full bg-emerald-100 rounded-2xl'>
-        <h3>{goalsArr[index]['type']}</h3>
+      <div className='flex flex-col justify-evenly items-center w-full h-full bg-slate-100 rounded-2xl'>
+        <span className='text-lg font-bold'>{goalsArr[index]['type']}</span>
         {!goals?.some(
           (goal: GoalInterface) => goal.goal_type === goalsArr[index]['type']
         ) ? (
@@ -57,7 +57,7 @@ const Goal = () => {
               <>
                 <div
                   key={workoutGoal.id}
-                  className='flex flex-row justify-center items-center'
+                  className='flex flex-row justify-center items-center gap-x-2'
                 >
                   <span>
                     {workoutGoal.weekly_goal}{' '}
@@ -92,9 +92,9 @@ const Goal = () => {
   };
 
   return (
-    <div className='flex flex-col md:flex-row justify-evenly items-center w-full h-5/6 my-2 mx-2 px-5'>
-      <div className='flex flex-col justify-start items-center gap-y-5 py-3 w-full h-full rounded-2xl text-center'>
-        <div className='text-lg'>Goals</div>
+    <div className='flex flex-col md:flex-row justify-evenly items-center w-full h-full my-2 mx-2 px-5'>
+      <div className='flex flex-col justify-start items-center gap-y-2 py-3 w-full h-full rounded-2xl text-center'>
+        <div className='text-xl font-bold'>Goals</div>
         <div className='flex flex-col md:grid md:grid-flow-row md:grid-cols-2 md:grid-rows-2 justify-evenly items-center gap-4 p-2 w-full h-full'>
           {[0, 1, 2, 3].map((i: number) => {
             return (

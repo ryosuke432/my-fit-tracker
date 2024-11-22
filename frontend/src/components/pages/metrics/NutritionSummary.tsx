@@ -1,5 +1,5 @@
 import React, { SetStateAction } from 'react';
-import { ScrollText } from 'lucide-react';
+import { PlusCircle, ScrollText } from 'lucide-react';
 
 const NutritionSummary = ({
   date,
@@ -40,6 +40,13 @@ const NutritionSummary = ({
   return (
     <>
       <div className='flex flex-row justify-around items-center gap-x-3'>
+        <button
+          type='button'
+          onClick={() => setFlipNutrition(2)}
+          className='md:hidden rounded-full hover:cursor-pointer'
+        >
+          <PlusCircle size={16} color='white' fill='rgb(16 185 129)' />
+        </button>
         <h3>Nutrition</h3>
         <button type='button' onClick={() => setFlipNutrition(1)}>
           <ScrollText

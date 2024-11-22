@@ -29,10 +29,10 @@ const Lessons = () => {
         </div>
       </div>
 
-      <div className='flex flex-col md:flex-row md:flex-wrap justify-start items-center gap-5 p-5 mt-10'>
+      <div className='flex flex-col md:flex-row md:flex-wrap justify-start items-center gap-8 p-5 mt-10'>
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map((number) => {
           return (
-            <div className='flex flex-col justify-evenly items-center gap-y-1 p-2 text-center w-64 md:w-80 h-48 bg-emerald-100 rounded-2xl hover:cursor-pointer'>
+            <div className='flex flex-col justify-evenly items-center gap-y-1 p-2 text-center w-64 md:w-80 h-48 bg-slate-100 rounded-2xl hover:cursor-pointer'>
               <h3>Lesson #{number}</h3>
               <div className='flex flex-row justify-between items-center gap-x-5'>
                 <small className='float-left'>Instructor #{number}</small>

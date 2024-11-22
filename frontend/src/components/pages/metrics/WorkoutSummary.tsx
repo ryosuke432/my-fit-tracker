@@ -1,5 +1,5 @@
 import React, { SetStateAction } from 'react';
-import { ScrollText } from 'lucide-react';
+import { PlusCircle, ScrollText } from 'lucide-react';
 
 const WorkoutSummary = ({
   date,
@@ -36,6 +36,13 @@ const WorkoutSummary = ({
   return (
     <>
       <div className='flex flex-row justify-around items-center gap-x-3'>
+        <button
+          type='button'
+          onClick={() => setFlipWorkout(2)}
+          className='md:hidden rounded-full p-2 hover:cursor-pointer'
+        >
+          <PlusCircle size={16} color='white' fill='rgb(16 185 129)' />
+        </button>
         <h3>Workout</h3>
         <button type='button' onClick={() => setFlipWorkout(1)}>
           <ScrollText

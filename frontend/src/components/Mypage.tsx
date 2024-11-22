@@ -32,11 +32,11 @@ const Mypage = () => {
   }, [fetchProfile]);
 
   return (
-    <div className='flex flex-col justify-between items-center w-full md:h-screen overflow-hidden'>
+    <div className='flex flex-col justify-between items-center w-full min-h-screen md:h-screen overflow-hidden'>
       <Header profile={profile} />
       <div className='flex flex-row justify-between items-center p-3 md:gap-x-5 w-full h-[calc(100vh-32px-80px)]'>
         <Sidebar />
-        <main className='w-full h-full'>
+        <main className='w-full md:w-[calc(100vw-192px)] h-full overflow-hidden'>
           <Outlet context={[profile, setProfile]} />
         </main>
       </div>

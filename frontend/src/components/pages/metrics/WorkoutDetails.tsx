@@ -1,20 +1,61 @@
-import React, { SetStateAction } from 'react';
-import { Pencil, Trash2, X } from 'lucide-react';
+import React, { SetStateAction, useEffect, useRef } from 'react';
+import { BarChart, Bar, XAxis, Tooltip } from 'recharts';
+import { X } from 'lucide-react';
 import axiosInstance from '../../../api/axiosInstance';
 
 const WorkoutDetails = ({
   workout,
+  dailyWorkout,
+  weeklyWorkout,
   fetchWorkout,
   fetchDailyWorkout,
   fetchWeeklyWorkout,
   setFlipWorkout,
 }: {
   workout: WorkoutInterface[];
+  dailyWorkout: AggregatedWorkoutInterface[];
+  weeklyWorkout: AggregatedWorkoutInterface[];
   fetchWorkout: () => Promise<void>;
   fetchDailyWorkout: () => Promise<void>;
   fetchWeeklyWorkout: () => Promise<void>;
   setFlipWorkout: React.Dispatch<SetStateAction<number>>;
 }) => {
+  const endDate = new Date();
+  const startDate = new Date(`${dailyWorkout[0].date}T00:00:00`);
+
+  const formatDate = (date: Date) => date.toISOString().split('T')[0];
+
+  const allDates = [];
+  for (
+    let currentDate = new Date(startDate);
+    currentDate <= endDate;
+    currentDate.setDate(currentDate.getDate() + 1)
+  ) {
+    allDates.push(formatDate(currentDate));
+  }
+
+  const chartData = allDates.map((date) => {
+    const activeEntry = dailyWorkout.find((entry) => entry.date === date);
+    return {
+      date,
+      calories: activeEntry?.total_calories ?? 0,
+    };
+  });
+
+  const getDay = (dateString: string) => {
+    const day = new Date(`${dateString}T00:00:00`).getDate();
+    return day.toString().padStart(2, '0');
+  };
+
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
+    if (scrollContainer) {
+      scrollContainer.scrollLeft = scrollContainer.scrollWidth;
+    }
+  }, []);
+
   const handleDelete = async (id: string) => {
     try {
       const { status } = await axiosInstance.delete(`v1/member/workout/${id}`);
@@ -35,42 +76,26 @@ const WorkoutDetails = ({
           <X size={16} />
         </button>
       </div>
-
-      <div className='grow flex flex-col justify-start items-center gap-y-2 w-11/12 overflow-auto'>
-        <table>
-          <tbody>
-            {workout?.map((data: WorkoutInterface) => {
-              return (
-                <tr key={data.id}>
-                  <th>
-                    {data.createdAt?.toString().slice(5, 10).replace('-', '/')}
-                  </th>
-                  <td>{data.name}</td>
-                  <td>{data.distance_km} km</td>
-                  <td>{data.duration_min} min</td>
-                  <td>{data.calories} cal</td>
-                  <td>
-                    <button type='button' onClick={() => console.log('update')}>
-                      <Pencil size={16} className='hover:cursor-pointer' />
-                    </button>
-                  </td>
-                  <td>
-                    <button
-                      type='button'
-                      onClick={() => handleDelete(data.id?.toString() ?? '')}
-                    >
-                      <Trash2
-                        size={16}
-                        color='red'
-                        className='hover:cursor-pointer'
-                      />
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+      <div className='flex flex-col justify-start items-center gap-y-1 w-full h-full'>
+        <div className='flex flex-col justify-start items-start gap-y-1 w-3/4 mt-2'>
+          <h3 className='float-left'>Calories Burned</h3>
+          <div ref={scrollContainerRef} className='w-full overflow-x-auto'>
+            <BarChart
+              width={chartData.length * 25}
+              height={120}
+              data={chartData}
+            >
+              <XAxis
+                dataKey='date'
+                tickFormatter={getDay}
+                axisLine={false}
+                tickLine={false}
+              />
+              <Tooltip />
+              <Bar dataKey='calories' fill='rgb(16 185 129)' />
+            </BarChart>
+          </div>
+        </div>
       </div>
     </>
   );

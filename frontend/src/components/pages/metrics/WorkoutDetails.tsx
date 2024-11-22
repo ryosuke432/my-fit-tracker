@@ -1,7 +1,6 @@
 import React, { SetStateAction, useEffect, useRef } from 'react';
 import { BarChart, Bar, XAxis, Tooltip } from 'recharts';
 import { X } from 'lucide-react';
-import axiosInstance from '../../../api/axiosInstance';
 
 const WorkoutDetails = ({
   workout,
@@ -56,18 +55,6 @@ const WorkoutDetails = ({
     }
   }, []);
 
-  const handleDelete = async (id: string) => {
-    try {
-      const { status } = await axiosInstance.delete(`v1/member/workout/${id}`);
-      if (status === 200) console.log('Successfully deleted!');
-    } catch (err) {
-      console.error(err);
-    } finally {
-      fetchWorkout();
-      fetchDailyWorkout();
-      fetchWeeklyWorkout();
-    }
-  };
   return (
     <>
       <div className='flex flex-row justify-around items-center gap-x-3'>

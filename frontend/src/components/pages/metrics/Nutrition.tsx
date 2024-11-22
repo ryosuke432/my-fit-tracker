@@ -97,6 +97,8 @@ export const Nutrition = ({
         ) : flipNutrition === 1 ? (
           <NutritionDetails
             nutrition={nutrition}
+            dailyNutrition={dailyNutrition}
+            weeklyNutrition={weeklyNutrition}
             fetchNutrition={fetchNutrition}
             fetchDailyNutrition={fetchDailyNutrition}
             fetchWeeklyNutrition={fetchWeeklyNutrition}

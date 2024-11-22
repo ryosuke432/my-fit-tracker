@@ -1,34 +1,59 @@
-import React, { SetStateAction, useEffect } from 'react';
-import { Pencil, Trash2, X } from 'lucide-react';
-import axiosInstance from '../../../api/axiosInstance';
+import React, { SetStateAction, useEffect, useRef } from 'react';
+import { BarChart, XAxis, Tooltip, Bar } from 'recharts';
+import { X } from 'lucide-react';
 
 const NutritionDetails = ({
   nutrition,
+  dailyNutrition,
+  weeklyNutrition,
   fetchNutrition,
   fetchDailyNutrition,
   fetchWeeklyNutrition,
   setFlipNutrition,
 }: {
   nutrition: NutritionInterface[];
+  dailyNutrition: AggregatedNutritionInterface[];
+  weeklyNutrition: AggregatedNutritionInterface[];
   fetchNutrition: () => Promise<void>;
   fetchDailyNutrition: () => Promise<void>;
   fetchWeeklyNutrition: () => Promise<void>;
   setFlipNutrition: React.Dispatch<SetStateAction<number>>;
 }) => {
-  const handleDelete = async (id: string) => {
-    try {
-      const { status } = await axiosInstance.delete(
-        `/v1/member/nutrition/${id}`
-      );
-      if (status === 200) console.log('Successfully deleted!');
-    } catch (err) {
-      console.error(err);
-    } finally {
-      fetchNutrition();
-      fetchDailyNutrition();
-      fetchWeeklyNutrition();
-    }
+  const endDate = new Date();
+  const startDate = new Date(`${dailyNutrition[0].date}T00:00:00`);
+
+  const formatDate = (date: Date) => date.toISOString().split('T')[0];
+
+  const allDates = [];
+  for (
+    let currentDate = new Date(startDate);
+    currentDate <= endDate;
+    currentDate.setDate(currentDate.getDate() + 1)
+  ) {
+    allDates.push(formatDate(currentDate));
+  }
+
+  const chartData = allDates.map((date) => {
+    const activeEntry = dailyNutrition.find((entry) => entry.date === date);
+    return {
+      date,
+      calories: activeEntry?.total_calories ?? 0,
+    };
+  });
+
+  const getDay = (dateString: string) => {
+    const day = new Date(`${dateString}T00:00:00`).getDate();
+    return day.toString().padStart(2, '0');
   };
+
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
+    if (scrollContainer) {
+      scrollContainer.scrollLeft = scrollContainer.scrollWidth;
+    }
+  }, []);
 
   return (
     <>
@@ -39,51 +64,26 @@ const NutritionDetails = ({
         </button>
       </div>
 
-      <div className='grow flex flex-col justify-start items-center w-11/12 scroll-auto'>
-        <table>
-          <thead>
-            <tr>
-              <th colSpan={3}></th>
-              <th>Protein</th>
-              <th>Fat</th>
-              <th>Carbs</th>
-            </tr>
-          </thead>
-          <tbody>
-            {nutrition?.map((data: NutritionInterface) => {
-              return (
-                <tr key={data.id}>
-                  <th>
-                    {data.createdAt?.toString().slice(5, 10).replace('-', '/')}
-                  </th>
-                  <td>{data.name}</td>
-                  <td>{data.calories} cal</td>
-                  <td>{data.protein} g</td>
-                  <td>{data.fat} g</td>
-                  <td>{data.carbohydrates} g</td>
-                  <td>
-                    <button type='button' onClick={() => console.log('edit')}>
-                      <Pencil size={16} className='hover:cursor-pointer' />
-                    </button>
-                  </td>
-                  <td>
-                    <button
-                      id='test'
-                      type='button'
-                      onClick={() => handleDelete(data.id?.toString() ?? '')}
-                    >
-                      <Trash2
-                        size={16}
-                        color='red'
-                        className='hover:cursor-pointer'
-                      />
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+      <div className='flex flex-col justify-start items-center gap-y-1 w-full h-full'>
+        <div className='flex flex-col justify-start items-start gap-y-1 w-3/4 mt-2'>
+          <h3 className='float-left'>Calories Taken</h3>
+          <div ref={scrollContainerRef} className='w-full overflow-x-auto'>
+            <BarChart
+              width={chartData.length * 25}
+              height={120}
+              data={chartData}
+            >
+              <XAxis
+                dataKey='date'
+                tickFormatter={getDay}
+                axisLine={false}
+                tickLine={false}
+              />
+              <Tooltip />
+              <Bar dataKey='calories' fill='rgb(16 185 129)' />
+            </BarChart>
+          </div>
+        </div>
       </div>
     </>
   );

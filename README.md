@@ -19,20 +19,14 @@ There are many wearable devices and fitness applications available today. Howeve
     - JWT (JSON Web Tokens) for user authentication
     - bcrypt
 - Deployment:
-    - AWS (or Render? or Vercel?) for deployment
-    - Cloudinary or Amazon S3 for hosting images of property listings
-- Optional Services:
-    - ElasticSearch for more advanced search capabilities (geo-based, full-text)
-    - Stripe or PayPal for payment integration (in case of paid plans)
+    - AWS for deployment
 
 ## Features to be implemented
 - User Authentication
     - Register/login to save fitness data
-    - Optional guest mode for quick tracking
-    - (For instructors) Register/login to upload lessons
+    - Multiple User Roles: regular and premium
 - Activity Logging
-    - Log workout activities (e.g., running, cycling, weightlifting) with duration, distance, calories burned.
-    - (Optional) Integrate with third-party APIs (e.g., Fitbit, Strava)
+    - Log workout activities (e.g., running, cycling, swimming) with duration, distance, calories burned.
 - Goal Setting
     - Set fitness goals (e.g., run 20 km in a month)
     - Track goal progress over time.
@@ -42,28 +36,13 @@ There are many wearable devices and fitness applications available today. Howeve
 - Nutrition Tracking
     - Log daily food intake and calories consumed
     - Track macros (protein, carbs, fats)
-- Community Features
-    - Join fitness groups and share workout progress
-    - Challenge friends to fitness competitions
 - Dark Mode
     - Switch between light and dark modes for accessibility
-- (Optional) Advanced Features:
-    - Create Custom Routes: Allow paid users to create their own walking or running routes with Mapbox API (paid plan)
-    - Notifications & Alerts: Allow users to set daily targets, receive reminders via alerts, and get notified of messages from friends and instructors
-    - Multiple User Roles: In addition to regular users, introduce an instructor role that can give lessons, receive reviews from users, and earn money through paid classes
 
 ## User stories:
 - Log Workout: Users log into their dashboard, click "Add Workout," select the workout type, enter data (duration, distance), and click "Save."
 - Track Progress: On the dashboard, users view their progress toward fitness goals through weekly summaries and graphs.
 - Set a Goal: Users set a goal (e.g., run 20 km per month) and track progress through visual indicators
-- Community Engagement: Users join fitness groups to share progress and participate in challenges
-- (Optional)
-    - Add Payment Method: Users log into their dashboard, click "Add Payment Method," enter data, and click "Save."
-    - Customize Own Routes: Paid users navigate to "My Routes" and customize their own routes, and click "Save."
-    - Take Lessons: Paid users navigate to "Lessons" page and select lessons (e.g., exercise lesson, nutrition lecture)
-    - For Instructors
-        - Register Lessons: Instructors log into their dashboard, click "Add Lesson", select the lesson type (e.g., workout, nutrition) and set the price, upload the lesson, and click "Save."
-        - Add Payment Method: Instructors log into their dashboard, click "Add Payment Method" to receive money they earn, enter necessary details, and click "Save."
 
 ## Use Case Diagram
 ![Use Case Diagram](./images/UseCaseDiagram.svg)

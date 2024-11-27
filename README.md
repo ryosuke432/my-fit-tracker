@@ -5,6 +5,9 @@ MyFitTracker is a web-based application that allows users to track their fitness
 ## Why use MyFitTracker?
 There are many wearable devices and fitness applications available today. However, most applications tend to be incomaptible across different operating systems or products. This makes it difficult to work out with friends or family, as you cannot encourage or compete with people using different environments. This is where MyFitTracker comes into play. With this web-based application, you can communicate with your friends and family, no matter what environment they are using.
 
+## Features
+
+
 ## Technology Stack
 - Frontend: 
     - React.js for interactive user interface
@@ -44,14 +47,8 @@ There are many wearable devices and fitness applications available today. Howeve
 - Track Progress: On the dashboard, users view their progress toward fitness goals through weekly summaries and graphs.
 - Set a Goal: Users set a goal (e.g., run 20 km per month) and track progress through visual indicators
 
-## Use Case Diagram
-![Use Case Diagram](./images/UseCaseDiagram.svg)
-
 ## Entity Relationship Diagram
 ![ER Diagram](./images/ERDDiagram.svg)
-
-## UI Wireframe
-![UI Wireframe](./images/UI_wireframe.svg)
 
 ## References:
 ### Backend:

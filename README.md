@@ -6,6 +6,22 @@ MyFitTracker is a web-based application that allows users to track their fitness
 There are many wearable devices and fitness applications available today. However, most applications tend to be incomaptible across different operating systems or products. This makes it difficult to work out with friends or family, as you cannot encourage or compete with people using different environments. This is where MyFitTracker comes into play. With this web-based application, you can communicate with your friends and family, no matter what environment they are using.
 
 ## Features
+- Goal
+    ![Goal](./images/myfittracker_goal.png)
+    ![Goal Form](./images/myfittracker_goal_form.png)
+- Metrics
+    ![Metrics](./images/myfittracker_metrics.png)
+    ![Metrics Details](./images/myfittracker_metrics_details.png)
+- User Authentication by User Type
+    ![Lessons with Permission](./images/myfittracker_lessons.png)
+    ![Lessons without Permission](./images/myfittracker_lessons_without_permission.png)
+- Mobile Layout
+    - Goal
+        ![Goal Mobile](./images/myfittracker_goal_mobile.png)
+    - Metrics
+        ![Metrics Mobile](./images/myfittracker_metrics_mobile.png)
+        ![Metrics Form Mobile](./images/myfittracker_metrics_form_mobile.png)
+        ![Metrics Details Mobile](./images/myfittracker_metrics_details_mobile.png)
 
 
 ## Technology Stack

@@ -93,7 +93,7 @@ const Signup = () => {
     {
       type: 'number',
       name: 'body_weight',
-      placeholder: '(Optional) Body weight kg',
+      placeholder: 'Body weight kg',
       autoComplete: 'off',
     },
   ];

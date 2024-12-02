@@ -1,10 +1,15 @@
-import { DataTypes } from 'sequelize';
-import sequelize from '../db.js';
+import { Sequelize, DataTypes } from 'sequelize';
+import sequelize from './index.js';
 import bcrypt from 'bcryptjs';
 
 const Member = sequelize.define(
   'Member',
   {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
     f_name: {
       type: DataTypes.STRING(100),
       allowNull: false,
@@ -85,7 +90,5 @@ const Member = sequelize.define(
 Member.prototype.comparePassword = async function (plainPwd) {
   return await bcrypt.compare(plainPwd, this.password);
 };
-
-await Member.sync({ alter: true });
 
 export default Member;

@@ -1,10 +1,10 @@
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import sequelize from '../db.js';
-import Member from '../models/member.model.js';
-import Workout from '../models/workout.model.js';
-import Nutrition from '../models/nutrition.model.js';
-import Goal from '../models/goal.model.js';
+import Member from '../sequelize/models/member.model.js';
+import Workout from '../sequelize/models/workout.model.js';
+import Nutrition from '../sequelize/models/nutrition.model.js';
+import Goal from '../sequelize/models/goal.model.js';
 
 dotenv.config();
 

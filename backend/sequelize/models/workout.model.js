@@ -1,8 +1,13 @@
-import { DataTypes } from 'sequelize';
-import sequelize from '../db.js';
+import { Sequelize, DataTypes } from 'sequelize';
+import sequelize from './index.js';
 import Member from './member.model.js';
 
 const Workout = sequelize.define('Workout', {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+  },
   name: {
     type: DataTypes.ENUM('Walking', 'Running', 'Cycling', 'Swimming'),
     allowNull: false,
@@ -15,12 +20,10 @@ const Workout = sequelize.define('Workout', {
   },
   calories: {
     type: DataTypes.FLOAT,
-  }
+  },
 });
 
 Member.hasMany(Workout);
 Workout.belongsTo(Member);
-
-await Workout.sync({ alter: true });
 
 export default Workout;

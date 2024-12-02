@@ -1,5 +1,9 @@
 **/node_modules
 .*env
 
-# db migration files
+# db migration and seeder fiels
 **/migrations
+**/seeders
+
+# endpoint test
+**/*.rest

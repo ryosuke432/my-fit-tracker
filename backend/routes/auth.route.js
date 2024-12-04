@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
-import Member from '../sequelize/models/member.model.js';
+import Member from '../models/member.model.js';
 
 dotenv.config();
 const authRouter = express.Router();
@@ -14,8 +14,7 @@ authRouter.post('/signup', async (req, res) => {
       !req.body.l_name ||
       !req.body.email ||
       !req.body.mobile ||
-      !req.body.password ||
-      !req.body.body_weight
+      !req.body.password
     ) {
       return res.status(400).send({ message: 'Send all required fields' });
     }

@@ -1,13 +1,8 @@
-import { Sequelize, DataTypes } from 'sequelize';
-import sequelize from './index.js';
+import { DataTypes } from 'sequelize';
+import sequelize from '../db.js';
 import Member from './member.model.js';
 
 const Nutrition = sequelize.define('Nutrition', {
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true,
-  },
   name: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -28,5 +23,7 @@ const Nutrition = sequelize.define('Nutrition', {
 
 Member.hasMany(Nutrition);
 Nutrition.belongsTo(Member);
+
+await Nutrition.sync({ alter: true });
 
 export default Nutrition;

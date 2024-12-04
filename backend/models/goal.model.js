@@ -1,13 +1,8 @@
-import { Sequelize, DataTypes } from 'sequelize';
-import sequelize from './index.js';
+import { DataTypes } from 'sequelize';
+import sequelize from '../db.js';
 import Member from './member.model.js';
 
 const Goal = sequelize.define('Goal', {
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true,
-  },
   goal_type: {
     type: DataTypes.ENUM(
       'Workout days',
@@ -29,5 +24,7 @@ const Goal = sequelize.define('Goal', {
 
 Member.hasMany(Goal);
 Goal.belongsTo(Member);
+
+await Goal.sync({ alter: true });
 
 export default Goal;

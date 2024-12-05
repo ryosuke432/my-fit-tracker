@@ -8,13 +8,13 @@ import MobileBottomNav from './MobileBottomNav';
 
 const Mypage = () => {
   const [profile, setProfile] = useState<MemberInterface>({
-    f_name: '',
-    l_name: '',
-    full_name: '',
+    firstName: '',
+    lastName: '',
+    fullName: '',
     email: '',
     mobile: 0,
-    body_weight: 0,
-    is_premium: false,
+    bodyWeight: 0,
+    isPremium: false,
   });
 
   const fetchProfile = useCallback(async () => {

@@ -31,8 +31,8 @@ const Header = ({ profile }: { profile: MemberInterface }) => {
           to={'/profile'}
           className='w-8 h-8 bg-slate-100 rounded-full hover:ring hover:ring-emerald-200'
         >
-          {profile.f_name[0]}
-          {profile.l_name[0]}
+          {profile.firstName[0]}
+          {profile.lastName[0]}
         </Link>
         <button
           type='button'

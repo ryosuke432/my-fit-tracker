@@ -22,11 +22,11 @@ const Profile = () => {
   }, [fetchProfile]);
 
   const [input, setInput] = useState({
-    f_name: '',
-    l_name: '',
+    firstName: '',
+    lastName: '',
     email: '',
     mobile: '',
-    body_weight: '',
+    bodyWeight: '',
   });
 
   const handleChange: handleChangeProp = async (e) => {
@@ -38,24 +38,24 @@ const Profile = () => {
   };
 
   const handleUpdate: handleBtnActionProp = async () => {
-    const { f_name, l_name, email, mobile, body_weight } = input;
+    const { firstName, lastName, email, mobile, bodyWeight } = input;
     try {
       const { data } = await axiosInstance.put('/v1/member/profile', {
-        f_name,
-        l_name,
+        firstName,
+        lastName,
         email,
         mobile,
-        body_weight,
+        bodyWeight,
       });
 
       console.log(data.message);
 
       setInput({
-        f_name: '',
-        l_name: '',
+        firstName: '',
+        lastName: '',
         email: '',
         mobile: '',
-        body_weight: '',
+        bodyWeight: '',
       });
     } catch (err: any) {
       console.error(err.response?.data?.message);
@@ -68,22 +68,22 @@ const Profile = () => {
   const readOnlyDataset = [
     {
       type: 'text',
-      name: 'f_name',
-      value: profile?.f_name,
+      name: 'firstName',
+      value: profile?.firstName,
       readOnly: true,
     },
     {
       type: 'text',
-      name: 'l_name',
-      value: profile?.l_name,
+      name: 'lastName',
+      value: profile?.lastName,
       readOnly: true,
     },
     { type: 'email', name: 'email', value: profile?.email, readOnly: true },
     { type: 'tel', name: 'mobile', value: profile?.mobile, readOnly: true },
     {
       type: 'number',
-      name: 'body_weight',
-      value: profile?.body_weight ?? '',
+      name: 'bodyWeight',
+      value: profile?.bodyWeight ?? '',
       readOnly: true,
     },
   ];
@@ -91,20 +91,20 @@ const Profile = () => {
   const inputDataset = [
     {
       type: 'text',
-      name: 'f_name',
-      placeholder: profile?.f_name,
+      name: 'firstName',
+      placeholder: profile?.firstName,
     },
     {
       type: 'text',
-      name: 'l_name',
-      placeholder: profile?.l_name,
+      name: 'lastName',
+      placeholder: profile?.lastName,
     },
     { type: 'email', name: 'email', placeholder: profile?.email },
     { type: 'tel', name: 'mobile', placeholder: profile?.mobile?.toString() },
     {
       type: 'number',
-      name: 'body_weight',
-      placeholder: profile?.body_weight?.toString() || 'No data',
+      name: 'bodyWeight',
+      placeholder: profile?.bodyWeight?.toString() || 'No data',
     },
   ];
 

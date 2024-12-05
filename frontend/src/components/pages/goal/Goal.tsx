@@ -45,14 +45,14 @@ const Goal = () => {
       <div className='flex flex-col justify-evenly items-center w-full h-full bg-slate-100 rounded-2xl'>
         <span className='text-lg font-bold'>{goalsArr[index]['type']}</span>
         {!goals?.some(
-          (goal: GoalInterface) => goal.goal_type === goalsArr[index]['type']
+          (goal: GoalInterface) => goal.name === goalsArr[index]['type']
         ) ? (
           <button type='button' onClick={() => setFlipGoal(index)}>
             <CirclePlus size={24} className='hover:cursor-pointer fill-white' />
           </button>
         ) : (
           goals
-            .filter((goal) => goal.goal_type === goalsArr[index]['type'])
+            .filter((goal) => goal.name === goalsArr[index]['type'])
             .map((workoutGoal) => (
               <>
                 <div

@@ -1,23 +1,31 @@
-import { DataTypes } from 'sequelize';
+import { Sequelize, DataTypes, Model } from 'sequelize';
 import sequelize from '../db.js';
 import bcrypt from 'bcryptjs';
 
-const Member = sequelize.define(
-  'Member',
+class Member extends Model {
+  getFullname() {
+    return [this.firstName, this.lastName].join(' ');
+  }
+
+  async comparePassword(plainPwd) {
+    return await bcrypt.compare(plainPwd, this.password);
+  }
+}
+
+Member.init(
   {
-    f_name: {
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
+    },
+    firstName: {
       type: DataTypes.STRING(100),
       allowNull: false,
     },
-    l_name: {
+    lastName: {
       type: DataTypes.STRING(100),
       allowNull: false,
-    },
-    full_name: {
-      type: DataTypes.VIRTUAL,
-      get() {
-        return `${this.f_name} ${this.l_name}`;
-      },
     },
     email: {
       type: DataTypes.STRING,
@@ -29,17 +37,13 @@ const Member = sequelize.define(
       },
     },
     mobile: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: false,
       unique: true,
       validate: {
-        len: {
-          args: [10, 10],
-          msg: 'Mobile number must be 10 digits',
-        },
         is: {
-          args: '^[0-9]{10}$',
-          msg: 'Only numbers are allowed',
+          args: /^[+]?[0-9]{7,15}$/,
+          msg: 'Invalid phone number format',
         },
       },
     },
@@ -54,38 +58,40 @@ const Member = sequelize.define(
         },
       },
     },
-    body_weight: {
+    bodyWeight: {
       type: DataTypes.FLOAT,
+      allowNull: false,
     },
-    is_premium: {
+    isPremium: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
+      allowNull: false,
+    },
+    lastActive: {
+      type: DataTypes.DATE,
+      defaultValue: Sequelize.NOW,
+      allowNull: false,
     },
   },
   {
+    sequelize,
+    modelName: 'Member',
+    paranoid: true,
     hooks: {
       beforeCreate: async (member) => {
         if (member.password) {
           const saltRounds = 10;
-          const hashedPwd = await bcrypt.hash(member.password, saltRounds);
-          member.password = hashedPwd;
+          member.password = await bcrypt.hash(member.password, saltRounds);
         }
       },
       beforeUpdate: async (member) => {
-        if (member.password) {
+        if (member.changed('password')) {
           const saltRounds = 10;
-          const hashedPwd = await bcrypt.hash(member.password, saltRounds);
-          member.password = hashedPwd;
+          member.password = await bcrypt.hash(member.password, saltRounds);
         }
       },
     },
   }
 );
-
-Member.prototype.comparePassword = async function (plainPwd) {
-  return await bcrypt.compare(plainPwd, this.password);
-};
-
-await Member.sync({ alter: true });
 
 export default Member;

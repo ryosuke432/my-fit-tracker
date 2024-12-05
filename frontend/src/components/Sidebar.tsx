@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { BookOpen, Flag, Gauge, MapPinned, Users } from 'lucide-react';
+import axiosInstance from '../api/axiosInstance';
 
 const Sidebar = () => {
   return (
@@ -42,9 +43,20 @@ const Sidebar = () => {
           <span>My Routes</span>
         </NavLink>
       </div>
-      <div className='text-black bg-amber-100 w-5/6 h-8 rounded-full'>
+
+      <button
+        type='button'
+        className='text-black bg-amber-100 w-5/6 h-8 rounded-full hover:cursor-pointer'
+        onClick={async () => {
+          try {
+            await axiosInstance.patch('/v1/member/profile/upgrade');
+          } catch (err) {
+            console.error(err);
+          }
+        }}
+      >
         Upgrade
-      </div>
+      </button>
     </div>
   );
 };

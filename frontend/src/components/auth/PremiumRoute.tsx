@@ -5,7 +5,7 @@ import { useProfile } from '../Mypage';
 const PremiumRoute = () => {
   const [profile, setProfile] = useProfile();
 
-  if (profile.is_premium === false)
+  if (profile.isPremium === false)
     return <div>This page is only for premium users</div>;
 
   return <Outlet />;

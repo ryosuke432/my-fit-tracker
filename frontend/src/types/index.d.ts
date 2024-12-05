@@ -1,20 +1,19 @@
 // model interfaces
-// TODO: after id is converted to uuid in backend, id data type will be changed to string
 interface MemberInterface {
-  id?: number | string;
-  f_name: string;
-  l_name: string;
-  full_name?: string;
+  id?: string;
+  firstName: string;
+  lastName: string;
+  fullName?: string;
   email: string;
   mobile: number;
-  body_weight?: number;
-  is_premium?: boolean;
+  bodyWeight?: number;
+  isPremium?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
 
 interface WorkoutInterface {
-  id?: number | string;
+  id?: string;
   name: string;
   duration_min: number;
   distance_km: number;
@@ -25,7 +24,7 @@ interface WorkoutInterface {
 }
 
 interface NutritionInterface {
-  id?: number | string;
+  id?: string;
   name: string;
   calories?: number;
   protein?: number;
@@ -54,8 +53,8 @@ interface AggregatedNutritionInterface {
 }
 
 interface GoalInterface {
-  id?: number | string;
-  goal_type: string;
+  id?: string;
+  name: string;
   weekly_goal: number;
   total_duration: number;
   createdAt?: Date;

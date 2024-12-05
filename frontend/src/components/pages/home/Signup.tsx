@@ -7,12 +7,12 @@ import Form from '../../ui/Form';
 const Signup = () => {
   const navigate = useNavigate();
   const [input, setInput] = useState({
-    f_name: '',
-    l_name: '',
+    firstName: '',
+    lastName: '',
     email: '',
     mobile: '',
     password: '',
-    body_weight: '',
+    bodyWeight: '',
   });
 
   const handleChange: handleChangeProp = async (e) => {
@@ -24,16 +24,16 @@ const Signup = () => {
   };
 
   const handleSignup: handleBtnActionProp = async () => {
-    const { f_name, l_name, email, mobile, password, body_weight } = input;
-    if (!f_name || !l_name || !email || !mobile || !password) return;
+    const { firstName, lastName, email, mobile, password, bodyWeight } = input;
+    if (!firstName || !lastName || !email || !mobile || !password) return;
     try {
       const { data } = await axiosInstance.post('/v1/auth/signup', {
-        f_name,
-        l_name,
+        firstName,
+        lastName,
         email,
         mobile,
         password,
-        body_weight,
+        bodyWeight,
       });
 
       console.log(data.message);
@@ -41,12 +41,12 @@ const Signup = () => {
       navigate('/login');
 
       setInput({
-        f_name: '',
-        l_name: '',
+        firstName: '',
+        lastName: '',
         email: '',
         mobile: '',
         password: '',
-        body_weight: '',
+        bodyWeight: '',
       });
     } catch (err: any) {
       console.error(err.response?.data?.message);
@@ -56,7 +56,7 @@ const Signup = () => {
   const inputDataset = [
     {
       type: 'text',
-      name: 'f_name',
+      name: 'firstName',
       placeholder: 'First Name',
       autoComplete: 'off',
       autoFocus: true,
@@ -64,7 +64,7 @@ const Signup = () => {
     },
     {
       type: 'text',
-      name: 'l_name',
+      name: 'lastName',
       placeholder: 'Last Name',
       autoComplete: 'off',
       required: true,
@@ -92,8 +92,8 @@ const Signup = () => {
     },
     {
       type: 'number',
-      name: 'body_weight',
-      placeholder: '(Optional) Body weight kg',
+      name: 'bodyWeight',
+      placeholder: 'Body weight (kg)',
       autoComplete: 'off',
     },
   ];
@@ -117,7 +117,7 @@ const Signup = () => {
         {/* <form className='flex flex-col gap-y-3 w-full'>
           <input
             type='text'
-            name='f_name'
+            name='firstName'
             placeholder='First Name'
             autoComplete='off'
             autoFocus
@@ -126,7 +126,7 @@ const Signup = () => {
           />
           <input
             type='text'
-            name='l_name'
+            name='lastName'
             placeholder='Last Name'
             autoComplete='off'
             onChange={handleChange}
@@ -159,7 +159,7 @@ const Signup = () => {
           <input
             id='bodyWeight'
             type='number'
-            name='body_weight'
+            name='bodyWeight'
             placeholder='(Optional) Body weight (kg)'
             onChange={handleChange}
           />

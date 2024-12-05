@@ -1,18 +1,40 @@
-import { DataTypes } from 'sequelize';
+import { Sequelize, DataTypes, Model } from 'sequelize';
 import sequelize from '../db.js';
 import Member from './member.model.js';
 import Channel from './channel.model.js';
 
-const Message = sequelize.define('Message', {
-  content: {
-    type: DataTypes.TEXT,
-    allowNull: false,
+class Message extends Model {}
+
+Message.init(
+  {
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
+    },
+    content: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    status: {
+      type: DataTypes.ENUM('sent', 'delivered', 'read'),
+      defaultValue: 'sent',
+    },
   },
-});
+  {
+    sequelize,
+    modelName: 'Message',
+    paranoid: true,
+    hooks: {
+      beforeCreate: (message) => {
+        message.content = message.content.trim();
+      },
+    },
+  }
+);
 
-Member.belongsToMany(Channel, { through: Message });
-Channel.belongsToMany(Member, { through: Message });
-
-await Message.sync({ alter: true });
+// Associations
+Message.belongsTo(Member, { foreignKey: 'MemberId', onDelete: 'CASCADE' });
+Message.belongsTo(Channel, { foreignKey: 'ChannelId', onDelete: 'CASCADE' });
 
 export default Message;

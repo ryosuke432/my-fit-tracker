@@ -30,7 +30,7 @@ const GoalForm = ({
     useState<number>(-1);
 
   const [input, setInput] = useState<GoalInterface>({
-    goal_type: '',
+    name: '',
     weekly_goal: 0,
     total_duration: 0,
   });
@@ -39,7 +39,7 @@ const GoalForm = ({
     try {
       await axiosInstance.post('/v1/member/goal', input);
       setInput({
-        goal_type: '',
+        name: '',
         weekly_goal: 0,
         total_duration: 0,
       });
@@ -71,7 +71,7 @@ const GoalForm = ({
               onClick={() => {
                 setInput({
                   ...input,
-                  goal_type: goalsArr[index],
+                  name: goalsArr[index],
                   weekly_goal: i,
                 });
                 setActiveWeeklyGoalBtn(i);

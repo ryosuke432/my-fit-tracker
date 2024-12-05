@@ -1,25 +1,33 @@
 import express from 'express';
 import {
-  addGoal,
-  addNutrition,
-  addWorkout,
-  deleteGoal,
-  deleteNutrition,
   deleteProfile,
-  deleteWorkout,
-  updateGoal,
-  updateNutrition,
   updateProfile,
-  updateWorkout,
   verifyToken,
-  viewAllGoals,
-  viewAllNutrition,
-  viewAllWorkout,
-  viewGoal,
-  viewNutrition,
   viewProfile,
-  viewWorkout,
+  upgradePlan,
+  downgradePlan,
 } from '../controller/member.controller.js';
+import {
+  addWorkout,
+  deleteWorkout,
+  updateWorkout,
+  viewAllWorkout,
+  viewWorkout,
+} from '../controller/workout.controller.js';
+import {
+  addNutrition,
+  deleteNutrition,
+  updateNutrition,
+  viewAllNutrition,
+  viewNutrition,
+} from '../controller/nutrition.controller.js';
+import {
+  addGoal,
+  deleteGoal,
+  updateGoal,
+  viewAllGoals,
+  viewGoal,
+} from '../controller/goal.controller.js';
 
 const memberRouter = express.Router();
 
@@ -32,6 +40,10 @@ memberRouter.get('/profile', verifyToken, viewProfile);
 
 // update a specific member profile
 memberRouter.put('/profile', verifyToken, updateProfile);
+
+// update a specific user's plan
+memberRouter.patch('/profile/upgrade', verifyToken, upgradePlan);
+memberRouter.patch('/profile/downgrade', verifyToken, downgradePlan);
 
 // delete a specific member
 memberRouter.delete('/profile', verifyToken, deleteProfile);
@@ -88,6 +100,6 @@ memberRouter.put('/goal/:id', verifyToken, updateGoal);
 // delete a specific goal
 memberRouter.delete('/goal/:id', verifyToken, deleteGoal);
 
-// 
+//
 
 export default memberRouter;

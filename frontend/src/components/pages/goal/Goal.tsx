@@ -6,10 +6,10 @@ import GoalForm from './GoalForm';
 const Goal = () => {
   const [goals, setGoals] = useState<GoalInterface[]>();
   const goalsArr = [
-    { type: 'Workout days', unit: 'day' },
-    { type: 'Calories burned', unit: 'cal' },
-    { type: 'Workout distance', unit: 'km' },
-    { type: 'Workout duration', unit: 'min' },
+    { type: 'Days', unit: 'day' },
+    { type: 'Calories', unit: 'cal' },
+    { type: 'Distance', unit: 'km' },
+    { type: 'Duration', unit: 'min' },
   ];
 
   const [flipGoal, setFlipGoal] = useState<number>(-1);
@@ -43,26 +43,35 @@ const Goal = () => {
   const GoalCard = ({ index }: { index: number }) => {
     return (
       <div className='flex flex-col justify-evenly items-center w-full h-full bg-slate-100 rounded-2xl'>
-        <span className='text-lg font-bold'>{goalsArr[index]['type']}</span>
+        <span className='text-lg font-bold'>
+          {goalsArr[index]['type'] === 'Days'
+            ? 'Workout Days'
+            : goalsArr[index]['type'] === 'Calories'
+            ? 'Calories Burned'
+            : goalsArr[index]['type'] === 'Distance'
+            ? 'Distance'
+            : 'Duration'}
+        </span>
         {!goals?.some(
-          (goal: GoalInterface) => goal.name === goalsArr[index]['type']
+          (goal: GoalInterface) =>
+            goal.GoalType.name === goalsArr[index]['type']
         ) ? (
           <button type='button' onClick={() => setFlipGoal(index)}>
             <CirclePlus size={24} className='hover:cursor-pointer fill-white' />
           </button>
         ) : (
           goals
-            .filter((goal) => goal.name === goalsArr[index]['type'])
-            .map((workoutGoal) => (
+            .filter((goal) => goal.GoalType.name === goalsArr[index]['type'])
+            .map((goal: GoalInterface, i: number) => (
               <>
                 <div
-                  key={workoutGoal.id}
+                  key={i}
                   className='flex flex-row justify-center items-center gap-x-2'
                 >
                   <span>
-                    {workoutGoal.weekly_goal}{' '}
+                    {goal.weekly_goal}{' '}
                     {goalsArr[index]['unit'] === 'day'
-                      ? workoutGoal.weekly_goal > 1
+                      ? goal.weekly_goal > 1
                         ? `${goalsArr[index]['unit']}s`
                         : `${goalsArr[index]['unit']}`
                       : goalsArr[index]['unit']}
@@ -70,8 +79,8 @@ const Goal = () => {
                   </span>
                   <X size={16} />
                   <span>
-                    {workoutGoal.total_duration}{' '}
-                    {workoutGoal.total_duration > 1 ? 'weeks' : 'week'}
+                    {goal.total_duration}{' '}
+                    {goal.total_duration > 1 ? 'weeks' : 'week'}
                   </span>
                 </div>
                 <div className='flex flex-row justify-evenly items-center gap-x-3 m-1 p-1'>
@@ -79,9 +88,7 @@ const Goal = () => {
                     size={16}
                     color='red'
                     className='hover:cursor-pointer'
-                    onClick={() =>
-                      handleDelete(workoutGoal.id?.toString() ?? '')
-                    }
+                    onClick={() => handleDelete(goal.id?.toString() ?? '')}
                   />
                 </div>
               </>

@@ -20,7 +20,7 @@ interface WorkoutInterface {
   calories?: number;
   createdAt?: Date;
   updatedAt?: Date;
-  MemberId?: number;
+  MemberId?: string;
 }
 
 interface NutritionInterface {
@@ -32,7 +32,7 @@ interface NutritionInterface {
   carbohydrates?: number;
   createdAt?: Date;
   updatedAt?: Date;
-  MemberId?: number;
+  MemberId?: string;
 }
 
 interface AggregatedWorkoutInterface {
@@ -53,13 +53,21 @@ interface AggregatedNutritionInterface {
 }
 
 interface GoalInterface {
-  id?: string;
-  name: string;
+  id: string;
   weekly_goal: number;
   total_duration: number;
-  createdAt?: Date;
-  updatedAt?: Date;
-  MemberId?: number;
+  createdAt: Date;
+  updatedAt: Date;
+  MemberId: string;
+  deletedAt?: Date;
+  GoalTypeId: string;
+  GoalType: {
+    id: string;
+    name: string;
+    createdAt: Date;
+    updatedAt: Date;
+    deletedAt?: Date;
+  };
 }
 
 // functions
@@ -70,7 +78,11 @@ interface handleBtnActionProp {
 }
 
 interface handleChangeProp {
-  (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>): void;
+  (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+  ): void;
 }
 
 // UI components

@@ -11,12 +11,7 @@ const GoalForm = ({
   setFlipGoal: React.Dispatch<SetStateAction<number>>;
   index: number;
 }) => {
-  const goalsArr = [
-    'Workout days',
-    'Calories burned',
-    'Workout distance',
-    'Workout duration',
-  ];
+  const goalsArr = ['Days', 'Calories', 'Distance', 'Duration'];
   const goalDaysArr = [1, 2, 3, 4, 5, 6, 7];
   const goalCalsArr = [
     500, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2200, 2400, 2600, 2800, 3000,
@@ -29,10 +24,10 @@ const GoalForm = ({
   const [activeTotalDurationBtn, setActiveTotalDurationBtn] =
     useState<number>(-1);
 
-  const [input, setInput] = useState<GoalInterface>({
-    name: '',
-    weekly_goal: 0,
-    total_duration: 0,
+  const [input, setInput] = useState({
+    name: '' as string,
+    weekly_goal: 0 as number,
+    total_duration: 0 as number,
   });
 
   const handleAddWorkout: handleBtnActionProp = async () => {
@@ -88,7 +83,6 @@ const GoalForm = ({
   return (
     <div className='flex flex-col justify-start items-center w-full px-4'>
       <div className='flex flex-row justify-around items-center gap-x-3 mb-2'>
-        <h2>{goalsArr[index]}</h2>
         <button type='button' onClick={() => setFlipGoal(-1)}>
           <X
             size={16}

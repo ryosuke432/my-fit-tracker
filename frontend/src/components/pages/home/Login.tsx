@@ -1,28 +1,32 @@
 import React, { useState } from 'react';
+import clsx from 'clsx';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth/AuthProvider';
 import axiosInstance from '../../../api/axiosInstance';
 import HomeLayout from './HomeLayout';
-import Form from '../../ui/Form';
+import { Eye, EyeClosed } from 'lucide-react';
+
+interface FormInputsInterface {
+  email: string;
+  password: string;
+}
 
 const Login = () => {
   const auth = useAuth();
   const navigate = useNavigate();
-  const [input, setInput] = useState({
-    email: '',
-    password: '',
-  });
 
-  const handleInput: handleChangeProp = async (e) => {
-    const { name, value } = e.target;
-    setInput((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<FormInputsInterface>();
 
-  const handleLogin: handleBtnActionProp = async () => {
-    const { email, password } = input;
+  const [errRes, setErrRes] = useState<string>('');
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+
+  const handleLogin: SubmitHandler<FormInputsInterface> = async (data) => {
+    const { email, password } = data;
     if (!email || !password) return;
 
     try {
@@ -38,49 +42,112 @@ const Login = () => {
         navigate('/goal', { replace: true });
       }
     } catch (err: any) {
-      console.error(err.response?.data?.message);
+      setErrRes(err.response.data.message);
+      console.error(err.response.data.message);
     }
-  };
-
-  const inputDataset = [
-    {
-      type: 'email',
-      name: 'email',
-      placeholder: 'Email',
-      autoComplete: 'off',
-      autoFocus: true,
-      required: true,
-    },
-    {
-      type: 'password',
-      name: 'password',
-      placeholder: 'Password',
-      autoComplete: 'off',
-      required: true,
-    },
-  ];
-
-  const buttonDataset = {
-    label: 'Log in',
-    action: handleLogin,
   };
 
   return (
     <HomeLayout>
       <div className='container min-w-72 w-96 mx-auto px-4 py-2 flex flex-col justify-evenly items-center gap-y-5 text-center border-2 border-solid border-slate-900 rounded'>
-        <h2 className='text-xl'>Log in</h2>
+        <h2 className='text-xl font-semibold'>Log in</h2>
 
-        <Form
-          inputDataset={inputDataset}
-          handleChange={handleInput}
-          buttonDataset={buttonDataset}
-        />
+        <form
+          onSubmit={handleSubmit(handleLogin)}
+          className='flex flex-col gap-y-5 w-full'
+        >
+          <label className='relative w-full'>
+            <input
+              id='email'
+              type='email'
+              {...register('email', {
+                required: { value: true, message: 'Email is required' },
+                pattern: {
+                  value: /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/,
+                  message: 'Invalid email format',
+                },
+              })}
+              className={clsx(
+                'w-full py-2 px-4 border border-slate-400 rounded focus:outline-none focus:ring-2',
+                { 'focus:ring-slate-800': !errors.email },
+                { 'focus:ring-red-500': errors.email }
+              )}
+            />
+            <p
+              className={clsx(
+                'absolute text-xs px-1 bg-white left-4 -top-2',
+                { 'text-red-500': errors.email },
+                { 'text-slate-500': !errors.email }
+              )}
+            >
+              {errors.email ? errors.email.message : 'Email'}
+            </p>
+            <p className='absolute text-s text-red-500 px-1 bg-white right-4 top-2'>
+              {errRes.toLowerCase().includes('email') && (
+                <span className='text-xs text-red-500'>{errRes}</span>
+              )}
+            </p>
+          </label>
 
+          <label className='relative w-full'>
+            <input
+              id='password'
+              type={isVisible ? 'text' : 'password'}
+              {...register('password', {
+                required: 'Password is required',
+                minLength: {
+                  value: 8,
+                  message: 'Password must be at least 8 characters',
+                },
+              })}
+              className={clsx(
+                'w-full py-2 px-4 border border-slate-400 rounded focus:outline-none focus:ring-2',
+                { 'focus:ring-red-500': errors.password },
+                { 'focus:ring-slate-800': !errors.password }
+              )}
+            />
+            <p
+              className={clsx(
+                'absolute text-xs px-1 bg-white left-4 -top-2',
+                { 'text-red-500': errors.password },
+                { 'text-slate-500': !errors.password }
+              )}
+            >
+              {errors.password ? errors.password.message : 'Password'}
+            </p>
+            <p className='absolute text-s text-red-500 px-1 bg-white right-10 top-2'>
+              {errRes.toLowerCase().includes('password') && (
+                <span className='text-xs text-red-500'>{errRes}</span>
+              )}
+            </p>
+
+            <div
+              className='absolute right-4 top-2.5 cursor-pointer'
+              onClick={() => setIsVisible(!isVisible)}
+            >
+              {isVisible ? (
+                <Eye size={16} className='stroke-slate-800' />
+              ) : (
+                <EyeClosed size={16} className='stroke-slate-400' />
+              )}
+            </div>
+          </label>
+
+          {/* Submit Button */}
+          <button
+            type='submit'
+            className='text-white font-bold bg-emerald-500 py-2 px-4 rounded-full hover:cursor-pointer hover:bg-emerald-700'
+          >
+            Log In
+          </button>
+        </form>
+
+        {/* Sign Up Link */}
         <p>
           Don't have an account?{' '}
-          <span className='text-blue-500'>
-            <Link to='/signup'>Sign up</Link>
-          </span>
+          <Link to='/signup' className='text-blue-500 underline'>
+            Sign up
+          </Link>
         </p>
       </div>
     </HomeLayout>

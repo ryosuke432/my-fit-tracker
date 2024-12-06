@@ -43,7 +43,7 @@ Member.init(
       validate: {
         is: {
           args: /^[+]?[0-9]{7,15}$/,
-          msg: 'Invalid phone number format',
+          msg: 'Invalid mobile number format',
         },
       },
     },

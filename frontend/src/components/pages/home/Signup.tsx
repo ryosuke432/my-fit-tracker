@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
-import { useForm, SubmitErrorHandler, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import axiosInstance from '../../../api/axiosInstance';
 import HomeLayout from './HomeLayout';
 
-interface FormInputsInterface {
+interface FormValues {
   firstName: string;
   lastName: string;
   email: string;
@@ -22,11 +22,11 @@ const Signup = () => {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<FormInputsInterface>();
+  } = useForm<FormValues>();
 
   const [errRes, setErrRes] = useState<string>('');
 
-  const handleSignup: SubmitHandler<FormInputsInterface> = async (data) => {
+  const handleSignup: SubmitHandler<FormValues> = async (data) => {
     const {
       firstName,
       lastName,
@@ -63,8 +63,9 @@ const Signup = () => {
 
       navigate('/login');
     } catch (err: any) {
-      setErrRes(err.response.data.message);
-      console.error(err.response.data.message);
+      const message = err.response.message;
+      setErrRes(message);
+      console.error(message);
     }
   };
 
@@ -86,16 +87,16 @@ const Signup = () => {
                 required: { value: true, message: 'First name is required' },
               })}
               className={clsx(
-                'w-full py-2 px-4 border border-slate-400 rounded focus:outline-none focus:ring-2',
-                { 'focus:ring-slate-800': !errors.firstName },
-                { 'focus:ring-red-500': errors.firstName }
+                'peer w-full py-2 px-4 border rounded focus:outline-none focus:ring-2',
+                { 'border-slate-500 focus:ring-slate-800': !errors.firstName },
+                { 'border-red-500 focus:ring-red-500': errors.firstName }
               )}
             />
             <p
               className={clsx(
                 'absolute text-xs px-1 bg-white left-4 -top-2',
-                { 'text-red-500': errors.firstName },
-                { 'text-slate-500': !errors.firstName }
+                { 'text-red-500 ': errors.firstName },
+                { 'text-slate-500 peer-focus:text-black': !errors.firstName }
               )}
             >
               {errors.firstName ? errors.firstName.message : 'First name'}
@@ -115,16 +116,16 @@ const Signup = () => {
                 required: { value: true, message: 'Last name is required' },
               })}
               className={clsx(
-                'w-full py-2 px-4 border border-slate-400 rounded focus:outline-none focus:ring-2',
-                { 'focus:ring-slate-800': !errors.lastName },
-                { 'focus:ring-red-500': errors.lastName }
+                'peer w-full py-2 px-4 border rounded focus:outline-none focus:ring-2',
+                { 'border-slate-500 focus:ring-slate-800': !errors.lastName },
+                { 'border-red-500 focus:ring-red-500': errors.lastName }
               )}
             />
             <p
               className={clsx(
                 'absolute text-xs px-1 bg-white left-4 -top-2',
-                { 'text-red-500': errors.lastName },
-                { 'text-slate-500': !errors.lastName }
+                { 'text-red-500 ': errors.lastName },
+                { 'text-slate-500  peer-focus:text-black': !errors.lastName }
               )}
             >
               {errors.lastName ? errors.lastName.message : 'Last name'}
@@ -148,16 +149,16 @@ const Signup = () => {
                 },
               })}
               className={clsx(
-                'w-full py-2 px-4 border border-slate-400 rounded focus:outline-none focus:ring-2',
-                { 'focus:ring-slate-800': !errors.email },
-                { 'focus:ring-red-500': errors.email }
+                'peer w-full py-2 px-4 border rounded focus:outline-none focus:ring-2',
+                { 'border-slate-500 focus:ring-slate-800': !errors.email },
+                { 'border-red-500 focus:ring-red-500': errors.email }
               )}
             />
             <p
               className={clsx(
                 'absolute text-xs px-1 bg-white left-4 -top-2',
                 { 'text-red-500': errors.email },
-                { 'text-slate-500': !errors.email }
+                { 'text-slate-500 peer-focus:text-black': !errors.email }
               )}
             >
               {errors.email ? errors.email.message : 'Email'}
@@ -181,16 +182,16 @@ const Signup = () => {
                 },
               })}
               className={clsx(
-                'w-full py-2 px-4 border border-slate-400 rounded focus:outline-none focus:ring-2',
-                { 'focus:ring-slate-800': !errors.mobile },
-                { 'focus:ring-red-500': errors.mobile }
+                'peer w-full py-2 px-4 border rounded focus:outline-none focus:ring-2',
+                { 'border-slate-500 focus:ring-slate-800': !errors.mobile },
+                { 'border-red-500 focus:ring-red-500': errors.mobile }
               )}
             />
             <p
               className={clsx(
                 'absolute text-xs px-1 bg-white left-4 -top-2',
                 { 'text-red-500': errors.mobile },
-                { 'text-slate-500': !errors.mobile }
+                { 'text-slate-500 peer-focus:text-black': !errors.mobile }
               )}
             >
               {errors.mobile ? errors.mobile.message : 'Mobile'}
@@ -205,7 +206,7 @@ const Signup = () => {
           <label className='relative w-full'>
             <input
               id='password'
-              type='text'
+              type='password'
               {...register('password', {
                 required: { value: true, message: 'Password is required' },
                 minLength: {
@@ -214,16 +215,16 @@ const Signup = () => {
                 },
               })}
               className={clsx(
-                'w-full py-2 px-4 border border-slate-400 rounded focus:outline-none focus:ring-2',
-                { 'focus:ring-slate-800': !errors.password },
-                { 'focus:ring-red-500': errors.password }
+                'peer w-full py-2 px-4 border rounded focus:outline-none focus:ring-2',
+                { 'border-slate-500 focus:ring-slate-800': !errors.password },
+                { 'border-red-500 focus:ring-red-500': errors.password }
               )}
             />
             <p
               className={clsx(
                 'absolute text-xs px-1 bg-white left-4 -top-2',
                 { 'text-red-500': errors.password },
-                { 'text-slate-500': !errors.password }
+                { 'text-slate-500 peer-focus:text-black': !errors.password }
               )}
             >
               {errors.password ? errors.password.message : 'Password'}
@@ -238,11 +239,11 @@ const Signup = () => {
           <label className='relative w-full'>
             <input
               id='confirmPassword'
-              type='text'
+              type='password'
               {...register('confirmPassword', {
                 required: {
                   value: true,
-                  message: 'Password confirmation is required',
+                  message: 'Please confirm password',
                 },
                 minLength: {
                   value: 8,
@@ -250,16 +251,22 @@ const Signup = () => {
                 },
               })}
               className={clsx(
-                'w-full py-2 px-4 border border-slate-400 rounded focus:outline-none focus:ring-2',
-                { 'focus:ring-slate-800': !errors.confirmPassword },
-                { 'focus:ring-red-500': errors.confirmPassword }
+                'peer w-full py-2 px-4 border rounded focus:outline-none focus:ring-2',
+                {
+                  'border-slate-500 focus:ring-slate-800':
+                    !errors.confirmPassword,
+                },
+                { 'border-red-500 focus:ring-red-500': errors.confirmPassword }
               )}
             />
             <p
               className={clsx(
                 'absolute text-xs px-1 bg-white left-4 -top-2',
                 { 'text-red-500': errors.confirmPassword },
-                { 'text-slate-500': !errors.confirmPassword }
+                {
+                  'text-slate-500 peer-focus:text-black':
+                    !errors.confirmPassword,
+                }
               )}
             >
               {errors.confirmPassword
@@ -276,7 +283,8 @@ const Signup = () => {
           <label className='relative w-full'>
             <input
               id='bodyWeight'
-              type='text'
+              type='number'
+              step='0.01'
               {...register('bodyWeight', {
                 required: { value: true, message: 'Body weight is required' },
                 min: {
@@ -285,16 +293,16 @@ const Signup = () => {
                 },
               })}
               className={clsx(
-                'w-full py-2 px-4 border border-slate-400 rounded focus:outline-none focus:ring-2',
-                { 'focus:ring-slate-800': !errors.bodyWeight },
-                { 'focus:ring-red-500': errors.bodyWeight }
+                'peer w-full py-2 px-4 border rounded focus:outline-none focus:ring-2',
+                { 'border-slate-500 focus:ring-slate-800': !errors.bodyWeight },
+                { 'border-red-500 focus:ring-red-500': errors.bodyWeight }
               )}
             />
             <p
               className={clsx(
                 'absolute text-xs px-1 bg-white left-4 -top-2',
                 { 'text-red-500': errors.bodyWeight },
-                { 'text-slate-500': !errors.bodyWeight }
+                { 'text-slate-500 peer-focus:text-black': !errors.bodyWeight }
               )}
             >
               {errors.bodyWeight

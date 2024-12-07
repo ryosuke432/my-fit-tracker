@@ -42,8 +42,9 @@ const Login = () => {
         navigate('/goal', { replace: true });
       }
     } catch (err: any) {
-      setErrRes(err.response.data.message);
-      console.error(err.response.data.message);
+      const message = err.response.message;
+      setErrRes(message);
+      console.error(message);
     }
   };
 
@@ -68,16 +69,18 @@ const Login = () => {
                 },
               })}
               className={clsx(
-                'w-full py-2 px-4 border border-slate-400 rounded focus:outline-none focus:ring-2',
-                { 'focus:ring-slate-800': !errors.email },
-                { 'focus:ring-red-500': errors.email }
+                'peer w-full py-2 px-4 border rounded focus:outline-none focus:ring-2',
+                { 'border-slate-500 focus:ring-slate-800': !errors.email },
+                {
+                  'border-red-500 focus:ring-red-500': errors.email,
+                }
               )}
             />
             <p
               className={clsx(
                 'absolute text-xs px-1 bg-white left-4 -top-2',
                 { 'text-red-500': errors.email },
-                { 'text-slate-500': !errors.email }
+                { 'text-slate-500 peer-focus:text-black': !errors.email }
               )}
             >
               {errors.email ? errors.email.message : 'Email'}
@@ -101,16 +104,18 @@ const Login = () => {
                 },
               })}
               className={clsx(
-                'w-full py-2 px-4 border border-slate-400 rounded focus:outline-none focus:ring-2',
-                { 'focus:ring-red-500': errors.password },
-                { 'focus:ring-slate-800': !errors.password }
+                'peer w-full py-2 px-4 border rounded focus:outline-none focus:ring-2',
+                { 'border-slate-500 focus:ring-slate-800': !errors.password },
+                {
+                  'border-red-500 focus:ring-red-500': errors.password,
+                }
               )}
             />
             <p
               className={clsx(
                 'absolute text-xs px-1 bg-white left-4 -top-2',
                 { 'text-red-500': errors.password },
-                { 'text-slate-500': !errors.password }
+                { 'text-slate-500 peer-focus:text-black': !errors.password }
               )}
             >
               {errors.password ? errors.password.message : 'Password'}

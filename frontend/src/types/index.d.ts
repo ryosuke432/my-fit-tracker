@@ -1,3 +1,5 @@
+declare module '@mapbox/mapbox-gl-draw';
+
 // model interfaces
 interface MemberInterface {
   id?: string;

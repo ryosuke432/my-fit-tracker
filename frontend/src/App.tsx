@@ -16,7 +16,7 @@ import Goal from './components/pages/goal/Goal';
 import Lessons from './components/Lessons';
 import PremiumRoute from './components/auth/PremiumRoute';
 import Community from './components/Community';
-import MyRoutes from './components/MyRoutes';
+import MyRoutes from './components/pages/myroutes/MyRoutes';
 
 function App() {
   return (

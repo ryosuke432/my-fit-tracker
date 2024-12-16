@@ -3,7 +3,6 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
-import { Navigation } from 'lucide-react';
 import axios from 'axios';
 
 const MyRoutes = () => {
@@ -11,15 +10,13 @@ const MyRoutes = () => {
     -123.11934, // Default longitude (Vancouver)
     49.24966, // Default latitude (Vancouver)
   ]);
-  const initialZoom = 14;
+  const [initialZoom, setInitialZoom] = useState<number>(16);
 
   // Map and container refs
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
 
   // State for dynamic map properties
-  const [center, setCenter] = useState<[number, number]>(initialCenter);
-  const [zoom, setZoom] = useState<number>(initialZoom);
   const [profile, setProfile] = useState<string>('walking');
   const [distance, setDistance] = useState<number>(0);
 
@@ -39,15 +36,27 @@ const MyRoutes = () => {
 
     const map = new mapboxgl.Map({
       container: mapContainerRef.current!,
-      center,
-      zoom,
+      style: 'mapbox://styles/mapbox/streets-v12',
+      center: initialCenter,
+      zoom: initialZoom,
     });
 
     map.on('move', () => {
       const mapCenter = map.getCenter();
-      setCenter([mapCenter.lng, mapCenter.lat]);
-      setZoom(map.getZoom());
+      setInitialCenter([mapCenter.lng, mapCenter.lat]);
+      setInitialZoom(map.getZoom());
     });
+
+    // Add geolocate control to the map.
+    const geoLocation = new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true,
+      },
+      trackUserLocation: true,
+      showUserHeading: true,
+    });
+
+    map.addControl(geoLocation);
 
     mapRef.current = map;
 
@@ -182,17 +191,6 @@ const MyRoutes = () => {
     map.on('draw.update', updateRoute);
   }, [profile]);
 
-  // Fly to the initial center on button click
-  const handleFlyTo = () => {
-    mapRef.current?.flyTo({ center: initialCenter, zoom: initialZoom });
-  };
-
-  // Handle zoom slider changes
-  const handleZoomChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newZoom = parseFloat(e.target.value);
-    mapRef.current?.setZoom(newZoom);
-  };
-
   return (
     <div className='flex flex-col justify-around items-center w-full h-full p-1'>
       {/* Saved Routes Display */}
@@ -209,23 +207,7 @@ const MyRoutes = () => {
       <div className='w-36 h-10 rounded bg-white'>Distance: {distance} km</div>
 
       {/* Map Container */}
-      <div className='grow relative w-full h-full'>
-        <input
-          type='range'
-          min={0}
-          max={22}
-          step={0.1}
-          value={zoom}
-          className='hidden md:block md:absolute md:bottom-8 md:left-2 md:accent-pink-500 md:z-10'
-          onChange={handleZoomChange}
-        />
-        <button
-          type='button'
-          className='absolute p-2 bottom-8 right-2 bg-white text-slate-500 rounded-full ring-2 ring-slate-900 hover:cursor-pointer z-10'
-          onClick={handleFlyTo}
-        >
-          <Navigation size={18} className='fill-white stroke-slate-500' />
-        </button>
+      <div className='grow w-full h-full'>
         <div
           id='map-container'
           className='w-full h-full'

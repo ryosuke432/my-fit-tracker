@@ -149,6 +149,19 @@ const MyRoutes = () => {
         const routeDistance = data.matchings[0].distance;
 
         drawRoute(routeGeometry);
+
+        // Add start and end markers to the map
+        const coords = routeGeometry.coordinates;
+        const startMarker = new mapboxgl.Marker({ color: '#34d399' })
+          .setLngLat([coords[0][0], coords[0][1]])
+          .addTo(map);
+        const endMarker = new mapboxgl.Marker({ color: '#f43f5d' })
+          .setLngLat([
+            coords[coords.length - 1][0],
+            coords[coords.length - 1][1],
+          ])
+          .addTo(map);
+
         setDistance(parseFloat((routeDistance / 1000).toFixed(2)));
       } catch (error) {
         console.error('Error fetching route:', error);

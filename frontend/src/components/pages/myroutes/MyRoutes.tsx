@@ -4,6 +4,8 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import axios from 'axios';
+import { LuBike } from "react-icons/lu";
+import { MdOutlineDirectionsRun } from "react-icons/md";
 
 const MyRoutes = () => {
   const [initialCenter, setInitialCenter] = useState<[number, number]>([
@@ -62,6 +64,7 @@ const MyRoutes = () => {
 
     return () => {
       map.remove();
+      setDistance(0);
     };
   }, []);
 
@@ -115,6 +118,12 @@ const MyRoutes = () => {
 
     map.addControl(draw, 'top-right');
 
+    const nav = new mapboxgl.NavigationControl();
+    map.addControl(nav, 'top-left');
+
+    let startMarker: mapboxgl.Marker;
+    let goalMarker: mapboxgl.Marker;
+
     const updateRoute = () => {
       const data = draw.getAll();
       if (!data.features.length) return;
@@ -147,22 +156,23 @@ const MyRoutes = () => {
 
         const routeGeometry = data.matchings[0].geometry;
         const routeDistance = data.matchings[0].distance;
+        const coordinates = routeGeometry.coordinates;
 
         drawRoute(routeGeometry);
+        setDistance(parseFloat((routeDistance / 1000).toFixed(2)));
 
-        // Add start and end markers to the map
-        const coords = routeGeometry.coordinates;
-        const startMarker = new mapboxgl.Marker({ color: '#34d399' })
-          .setLngLat([coords[0][0], coords[0][1]])
+        if (startMarker) startMarker.remove();
+        if (goalMarker) goalMarker.remove();
+
+        startMarker = new mapboxgl.Marker({ color: '#34d399' })
+          .setLngLat([coordinates[0][0], coordinates[0][1]])
           .addTo(map);
-        const endMarker = new mapboxgl.Marker({ color: '#f43f5d' })
+        goalMarker = new mapboxgl.Marker({ color: '#f43f5d' })
           .setLngLat([
-            coords[coords.length - 1][0],
-            coords[coords.length - 1][1],
+            coordinates[coordinates.length - 1][0],
+            coordinates[coordinates.length - 1][1],
           ])
           .addTo(map);
-
-        setDistance(parseFloat((routeDistance / 1000).toFixed(2)));
       } catch (error) {
         console.error('Error fetching route:', error);
       }
@@ -202,30 +212,67 @@ const MyRoutes = () => {
 
     map.on('draw.create', updateRoute);
     map.on('draw.update', updateRoute);
-  }, [profile]);
+
+    return () => {
+      // Cleanup draw and markers
+
+      if (startMarker) startMarker.remove();
+      if (goalMarker) goalMarker.remove();
+    };
+  }, []);
 
   return (
-    <div className='flex flex-col justify-around items-center w-full h-full p-1'>
+    <div className='flex flex-col justify-around items-center w-full h-full'>
       {/* Saved Routes Display */}
-      <div className='flex flex-row justify-start items-center gap-x-2 w-full p-1'>
-        <div className='w-36 h-10 ring-2 ring-emerald-200 rounded-2xl'>
+      <div className='flex flex-row justify-start items-center gap-x-2 w-full'>
+        <div className='w-36 h-8 bg-slate-800 text-white border-t border-l border-r border-slate-800 rounded-t'>
           Saved Route 1
         </div>
-        <div className='w-36 h-10 ring-2 ring-emerald-200 rounded-2xl'>
+        <div className='w-36 h-8 bg-white text-black border-t border-l border-r border-slate-800 rounded-t'>
           Saved Route 2
         </div>
       </div>
+      <div className='w-full h-full border border-slate-800 rounded-r rounded-b pb-1'>
+        <div className='flex flex-row justify-start items-center gap-x-2 w-full px-2 py-1 rounded-2xl bg-white'>
+          <div className='flex flex-row justify-center items-center p-1 bg-slate-200 rounded'>
+            <button
+              type='button'
+              className='bg-slate-200 text-black p-1 rounded hover:cursor-pointer transition-all disabled:bg-white disabled:cursor-default'
+              onClick={() => setProfile('walking')}
+              disabled={profile === 'walking'}
+            >
+              Running
+            </button>
+            <button
+              type='button'
+              className='bg-slate-200 text-black p-1 rounded hover:cursor-pointer transition-all disabled:bg-white disabled:cursor-default'
+              onClick={() => setProfile('cycling')}
+              disabled={profile === 'cycling'}
+            >
+              Cycling
+            </button>
+          </div>
 
-      {/* Distance Display */}
-      <div className='w-36 h-10 rounded bg-white'>Distance: {distance} km</div>
+          { profile === 'walking' ? <MdOutlineDirectionsRun /> : <LuBike />}
 
-      {/* Map Container */}
-      <div className='grow w-full h-full'>
-        <div
-          id='map-container'
-          className='w-full h-full'
-          ref={mapContainerRef}
-        />
+          <div className='flex flex-row justify-center items-center h-full'>
+            <div className='h-full p-2 text-white border border-emerald-500 bg-emerald-500 rounded-l'>
+              Distance
+            </div>
+            <div className='h-full w-24 p-2 text-black border border-emerald-500 rounded-r'>
+              {distance} km
+            </div>
+          </div>
+        </div>
+
+        {/* Map Container */}
+        <div className='grow w-full h-full'>
+          <div
+            id='map-container'
+            className='w-full h-full'
+            ref={mapContainerRef}
+          />
+        </div>
       </div>
     </div>
   );

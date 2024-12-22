@@ -151,64 +151,119 @@ const Lessons = () => {
   const [copiedLessons, setCopiedLessons] =
     useState<LessonInterface[]>(initialLessons);
   const [search, setSearch] = useState<string>('');
+  const [filter, setFilter] = useState<string>('');
+  const [sortByPrice, setSortByPrice] = useState<string>('');
+  const [sortByDate, setSortByDate] = useState<string>('');
 
   useEffect(() => {
-    handleFilter();
-  }, [search]);
+    filterAndSortLessons();
+  }, [search, filter, sortByPrice, sortByDate]);
 
   const handleChange: handleChangeProp = (e) => {
     const { value } = e.target;
     setSearch(value.trim().toLowerCase());
   };
 
-  const handleFilter = () => {
-    if (!search) return setCopiedLessons(lessons);
-    const filtered = [...lessons].filter(
-      (lesson: LessonInterface) =>
-        lesson.title.toLowerCase().includes(search) ||
-        lesson.instructor.toLowerCase().includes(search) ||
-        lesson.description.toLowerCase().includes(search) ||
-        lesson.category.toLowerCase().includes(search)
+  const searchLessons = (lesson: LessonInterface) => {
+    return (
+      lesson.title.toLowerCase().includes(search) ||
+      lesson.instructor.toLowerCase().includes(search) ||
+      lesson.description.toLowerCase().includes(search) ||
+      lesson.category.toLowerCase().includes(search)
     );
-    setCopiedLessons(filtered);
   };
 
-  const handleSort: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
-    const { value } = e.target;
-    const sorted = [...lessons].sort((a, b) => {
-      if (value === '1') return a.price - b.price;
-      if (value === '2') return +new Date(a.createdAt) - +new Date(b.createdAt);
-      if (value === '3') return a.category.localeCompare(b.category);
-      return 0;
-    });
-    setCopiedLessons(sorted);
+  const filterLessons = (lesson: LessonInterface) => {
+    switch (filter) {
+      case 'Running':
+        return lesson.category === 'Running';
+      case 'Cycling':
+        return lesson.category === 'Cycling';
+      case 'Walking':
+        return lesson.category === 'Walking';
+      case 'Stretching':
+        return lesson.category === 'Stretching';
+      case 'Cardio':
+        return lesson.category === 'Cardio';
+      default:
+        return true;
+    }
+  };
+
+  const sortLessonsByPrice = (a: LessonInterface, b: LessonInterface) => {
+    switch (sortByPrice) {
+      case 'lowest':
+        return a.price - b.price;
+      case 'highest':
+        return b.price - a.price;
+      default:
+        return 0;
+    }
+  };
+
+  const sortLessonsByDate = (a: LessonInterface, b: LessonInterface) => {
+    switch (sortByDate) {
+      case 'newest':
+        return b.createdAt.getTime() - a.createdAt.getTime();
+      case 'oldest':
+        return a.createdAt.getTime() - b.createdAt.getTime();
+      default:
+        return 0;
+    }
+  };
+
+  const filterAndSortLessons = () => {
+    const edited = [...lessons]
+      .filter(searchLessons)
+      .filter(filterLessons)
+      .sort(sortLessonsByPrice)
+      .sort(sortLessonsByDate);
+    setCopiedLessons(edited);
   };
 
   return (
     <div className='h-full md:ml-16 overflow-y-auto'>
-      <div className='fixed flex flex-row justify-start items-center gap-x-5 bg-white h-12 w-full border-b border-slate-200'>
-        <div className='flex flex-row justify-start items-center gap-x-3 ml-5'>
-          <input
-            type='text'
-            name='search'
-            placeholder='Search...'
-            className='p-1 border border-slate-200 rounded-full'
-            onChange={(e) => handleChange(e)}
-          />
-        </div>
-        <div className='flex flex-row justify-start items-center gap-x-3'>
-          <label htmlFor='sort'>Sort</label>
-          <select
-            name='sort'
-            id='sort'
-            className='w-40 p-1 bg-slate-100 border border-slate-500 rounded-full'
-            onChange={handleSort}
-          >
-            <option value='1'>Price</option>
-            <option value='2'>Date</option>
-            <option value='3'>Category</option>
-          </select>
-        </div>
+      <div className='fixed flex flex-row justify-start items-center gap-x-5 ml-5 bg-white h-12 w-full border-b border-slate-200'>
+        <input
+          type='text'
+          name='search'
+          placeholder='Search...'
+          className='p-1 border border-slate-200 rounded-full'
+          onChange={(e) => handleChange(e)}
+        />
+
+        <select
+          className='p-1 border border-slate-200 rounded-full'
+          onChange={(e) => setFilter(e.target.value)}
+        >
+          <option value=''>All</option>
+          <option value='Running'>Running</option>
+          <option value='Cycling'>Cycling</option>
+          <option value='Walking'>Walking</option>
+          <option value='Stretching'>Stretching</option>
+          <option value='Cardio'>Cardio</option>
+        </select>
+
+        <select
+          className='p-1 border border-slate-200 rounded-full'
+          onChange={(e) => setSortByPrice(e.target.value)}
+          defaultValue=''
+          disabled={sortByDate ? true : false}
+        >
+          <option value=''>Price</option>
+          <option value='lowest'>$ &#8594; $$$</option>
+          <option value='highest'>$$$ &#8594; $</option>
+        </select>
+
+        <select
+          className='p-1 border border-slate-200 rounded-full'
+          onChange={(e) => setSortByDate(e.target.value)}
+          defaultValue=''
+          disabled={sortByPrice ? true : false}
+        >
+          <option value=''>Date</option>
+          <option value='newest'>Newest</option>
+        </select>
       </div>
 
       <div className='flex flex-col md:flex-row md:flex-wrap justify-start items-center gap-8 p-5 mt-10'>

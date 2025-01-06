@@ -28,7 +28,6 @@ There are many wearable devices and fitness applications available today. Howeve
         ![Metrics Mobile](./images/myfittracker_metrics_mobile.png)
         ![Metrics Form Mobile](./images/myfittracker_metrics_form_mobile.png)
         ![Metrics Details Mobile](./images/myfittracker_metrics_details_mobile.png)
-    
     - Lessons
         ![Lessons Mobile](./images/myfittracker_lessons_mobile.png)
     - My Routes

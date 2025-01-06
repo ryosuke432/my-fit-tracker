@@ -29,8 +29,10 @@ There are many wearable devices and fitness applications available today. Howeve
         ![Metrics Form Mobile](./images/myfittracker_metrics_form_mobile.png)
         ![Metrics Details Mobile](./images/myfittracker_metrics_details_mobile.png)
     - Lessons
+
         ![Lessons Mobile](./images/myfittracker_lessons_mobile.png)
     - My Routes
+
         ![My Routes Mobile](./images/myfittracker_route_mobile.png)
 
 
@@ -72,9 +74,6 @@ There are many wearable devices and fitness applications available today. Howeve
 - Log Workout: Users log into their dashboard, click "Add Workout," select the workout type, enter data (duration, distance), and click "Save."
 - Track Progress: On the dashboard, users view their progress toward fitness goals through weekly summaries and graphs.
 - Set a Goal: Users set a goal (e.g., run 20 km per month) and track progress through visual indicators
-
-## Entity Relationship Diagram
-![ER Diagram](./images/ERDDiagram.svg)
 
 ## References:
 ### Backend:

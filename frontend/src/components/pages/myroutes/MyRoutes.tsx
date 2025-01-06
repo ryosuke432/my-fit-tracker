@@ -223,7 +223,6 @@ const MyRoutes = () => {
 
   return (
     <div className='flex flex-col justify-around items-center w-full h-full'>
-      {/* Saved Routes Display */}
       <div className='w-full h-full border border-slate-800 rounded-r rounded-b pb-1'>
         <div className='flex flex-row justify-start items-center gap-x-2 w-full px-2 py-1 rounded-2xl bg-white'>
           <div className='flex flex-row justify-center items-center p-1 bg-slate-200 rounded'>

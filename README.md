@@ -49,8 +49,7 @@ There are many wearable devices and fitness applications available today. Howeve
 - Authentication & Security:
     - JWT (JSON Web Tokens) for user authentication
     - bcrypt
-- Deployment:
-    - AWS for deployment
+- 
 
 ## Features to be implemented
 - User Authentication
@@ -67,8 +66,7 @@ There are many wearable devices and fitness applications available today. Howeve
 - Nutrition Tracking
     - Log daily food intake and calories consumed
     - Track macros (protein, carbs, fats)
-- Dark Mode
-    - Switch between light and dark modes for accessibility
+
 
 ## User stories:
 - Log Workout: Users log into their dashboard, click "Add Workout," select the workout type, enter data (duration, distance), and click "Save."

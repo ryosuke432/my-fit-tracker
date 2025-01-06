@@ -16,10 +16,10 @@ There are many wearable devices and fitness applications available today. Howeve
     ![Metrics](./images/myfittracker_metrics.png)
     ![Metrics Details](./images/myfittracker_metrics_details.png)
 - User Authentication by User Type
-    Only for Premium Users
+    - Only for Premium Users
     ![Lessons with Permission](./images/myfittracker_lessons_1.png)
     ![My Routes with Permission](./images/myfittracker_route.png)
-    Without Permission
+    - Without Permission
     ![Lessons without Permission](./images/myfittracker_lessons_without_permission.png)
 - Mobile Layout
     - Goal

@@ -42,6 +42,7 @@ const Login = () => {
         navigate('/goal', { replace: true });
       }
     } catch (err: any) {
+      console.error(err)
       const message = err.response.message;
       setErrRes(message);
       console.error(message);

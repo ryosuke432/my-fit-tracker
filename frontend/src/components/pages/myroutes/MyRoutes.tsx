@@ -4,8 +4,8 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import axios from 'axios';
-import { LuBike } from "react-icons/lu";
-import { MdOutlineDirectionsRun } from "react-icons/md";
+import { LuBike } from 'react-icons/lu';
+import { MdOutlineDirectionsRun } from 'react-icons/md';
 
 const MyRoutes = () => {
   const [initialCenter, setInitialCenter] = useState<[number, number]>([
@@ -224,14 +224,6 @@ const MyRoutes = () => {
   return (
     <div className='flex flex-col justify-around items-center w-full h-full'>
       {/* Saved Routes Display */}
-      <div className='flex flex-row justify-start items-center gap-x-2 w-full'>
-        <div className='w-36 h-8 bg-slate-800 text-white border-t border-l border-r border-slate-800 rounded-t'>
-          Saved Route 1
-        </div>
-        <div className='w-36 h-8 bg-white text-black border-t border-l border-r border-slate-800 rounded-t'>
-          Saved Route 2
-        </div>
-      </div>
       <div className='w-full h-full border border-slate-800 rounded-r rounded-b pb-1'>
         <div className='flex flex-row justify-start items-center gap-x-2 w-full px-2 py-1 rounded-2xl bg-white'>
           <div className='flex flex-row justify-center items-center p-1 bg-slate-200 rounded'>
@@ -253,7 +245,7 @@ const MyRoutes = () => {
             </button>
           </div>
 
-          { profile === 'walking' ? <MdOutlineDirectionsRun /> : <LuBike />}
+          {profile === 'walking' ? <MdOutlineDirectionsRun /> : <LuBike />}
 
           <div className='flex flex-row justify-center items-center h-full'>
             <div className='h-full p-2 text-white border border-emerald-500 bg-emerald-500 rounded-l'>
